@@ -5,5 +5,9 @@
     <string name="btn_login">Login</string>
     <string name="btn_cadastrar">Cadastrar</string>
     <string name="input_usuario">Usuário</string>
-    <string name="input_field_senha">Senha:</string>
+    <string name="input_field_senha">Insira sua senha</string>
+    <string name="input_nome">Insira seu nome\n</string>
+    <string name="input_nome_usuario">Insira seu nome de usuário\n</string>
+    <string name="input_email">Insira seu email\n</string>
+    <string name="btn_criarConta">Criar Conta</string>
 </resources>
