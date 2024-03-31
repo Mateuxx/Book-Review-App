@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TelaLoginActivity">
+    tools:context=".ui.activity.TelaLoginActivity">
 
 
     <ImageView
@@ -33,6 +33,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView6">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/input_usuario"
@@ -43,14 +44,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_senha"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_height="wrap_content"
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout_usuario">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/senha"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="@string/input_field_senha"
@@ -68,9 +70,9 @@
         android:text="@string/btn_login"
         android:textColor="#124076"
         app:backgroundTint="#F1A139"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_senha"
         app:layout_constraintEnd_toEndOf="@id/textInputLayout_senha"
-        app:layout_constraintStart_toStartOf="@id/textInputLayout_senha"/>
+        app:layout_constraintStart_toStartOf="@id/textInputLayout_senha"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout_senha" />
 
     <Button
         android:id="@+id/buttonCadastro"
@@ -80,9 +82,9 @@
         android:background="@android:color/transparent"
         android:text="@string/btn_cadastrar"
         android:textColor="@color/black"
-        app:layout_constraintTop_toBottomOf="@+id/buttonLogin"
         app:layout_constraintEnd_toEndOf="@+id/buttonLogin"
-        app:layout_constraintStart_toStartOf="@+id/buttonLogin" />
+        app:layout_constraintStart_toStartOf="@+id/buttonLogin"
+        app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

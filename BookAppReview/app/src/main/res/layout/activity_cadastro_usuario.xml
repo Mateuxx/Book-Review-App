@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CadastroUsuarioActivity">
+    tools:context=".ui.activity.CadastroUsuarioActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout_nomeCadastro"
@@ -158,7 +158,7 @@
         android:layout_width="346dp"
         android:layout_height="126dp"
 
-        android:src="@drawable/logoBookReview"
+        android:src="@drawable/logobookreview"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

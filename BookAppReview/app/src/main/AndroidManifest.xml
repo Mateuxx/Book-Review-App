@@ -13,10 +13,10 @@
         android:theme="@style/Theme.BookAppReview"
         tools:targetApi="31">
         <activity
-            android:name=".CadastroUsuarioActivity"
+            android:name=".ui.activity.CadastroUsuarioActivity"
             android:exported="false" />
         <activity
-            android:name=".TelaLoginActivity"
+            android:name=".ui.activity.TelaLoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
