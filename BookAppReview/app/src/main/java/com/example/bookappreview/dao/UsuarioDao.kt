@@ -18,9 +18,11 @@ class UsuarioDao {
         }
         return result
     }
+
     companion object {
         private val usuarios = mutableListOf<Usuario>(
             Usuario(
+                id = 1,
                 nome = "admin",
                 email = "guilherme@gmail.com",
                 senha = "123"

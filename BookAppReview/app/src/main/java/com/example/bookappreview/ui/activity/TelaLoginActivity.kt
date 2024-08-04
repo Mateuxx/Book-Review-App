@@ -1,24 +1,27 @@
 package com.example.bookappreview.ui.activity
 
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Email
 import android.util.Log
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.bookappreview.R
 import com.example.bookappreview.dao.UsuarioDao
 import com.example.bookappreview.databinding.ActivityTelaLoginActivityBinding
+import com.example.bookappreview.repository.helpers.EncapsulamentoMVVM
+import com.example.bookappreview.repository.UsuarioRepository
+import com.example.bookappreview.viewModel.UsuarioViewModel
 
 class TelaLoginActivity : AppCompatActivity() {
+
+//    // TODO: melhorar encapsulamento
+//    private val viewModel by lazy {
+//        val app = application as EncapsulamentoMVVM
+//        UsuarioViewModel(app.usuarioRepository)
+//    }
+
+    private val viewModel: UsuarioViewModel by
 
     private val binding by lazy {
         ActivityTelaLoginActivityBinding.inflate(layoutInflater)
     }
-
-    private val dao = UsuarioDao()
     private val TAG = "LoginLogs"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,13 +40,7 @@ class TelaLoginActivity : AppCompatActivity() {
             val senhaText = binding.senha.text.toString()
             //Mudar para logasdas
             println("Valor do senha : $senhaText")
-            val login = dao.searchByLoginAndSenha(usuarioLogin, senhaText)
-            if (login) {
-                Log.d(TAG, "")
-
-            } else {
-                Log.d(TAG, "Falha no login")
-            }
+            viewModel.autenticacao(usuarioLogin, senhaText)
         }
     }
 }
