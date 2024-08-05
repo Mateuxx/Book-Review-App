@@ -1,7 +1,13 @@
 package com.example.bookappreview.viewModel
 
+import android.os.Bundle
 import android.util.Log
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModel
+import com.example.bookappreview.R
 import com.example.bookappreview.repository.UsuarioRepository
 
 class UsuarioViewModel(
@@ -21,4 +27,5 @@ class UsuarioViewModel(
             Log.e(TAG, "autentica: Falha na autenticação", )
         }
     }
+
 }
