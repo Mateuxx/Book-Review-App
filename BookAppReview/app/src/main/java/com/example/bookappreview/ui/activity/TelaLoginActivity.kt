@@ -27,11 +27,11 @@ class TelaLoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val userTest = Usuario(
-            nome = "Mateus",
+            nome = "Gui",
+            username = "gui123",
             email = "email",
-            senha = "senha"
+            senha = "123",
         )
-
         lifecycleScope.launch {
             userDao.salvaUsuario(userTest)
         }
@@ -46,6 +46,14 @@ class TelaLoginActivity : AppCompatActivity() {
             val usuarioLogin = campoUsuario.text.toString()
             val senhaText = binding.senha.text.toString()
             Log.i(TAG, "login: Usuario: $usuarioLogin - Senha: $senhaText")
+            var buscaUser: Usuario? = null
+
+//              TODO - Fazer depois no Viewmocel
+            lifecycleScope.launch {
+                buscaUser = userDao.buscaUsername(usuarioLogin)
+                Log.i(TAG, "login: Dentro do launch $buscaUser")
+            }
+            Log.i(TAG, "login: $buscaUser")
         }
     }
 }
