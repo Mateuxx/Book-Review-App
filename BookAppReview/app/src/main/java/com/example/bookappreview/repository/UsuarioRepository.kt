@@ -1,14 +1,17 @@
 package com.example.bookappreview.repository
 
-import com.example.bookappreview.dao.UsuarioDao
-
-class UsuarioRepository(
-    private val dao: UsuarioDao
-) {
-
-    /**
-     * Encapsulamento da autenticação la do DB.
-     */
-    fun autentica(nome: String, senha: String): Boolean =
-         dao.searchByLoginAndSenha(nome, senha)
-}
+//class UsuarioRepository(
+//    private val dao: UsuarioDao
+//) {
+//
+//    /**
+//     * Encapsulamento da autenticação la do DB.
+//     */
+////    suspend fun autentica(id: Int, senha: String) =
+////         dao.autentica(id, senha)
+////
+//
+//    suspend fun salva (usuario: Usuario){
+//        dao.salva(usuario)
+//    }
+//}

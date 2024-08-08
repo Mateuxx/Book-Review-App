@@ -3,22 +3,19 @@ package com.example.bookappreview.ui.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
-import com.example.bookappreview.dao.UsuarioDao
+import androidx.lifecycle.lifecycleScope
+import com.example.bookappreview.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityTelaLoginActivityBinding
-import com.example.bookappreview.repository.UsuarioRepository
-import com.example.bookappreview.viewModel.UsuarioViewModel
-import com.example.bookappreview.viewModel.factory.UsuarioViewModelFactory
+import com.example.bookappreview.model.Usuario
+import kotlinx.coroutines.launch
 
 class TelaLoginActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: UsuarioViewModel
+//    private lateinit var viewModel: UsuarioViewModel
 
-    //Dependencias para funcionar
-    private val viewModelFactory = UsuarioViewModelFactory(
-        UsuarioRepository(UsuarioDao()),
-    )
+    private val userDao by lazy {
+        AppDatabase.instancia(this).userDao()
+    }
 
     private val binding by lazy {
         ActivityTelaLoginActivityBinding.inflate(layoutInflater)
@@ -28,10 +25,17 @@ class TelaLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(
-            this,
-            viewModelFactory
-        )[UsuarioViewModel::class.java]
+
+        val userTest = Usuario(
+            nome = "Mateus",
+            email = "email",
+            senha = "senha"
+        )
+
+        lifecycleScope.launch {
+            userDao.salvaUsuario(userTest)
+        }
+
         login()
     }
 
@@ -42,7 +46,6 @@ class TelaLoginActivity : AppCompatActivity() {
             val usuarioLogin = campoUsuario.text.toString()
             val senhaText = binding.senha.text.toString()
             Log.i(TAG, "login: Usuario: $usuarioLogin - Senha: $senhaText")
-            viewModel.autentica(usuarioLogin, senhaText)
         }
     }
 }

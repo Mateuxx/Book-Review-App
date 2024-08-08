@@ -8,10 +8,10 @@ import android.content.Intent
  */
 fun Context.vaiPara(
     clazz: Class<*>,
-    intent: Intent.() -> Unit = {}
+//    intent: Intent.() -> Unit = {} -> PutExtra stuff
 ) {
     Intent(this, clazz).apply {
-        intent()
+//        intent() -> PutExtra
         startActivity(this)
     }
 }
