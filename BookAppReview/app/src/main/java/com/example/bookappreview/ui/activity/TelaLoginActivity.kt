@@ -3,10 +3,14 @@ package com.example.bookappreview.ui.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import com.example.bookappreview.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityTelaLoginActivityBinding
+import com.example.bookappreview.helpers.vaiPara
 import com.example.bookappreview.model.Usuario
+import com.example.bookappreview.repository.UsuarioRepository
+import com.example.bookappreview.ui.viewModel.UsuarioViewModel
 import kotlinx.coroutines.launch
 
 class TelaLoginActivity : AppCompatActivity() {
@@ -15,6 +19,11 @@ class TelaLoginActivity : AppCompatActivity() {
 
     private val userDao by lazy {
         AppDatabase.instancia(this).userDao()
+    }
+
+    private val viewModel by lazy {
+        val repository = UsuarioRepository(AppDatabase.instancia(this).userDao())
+        UsuarioViewModel(repository)
     }
 
     private val binding by lazy {
@@ -26,17 +35,24 @@ class TelaLoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val userTest = Usuario(
-            nome = "Gui",
-            username = "gui123",
-            email = "email",
-            senha = "123",
-        )
-        lifecycleScope.launch {
-            userDao.salvaUsuario(userTest)
-        }
-
+//        val userTest = Usuario(
+//            nome = "Gui",
+//            username = "gui123",
+//            email = "email",
+//            senha = "123",
+//        )
+//        lifecycleScope.launch {
+//            userDao.salvaUsuario(userTest)
+//        }
         login()
+        cadastrar()
+    }
+
+    private fun cadastrar() {
+        val btnCadastro = binding.buttonCadastro
+        btnCadastro.setOnClickListener {
+            vaiPara(CadastroUsuarioActivity::class.java)
+        }
     }
 
     private fun login() {
@@ -46,14 +62,14 @@ class TelaLoginActivity : AppCompatActivity() {
             val usuarioLogin = campoUsuario.text.toString()
             val senhaText = binding.senha.text.toString()
             Log.i(TAG, "login: Usuario: $usuarioLogin - Senha: $senhaText")
-            var buscaUser: Usuario? = null
 
-//              TODO - Fazer depois no Viewmocel
             lifecycleScope.launch {
-                buscaUser = userDao.buscaUsername(usuarioLogin)
-                Log.i(TAG, "login: Dentro do launch $buscaUser")
+                if (viewModel.verificaLogin(usuarioLogin, senhaText)) {
+                    vaiPara(HomeActivity::class.java)
+                }
             }
-            Log.i(TAG, "login: $buscaUser")
+
         }
     }
+
 }

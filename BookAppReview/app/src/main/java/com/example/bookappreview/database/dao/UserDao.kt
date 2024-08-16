@@ -11,6 +11,6 @@ interface UserDao {
     suspend fun salvaUsuario(userDao: Usuario)
 
     @Query("SELECT * FROM usuario WHERE username = :username")
-    suspend fun buscaUsername(username: String): Usuario
+    suspend fun buscaUsername(username: String): Usuario?
 
 }
