@@ -1,7 +1,9 @@
 package com.example.bookappreview.repository
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import com.example.bookappreview.database.dao.UserDao
+import com.example.bookappreview.model.Livro
 import com.example.bookappreview.model.Usuario
 import com.example.bookappreview.webclient.NetworkService
 
@@ -23,9 +25,10 @@ class MainRepository(
         dao.buscaUsername(username)
 
     /**
-     * Requisição dos livros da api
+     * Busca os livros
      */
-    fun buscaLivros(searchQuery: String, context: Context) {
-        networkService.bookApi(searchQuery, context)
+    suspend fun fetchBooks(searchQuery: String, context: Context): List<Livro> {
+        return networkService.bookApi(searchQuery, context)
     }
+
 }
