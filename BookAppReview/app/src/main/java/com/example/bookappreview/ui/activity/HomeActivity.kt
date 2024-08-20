@@ -6,17 +6,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bookappreview.R
+import com.example.bookappreview.databinding.ActivityHomeBinding
+import com.example.bookappreview.helpers.vaiPara
 
 class HomeActivity : AppCompatActivity() {
+
+    private val binding by lazy {
+        ActivityHomeBinding.inflate(layoutInflater)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_home)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        setContentView(binding.root)
 
+        val btn = binding.button
+        btn.setOnClickListener {
+            vaiPara(AddLivroActivity::class.java)
+        }
     }
 }

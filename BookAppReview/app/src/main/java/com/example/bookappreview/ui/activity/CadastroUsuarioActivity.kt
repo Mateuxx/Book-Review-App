@@ -35,10 +35,10 @@ class CadastroUsuarioActivity : AppCompatActivity() {
     private suspend fun cadastra() {
         val btnCriarConta = binding.buttonCriarConta
         btnCriarConta.setOnClickListener {
-            val user  = criaUsuario()
+            val user = criaUsuario()
             Log.i("TAG", "cadastra: $user")
             lifecycleScope.launch {
-                if (viewModel.verificaCadastraUsuario(user)){
+                if (viewModel.verificaCadastraUsuario(user, this@CadastroUsuarioActivity)) {
                     vaiPara(TelaLoginActivity::class.java)
                 }
             }

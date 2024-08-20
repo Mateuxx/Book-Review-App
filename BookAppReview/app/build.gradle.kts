@@ -49,11 +49,15 @@ dependencies {
     implementation("androidx.room:room-runtime:2.6.1")
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.tools.core)
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 
-    // Dependências adicionais
+    implementation ("com.android.volley:volley:1.2.1")
+    implementation ("com.squareup.picasso:picasso:2.71828")
+
+    // Dependências adicionaiscom.squareup.picasso:picasso:2.71828
     implementation(libs.material)
     implementation(libs.androidx.activity)
     testImplementation(libs.junit)

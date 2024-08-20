@@ -2,6 +2,7 @@ package com.example.bookappreview.ui.activity
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
@@ -34,16 +35,6 @@ class TelaLoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-//        val userTest = Usuario(
-//            nome = "Gui",
-//            username = "gui123",
-//            email = "email",
-//            senha = "123",
-//        )
-//        lifecycleScope.launch {
-//            userDao.salvaUsuario(userTest)
-//        }
         login()
         cadastrar()
     }
@@ -66,6 +57,12 @@ class TelaLoginActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 if (viewModel.verificaLogin(usuarioLogin, senhaText)) {
                     vaiPara(HomeActivity::class.java)
+                } else {
+                    Toast.makeText(
+                        this@TelaLoginActivity,
+                        "Coloque um usuario válido",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
