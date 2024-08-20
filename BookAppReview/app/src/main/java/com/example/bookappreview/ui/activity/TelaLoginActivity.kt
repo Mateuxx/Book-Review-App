@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import com.example.bookappreview.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityTelaLoginActivityBinding
 import com.example.bookappreview.helpers.vaiPara
-import com.example.bookappreview.model.Usuario
-import com.example.bookappreview.repository.UsuarioRepository
+import com.example.bookappreview.repository.MainRepository
 import com.example.bookappreview.ui.viewModel.UsuarioViewModel
+import com.example.bookappreview.webclient.NetworkService
 import kotlinx.coroutines.launch
 
 class TelaLoginActivity : AppCompatActivity() {
@@ -23,7 +22,7 @@ class TelaLoginActivity : AppCompatActivity() {
     }
 
     private val viewModel by lazy {
-        val repository = UsuarioRepository(AppDatabase.instancia(this).userDao())
+        val repository = MainRepository(AppDatabase.instancia(this).userDao(), NetworkService())
         UsuarioViewModel(repository)
     }
 
