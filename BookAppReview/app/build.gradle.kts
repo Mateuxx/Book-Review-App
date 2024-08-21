@@ -57,6 +57,9 @@ dependencies {
     implementation ("com.android.volley:volley:1.2.1")
     implementation ("com.squareup.picasso:picasso:2.71828")
 
+    implementation( libs.material)
+
+
     // Dependências adicionaiscom.squareup.picasso:picasso:2.71828
     implementation(libs.material)
     implementation(libs.androidx.activity)
