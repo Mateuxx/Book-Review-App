@@ -42,7 +42,7 @@
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/autor_nome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/livro_nome" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/ano_pub"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -63,7 +63,7 @@
             android:fontFamily="sans-serif-medium"
             android:text="2023"
             app:layout_constraintStart_toEndOf="@+id/imageView"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/autor_nome" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

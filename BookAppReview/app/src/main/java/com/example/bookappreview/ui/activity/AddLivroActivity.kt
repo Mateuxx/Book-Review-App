@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import com.example.bookappreview.R
 import com.example.bookappreview.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityAddLivroBinding
 import com.example.bookappreview.model.Livro
 import com.example.bookappreview.repository.MainRepository
+import com.example.bookappreview.ui.recyclerview.adapter.ListaLivrosAdapter
 import com.example.bookappreview.ui.viewModel.AddLivroViewModel
 import com.example.bookappreview.webclient.NetworkService
 
@@ -23,9 +23,7 @@ class AddLivroActivity : AppCompatActivity() {
         ActivityAddLivroBinding.inflate(layoutInflater)
     }
 
-    private val bindingLivro by lazy {
-
-    }
+    private val adapter = ListaLivrosAdapter(context = this)
 
     private lateinit var searchView: SearchView
 
@@ -35,33 +33,45 @@ class AddLivroActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        configuraRecyclerView()
 
 
         searchView = binding.searchView
 
-
         // Configurar a SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                return false
+                query?.let { fetchBooks(it) }
+                return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                return false
+                newText?.let { fetchBooks(it) }
+                return true
             }
         })
 
 
+
         viewModel.livros.observe(this) { livros ->
             // Atualizar a UI com a lista de livros
+            adapter.updateLivros(livros)
             Log.i("TAG", "Livros recebidos: ${livros.size}")
             println("Todos os livros: $livros")
             armazenaLivros.addAll(livros)
         }
 
-        viewModel.fetchBooks("harrypotter", this)
+        viewModel.fetchBooks("python", this)
 
-        Log.i("TAG", "onCreate: Salvou os livros: $armazenaLivros")
+    }
+
+    private fun fetchBooks(query: String) {
+        viewModel.fetchBooks(query, this)
+    }
+
+    private fun configuraRecyclerView() {
+        val recyclerView = binding.activityListaProdutosRecyclerView
+        recyclerView.adapter = adapter
     }
 
 }
