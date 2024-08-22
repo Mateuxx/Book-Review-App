@@ -24,6 +24,7 @@ class AddLivroViewModel(
     fun fetchBooks(searchQuery: String, context: Context) {
         viewModelScope.launch {
             val books = repository.fetchBooks(searchQuery, context)
+
             _livros.postValue(books)
         }
     }

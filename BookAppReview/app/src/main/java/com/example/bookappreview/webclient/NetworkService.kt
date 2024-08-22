@@ -7,7 +7,6 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.bookappreview.model.Livro
 import kotlinx.coroutines.suspendCancellableCoroutine
-import org.json.JSONObject
 import kotlin.coroutines.resume
 
 class NetworkService {
@@ -19,6 +18,7 @@ class NetworkService {
             mRequestQueue.cache.clear()
 
             val url = "https://www.googleapis.com/books/v1/volumes?q=$searchQuery"
+
 
             val request = JsonObjectRequest(
                 Request.Method.GET,
@@ -38,16 +38,31 @@ class NetworkService {
                         val pageCount = volumeObj.optInt("pageCount")
                         val imageLinks = volumeObj.optJSONObject("imageLinks")
                         val thumbnail = imageLinks?.optString("thumbnail")
+                        val anoDeLancamento = volumeObj.optString("publishedDate")
+                        val authorsArrayList: ArrayList<String> = ArrayList()
+                        if (volumeObj.has("authors")) {
+                            val authorsArray = volumeObj.getJSONArray("authors")
+                            for (j in 0 until authorsArray.length()) {
+                                authorsArrayList.add(authorsArray.optString(j))
+                            }
+                        } else {
+                            authorsArrayList.add("Autor não encontrado.")
+                        }
 
+
+                        Log.i("TAG", "bookApi: $itemsObj")
                         Log.i("TAG", "bookApi: Livros: $title")
+
 
                         val livro = Livro(
                             title,
                             subtitle,
                             publisher,
-                            thumbnail?:"",
+                            thumbnail ?: "",
                             description,
                             pageCount,
+                            anoDeLancamento,
+                            authorsArrayList[0]
                         )
 
                         arrayOfBooks.add(livro)

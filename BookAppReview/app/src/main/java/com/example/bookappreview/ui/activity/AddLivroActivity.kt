@@ -41,7 +41,6 @@ class AddLivroActivity : AppCompatActivity() {
         // Configurar a SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { fetchBooks(it) }
                 return true
             }
 
@@ -51,8 +50,6 @@ class AddLivroActivity : AppCompatActivity() {
             }
         })
 
-
-
         viewModel.livros.observe(this) { livros ->
             // Atualizar a UI com a lista de livros
             adapter.updateLivros(livros)
@@ -60,8 +57,6 @@ class AddLivroActivity : AppCompatActivity() {
             println("Todos os livros: $livros")
             armazenaLivros.addAll(livros)
         }
-
-        viewModel.fetchBooks("python", this)
 
     }
 
