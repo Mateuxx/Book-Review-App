@@ -1,0 +1,48 @@
+{
+  "kind": "books#volume",
+  "id": "5y8FEQAAQBAJ",
+  "etag": "01IiCpWTPsI",
+  "selfLink": "https://www.googleapis.com/books/v1/volumes/5y8FEQAAQBAJ",
+  "volumeInfo": {
+    "title": "Kotlin in Action, Second Edition",
+    "authors": [
+      "Sebastian Aigner",
+      "Roman Elizarov",
+      "Svetlana Isakova",
+      "Dmitry Jemerov"
+    ],
+    "publisher": "Simon and Schuster",
+    "publishedDate": "2024-06-18",
+    "description": "Expert guidance and amazing examples from Kotlin core developers! It’s everything you need to get up and running fast. Kotlin in Action, Second Edition takes you from language basics to building production-quality applications that take advantage of Kotlin’s unique features. Discover how the language handles everything from statements and functions to classes and types, and the unique features that make Kotlin programming so seamless.\n\nIn Kotlin in Action, Second Edition you will learn:\n- Kotlin statements and functions, and classes and types\n- Functional programming on the JVM\n- The Kotlin standard library and out-of-the-box features\n- Writing clean and idiomatic code\n- Combining Kotlin and Java\n- Improve code reliability with null safety\n- Domain-specific languages\n- Kotlin coroutines and flows\n- Mastering the kotlinx.coroutines library\n\nKotlin in Action, Second Edition is a complete guide to the Kotlin language written especially for readers familiar with Java or another OO language. Its authors—all core Kotlin language developers and Kotlin team members—share their unique insights, along with practical techniques and hands-on examples. This new second edition is fully updated to include the latest innovations, and it adds new chapters dedicated to coroutines, flows, and concurrency.\n\nAbout the technology:\nKotlin is a low-hassle, high-productivity programming language flexible enough to handle any web, mobile, cloud, and enterprise application. Java developers will appreciate the simple syntax, intuitive type system, excellent tooling, and support for functional-style programming. Plus, since Kotlin runs on the JVM, it integrates seamlessly with existing Java code, libraries, and frameworks, including Spring and Android.\n\nAbout the book:\nKotlin in Action, Second Edition teaches you Kotlin techniques you can use for almost any type of application, from enterprise services to Android apps. The authors are all members of the Kotlin team, so you can trust that even the gnarly details are dead accurate. You’ll start with Kotlin fundamentals, learning how the language handles everything from statements and functions to classes and types, and about its unique features that make Kotlin programming so seamless. As you progress through this masterful book, you’ll get hands-on with the Kotlin standard library, functional programming in Kotlin, and advanced features such as generics and reflection. And this updated second edition now covers coroutines and structured concurrency to help you create efficient high-performance applications.\n\nWhat's inside:\n- Guidance from members of the Kotlin team\n- Domain-specific languages\n- Kotlin coroutines and flows",
+    "industryIdentifiers": [
+      {
+        "type": "ISBN_13",
+        "identifier": "9781638355298"
+      },
+      {
+        "type": "ISBN_10",
+        "identifier": "1638355290"
+      }
+    ],
+    "readingModes": {
+      "text": true,
+      "image": false
+    },
+    "pageCount": 558,
+    "printType": "BOOK",
+    "categories": [
+      "Computers"
+    ],
+    "maturityRating": "NOT_MATURE",
+    "allowAnonLogging": true,
+    "contentVersion": "1.4.2.0.preview.2",
+    "panelizationSummary": {
+      "containsEpubBubbles": false,
+      "containsImageBubbles": false
+    },
+    "imageLinks": {
+      "smallThumbnail": "http://books.google.com/books/content?id=5y8FEQAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api",
+      "thumbnail": "http://books.google.com/books/content?id=5y8FEQAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api"
+    }
+  }
+}

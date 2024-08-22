@@ -1,5 +1,6 @@
 package com.example.bookappreview.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -54,10 +55,11 @@ class AddLivroActivity : AppCompatActivity() {
             // Atualizar a UI com a lista de livros
             adapter.updateLivros(livros)
             Log.i("TAG", "Livros recebidos: ${livros.size}")
-            println("Todos os livros: $livros")
+            for (i in livros.indices) {
+                println(livros[i])
+            }
             armazenaLivros.addAll(livros)
         }
-
     }
 
     private fun fetchBooks(query: String) {
@@ -67,6 +69,22 @@ class AddLivroActivity : AppCompatActivity() {
     private fun configuraRecyclerView() {
         val recyclerView = binding.activityListaProdutosRecyclerView
         recyclerView.adapter = adapter
-    }
+        /**
+         * Define que ao clicar em um item do recycler ele ir para a pagina desse livro
+         * passando um chave pela intent para conseguirmos receber os dados desse livro nessa
+         * nova activity por meio de seu ID
+         */
+        adapter.quandoClicaNoItem = { livro ->
+            val intent = Intent(
+                this,
+                LivroDetalhesActivity::class.java
+            ).apply {
+                Log.i("TAG", "configuraRecyclerView: livro ID: ${livro}")
+                putExtra(CHAVE_LIVRO_OBj, livro)
+            }
+            startActivity(intent)//inicia a activty recebendo a intent no qual foi passada
 
+        }
+
+    }
 }

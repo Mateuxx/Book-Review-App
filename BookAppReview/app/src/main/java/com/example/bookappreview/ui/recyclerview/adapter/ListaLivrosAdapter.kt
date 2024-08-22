@@ -40,9 +40,9 @@ class ListaLivrosAdapter(
                 //ver se a url foi requisitada
             }
 
-            val visibilidade = if(livro.imagem != null) {
+            val visibilidade = if (livro.imagem != null) {
                 View.VISIBLE
-            }else {
+            } else {
                 View.GONE
             }
 

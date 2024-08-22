@@ -55,14 +55,14 @@ class NetworkService {
 
 
                         val livro = Livro(
-                            title,
-                            subtitle,
-                            publisher,
-                            thumbnail ?: "",
-                            description,
-                            pageCount,
-                            anoDeLancamento,
-                            authorsArrayList[0]
+                            title = title,
+                            subtitle = "",
+                            imagem = thumbnail?: "",
+                            publisher = "",
+                            pageCount = 0,
+                            description = "",
+                            year = anoDeLancamento,
+                            autor = authorsArrayList[0]
                         )
 
                         arrayOfBooks.add(livro)
