@@ -4,14 +4,8 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.bookappreview.R
-import com.example.bookappreview.database.AppDatabase
 import com.example.bookappreview.model.Livro
-import com.example.bookappreview.repository.MainRepository
-import com.example.bookappreview.ui.viewModel.AddLivroViewModel
-import com.example.bookappreview.webclient.NetworkService
 import java.util.UUID
 
 class LivroDetalhesActivity : AppCompatActivity() {
@@ -27,6 +21,7 @@ class LivroDetalhesActivity : AppCompatActivity() {
     }
 
     private fun carregaLivro() {
+        //Refatorar depois
         val livro = intent.getParcelableExtra<Livro>("LIVRO_OBJ")
         Log.i("TAG", "carregaLivro: $livro")
     }

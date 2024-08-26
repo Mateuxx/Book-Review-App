@@ -1,8 +1,9 @@
 package com.example.bookappreview.model
 
 import android.os.Parcel
-import java.util.UUID
 import android.os.Parcelable
+import java.util.UUID
+
 
 data class Livro(
     val id: String = UUID.randomUUID().toString(),

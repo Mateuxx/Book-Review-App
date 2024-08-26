@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.devtools.ksp")
+//    id("kotlin-parcelize")
 }
 
 android {
@@ -60,6 +61,7 @@ dependencies {
     implementation ("io.coil-kt:coil:1.4.0")
 
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+
 
 
     implementation( libs.material)
