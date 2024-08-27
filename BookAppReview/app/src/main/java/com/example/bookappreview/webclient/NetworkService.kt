@@ -34,6 +34,7 @@ class NetworkService {
                         val title = volumeObj.optString("title")
                         val subtitle = volumeObj.optString("subtitle")
                         val publisher = volumeObj.optString("publisher")
+                        val categories = volumeObj.optString("categories")
                         val description = volumeObj.optString("description")
                         val pageCount = volumeObj.optInt("pageCount")
                         val imageLinks = volumeObj.optJSONObject("imageLinks")
@@ -56,13 +57,15 @@ class NetworkService {
 
                         val livro = Livro(
                             title = title,
-                            subtitle = "",
-                            imagem = thumbnail?: "",
-                            publisher = "",
-                            pageCount = 0,
-                            description = "",
+                            subtitle = subtitle,
+                            publisher = publisher,
+                            imagem = thumbnail ?: "",
+                            description = description,
+                            pageCount = pageCount,
                             year = anoDeLancamento,
-                            autor = authorsArrayList[0]
+                            autor = authorsArrayList[0],
+                            genero = categories
+
                         )
 
                         arrayOfBooks.add(livro)

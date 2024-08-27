@@ -1,28 +1,62 @@
 package com.example.bookappreview.ui.activity
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.example.bookappreview.R
+import com.example.bookappreview.databinding.ActivityLivroDetalhesBinding
+import com.example.bookappreview.helpers.tentaCarregarImagem
 import com.example.bookappreview.model.Livro
-import java.util.UUID
 
 class LivroDetalhesActivity : AppCompatActivity() {
 
 
-    var livroID: UUID = UUID(0, 0)
+    private val binding by lazy {
+        ActivityLivroDetalhesBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_livro_detalhes)
-        carregaLivro()
+        setContentView(binding.root)
+        val livroCarregado = carregaLivro()
+        Log.i("TAG", "onCreate: livro carregador: $livroCarregado")
+        preencherInfos(livroCarregado)
     }
 
-    private fun carregaLivro() {
+
+    private fun carregaLivro(): Livro {
         //Refatorar depois
         val livro = intent.getParcelableExtra<Livro>("LIVRO_OBJ")
+        Log.i("TAG", "carregaLivro: ${livro?.description}")
         Log.i("TAG", "carregaLivro: $livro")
+        Log.i("TAG", "carregaLivro: $livro")
+        return livro!!
+    }
+
+    private fun preencherInfos(livro: Livro) {
+
+        var isExpanded = false
+
+        binding.apply {
+            titulo.text = livro.title.toString()
+            autor.text = livro.autor.toString()
+            genero.text = livro.genero
+            Log.i("TAG", "preencherInfos: Genero: ${livro.genero}")
+            pages.text = livro.pageCount.toString()
+            descricaoTexto.text = livro.description.toString()
+            descricaoTexto.setOnClickListener {
+                if (isExpanded) {
+                    descricaoTexto.maxLines = 5
+                    descricaoTexto.ellipsize = TextUtils.TruncateAt.END
+                    isExpanded = false
+                } else {
+                    descricaoTexto.maxLines = Int.MAX_VALUE
+                    descricaoTexto.ellipsize = null
+                    isExpanded = true
+                }
+
+            }
+            imagemLivro.tentaCarregarImagem(livro.imagem)
+        }
     }
 }
