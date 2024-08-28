@@ -1,5 +1,6 @@
 package com.example.bookappreview.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
@@ -15,12 +16,29 @@ class LivroDetalhesActivity : AppCompatActivity() {
         ActivityLivroDetalhesBinding.inflate(layoutInflater)
     }
 
+    private var livroCarregado: Livro? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        val livroCarregado = carregaLivro()
+        livroCarregado = carregaLivro()
         Log.i("TAG", "onCreate: livro carregador: $livroCarregado")
-        preencherInfos(livroCarregado)
+        preencherInfos(livroCarregado!!)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.threeDots.setOnClickListener {
+            val intent = Intent(
+                this,
+                ReviewLivroActivity::class.java
+            ).apply {
+                Log.i("TAG", "LivroDetalhesactivity: livro ID: $livroCarregado")
+                putExtra(CHAVE_LIVRO_OBj, livroCarregado)
+            }
+            startActivity(intent)//inicia a activty recebendo a intent no qual foi passada
+        }
+
     }
 
 
@@ -28,8 +46,6 @@ class LivroDetalhesActivity : AppCompatActivity() {
         //Refatorar depois
         val livro = intent.getParcelableExtra<Livro>("LIVRO_OBJ")
         Log.i("TAG", "carregaLivro: ${livro?.description}")
-        Log.i("TAG", "carregaLivro: $livro")
-        Log.i("TAG", "carregaLivro: $livro")
         return livro!!
     }
 

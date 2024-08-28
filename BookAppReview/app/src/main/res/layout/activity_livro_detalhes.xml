@@ -13,8 +13,8 @@
 
         <ImageView
             android:id="@+id/imagemLivro"
-            android:layout_width="169dp"
-            android:layout_height="223dp"
+            android:layout_width="192dp"
+            android:layout_height="273dp"
             android:layout_marginTop="52dp"
             android:scaleType="centerCrop"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,13 +28,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/alata"
+            android:gravity="center"
             android:text="Book Details"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/imagemLivro"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:gravity="center"/>
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/titulo"
@@ -156,7 +158,7 @@
             android:id="@+id/descricaoTexto"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLines="8"
+            android:maxLines="6"
             android:ellipsize="end"
             android:textSize="16sp"
             android:clickable="true"
@@ -167,11 +169,12 @@
             tools:text="@tools:sample/lorem/random" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/threeDots"
             android:layout_width="26dp"
             android:layout_height="33dp"
             android:layout_marginTop="12dp"
             android:text="..."
+
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
