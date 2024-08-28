@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("com.google.devtools.ksp")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -47,11 +48,26 @@ android {
 dependencies {
 
     implementation("androidx.room:room-runtime:2.6.1")
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.tools.core)
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 
-    // Dependências adicionais
+    implementation ("com.android.volley:volley:1.2.1")
+    implementation ("com.squareup.picasso:picasso:2.71828")
+
+    implementation ("io.coil-kt:coil:1.4.0")
+
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+
+    implementation ("com.google.code.gson:gson:2.11.0")
+
+    implementation( libs.material)
+
+
+    // Dependências adicionaiscom.squareup.picasso:picasso:2.71828
     implementation(libs.material)
     implementation(libs.androidx.activity)
     testImplementation(libs.junit)
