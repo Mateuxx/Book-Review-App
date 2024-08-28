@@ -62,7 +62,7 @@ class LivroDetalhesActivity : AppCompatActivity() {
             descricaoTexto.text = livro.description.toString()
             descricaoTexto.setOnClickListener {
                 if (isExpanded) {
-                    descricaoTexto.maxLines = 5
+                    descricaoTexto.maxLines = 8
                     descricaoTexto.ellipsize = TextUtils.TruncateAt.END
                     isExpanded = false
                 } else {

@@ -27,7 +27,6 @@
         <activity
             android:name=".ui.activity.AddLivroActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

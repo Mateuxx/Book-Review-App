@@ -62,7 +62,7 @@ dependencies {
 
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
-
+    implementation ("com.google.code.gson:gson:2.11.0")
 
     implementation( libs.material)
 

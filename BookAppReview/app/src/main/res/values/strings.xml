@@ -10,4 +10,5 @@
     <string name="input_nome_usuario">Insira seu nome de usuário\n</string>
     <string name="input_email">Insira seu email\n</string>
     <string name="btn_criarConta">Criar Conta</string>
+    <string name="salvar">Salvar</string>
 </resources>
