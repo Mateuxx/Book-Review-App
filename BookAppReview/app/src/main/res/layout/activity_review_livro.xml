@@ -216,7 +216,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <RatingBar
-                android:id="@+id/textView17"
+                android:id="@+id/ratingBar"
                 android:layout_width="241dp"
                 android:layout_height="48dp"
                 android:layout_marginStart="16dp"

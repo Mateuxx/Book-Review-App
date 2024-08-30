@@ -35,6 +35,13 @@ class ReviewLivroActivity : AppCompatActivity() {
         Log.i("TAG", "onCreate: Livro Carregado: $livro")
         preencherCampos(livro!!)
         saveBook(livro)
+
+        binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
+            Log.i("TAG", "onCreate: Rating bar: $ratingBar")
+            Log.i("TAG", "onCreate: Rating : $rating")
+            Log.i("TAG", "onCreate: from user: $fromUser")
+
+        }
     }
 
     private fun saveBook(book: Livro) {
