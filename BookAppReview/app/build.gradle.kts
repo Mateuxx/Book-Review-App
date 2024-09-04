@@ -55,6 +55,8 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
 
+
+
     implementation ("com.android.volley:volley:1.2.1")
     implementation ("com.squareup.picasso:picasso:2.71828")
 
@@ -67,10 +69,22 @@ dependencies {
     implementation( libs.material)
 
 
+    implementation ("com.google.android.material:material:1.9.0")
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+
+
+
+
     // Dependências adicionaiscom.squareup.picasso:picasso:2.71828
     implementation(libs.material)
     implementation(libs.androidx.activity)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+
+    implementation("androidx.appcompat:appcompat:1.6.1") // Atualize para a versão mais recente
+    implementation("com.google.android.material:material:1.10.0") // Atualize para a versão mais recente
+    implementation("androidx.recyclerview:recyclerview:1.3.1") // Para RecyclerView
 }
