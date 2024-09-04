@@ -11,4 +11,10 @@
     <string name="input_email">Insira seu email\n</string>
     <string name="btn_criarConta">Criar Conta</string>
     <string name="salvar">Salvar</string>
+    <string name="Titulo">Salve alguma coisa pra gente ver</string>
+    <string name="autorlista">Autor</string>
+    <string name="ano_lista_carrousel">2023</string>
+    <string name="livros_lidos_home_activity">Livros Lidos</string>
+    <string name="watchread_home_activity">Watchread</string>
+    <string name="want_to_read">Want to Read</string>
 </resources>
