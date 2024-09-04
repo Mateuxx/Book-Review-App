@@ -16,30 +16,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BookAppReview"
         tools:targetApi="31">
+
         <activity
             android:name=".ui.activity.ReviewLivroActivity"
             android:exported="false">
-
         </activity>
+
         <activity
             android:name=".ui.activity.LivroDetalhesActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.activity.AddLivroActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
         </activity>
+
         <activity
             android:name=".ui.activity.HomeActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:name=".ui.activity.CadastroUsuarioActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.activity.TelaLoginActivity"
             android:exported="false" />
@@ -47,6 +51,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
     </application>
 
 </manifest>
