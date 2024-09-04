@@ -183,8 +183,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ratingLikedLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="382dp"
+            android:layout_height="82dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -207,10 +207,11 @@
                 android:id="@+id/likedTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
                 android:fontFamily="@font/alata"
-                android:text="Liked"
+                android:text="Like"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -223,7 +224,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="12dp"
                 android:progressTint="@color/orange"
-                android:rating="3"
+                android:rating="0"
                 android:scaleX="0.8"
                 android:scaleY="0.8"
                 android:stepSize="1"
@@ -231,16 +232,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ratedTextView" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="39dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginRight="12dp"
+            <ImageButton
+                android:id="@+id/favoriteButton"
+                android:layout_width="47dp"
+                android:layout_height="50dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/transparent"
+                android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/likedTextView"
+                app:layout_constraintTop_toBottomOf="@+id/likedTextView"
                 app:srcCompat="@drawable/heart_selector" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View

@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.bookappreview.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityHomeBinding
 import com.example.bookappreview.model.Livro
-import com.example.bookappreview.repository.MainRepository
+import com.example.bookappreview.repository.UsuarioRepository
 import com.example.bookappreview.ui.recyclerview.adapter.ListaLivrosHomeAdapter
 import com.example.bookappreview.ui.viewModel.HomeViewModel
 import com.example.bookappreview.webclient.NetworkService
@@ -16,7 +16,7 @@ class HomeActivity : AppCompatActivity() {
 
     // Inicializa o ViewModel com o repositório
     private val viewModel by lazy {
-        val repository = MainRepository(AppDatabase.instancia(this).userDao(), NetworkService())
+        val repository = UsuarioRepository(AppDatabase.instancia(this).userDao(), NetworkService())
         HomeViewModel(repository)
     }
 

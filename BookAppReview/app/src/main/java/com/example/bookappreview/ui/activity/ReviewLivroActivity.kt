@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.bookappreview.R
 import com.example.bookappreview.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityReviewLivroBinding
 import com.example.bookappreview.helpers.tentaCarregarImagem
@@ -12,6 +13,11 @@ import com.example.bookappreview.helpers.toast
 import com.example.bookappreview.helpers.vaiPara
 import com.example.bookappreview.model.Livro
 import com.example.bookappreview.model.LivroSalvo
+import com.example.bookappreview.repository.LivroRepository
+import com.example.bookappreview.repository.UsuarioRepository
+import com.example.bookappreview.ui.viewModel.AddLivroViewModel
+import com.example.bookappreview.ui.viewModel.ReviewLivroViewModel
+import com.example.bookappreview.webclient.NetworkService
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -23,10 +29,12 @@ class ReviewLivroActivity : AppCompatActivity() {
         ActivityReviewLivroBinding.inflate(layoutInflater)
     }
 
-    private val livroDao by lazy {
-        val db = AppDatabase.instancia(this)
-        db.livroSalvodao()
+    private val viewModel by lazy {
+        val repository = LivroRepository(AppDatabase.instancia(this).livroSalvodao())
+        ReviewLivroViewModel(repository)
     }
+
+    private var isFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +42,32 @@ class ReviewLivroActivity : AppCompatActivity() {
         val livro = intent.getParcelableExtra<Livro>("LIVRO_OBJ")
         Log.i("TAG", "onCreate: Livro Carregado: $livro")
         preencherCampos(livro!!)
-        saveBook(livro)
 
-        binding.ratingBar.setOnRatingBarChangeListener { ratingBar, rating, fromUser ->
-            Log.i("TAG", "onCreate: Rating bar: $ratingBar")
-            Log.i("TAG", "onCreate: Rating : $rating")
-            Log.i("TAG", "onCreate: from user: $fromUser")
+        binding.favoriteButton.setOnClickListener {
+            favoriteBook()
+        }
+        binding.textViewSave.setOnClickListener {
+            saveBook(livro)
+        }
+    }
 
+    private fun favoriteBook() {
+        if (!binding.favoriteButton.isActivated) {
+            binding.favoriteButton.apply {
+                Log.i("TAG", "favoriteBook: isActive ao clicar: $isActivated")
+                isActivated = true
+                setImageResource(R.drawable.ic_heart_red)
+            }
+            isFavorite = true
+            binding.likedTextView.text = "Liked"
+        } else {
+            binding.favoriteButton.apply {
+                Log.i("TAG", "favoriteBook: isActive ao clicar: $isActivated")
+                isActivated = false
+                setImageResource(R.drawable.heart_selector)
+            }
+            binding.likedTextView.text = "Like"
+            isFavorite = false
         }
     }
 
@@ -48,19 +75,17 @@ class ReviewLivroActivity : AppCompatActivity() {
         val savingBook = LivroSalvo(
             id = book.id,
             livro = book,
-            like = true,
-            rated = 5,
-            review = "Curti mano",
-            dateReview = "hojee"
+            like = isFavorite,
+            rated = binding.ratingBar.rating.toInt(),
+            review = binding.editTextTextMultiLine2.text.toString(),
+            dateReview = currentDate()
         )
         Log.i("TAG", "onCreate: Vendo dados: ${savingBook.livro.id}")
-        binding.textViewSave.setOnClickListener {
-            lifecycleScope.launch {
-                livroDao.salva(savingBook)
-                toast("Livro Salvo Com sucesso")
-            }
-            vaiPara(HomeActivity::class.java)
+        lifecycleScope.launch {
+            viewModel.saveBook(savingBook)
+            toast("Livro Salvo Com sucesso")
         }
+        vaiPara(HomeActivity::class.java)
     }
 
 
@@ -75,6 +100,9 @@ class ReviewLivroActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Get the current phones current date
+     */
     @SuppressLint("NewApi")
     private fun currentDate(): String {
         val monthNames = mapOf(

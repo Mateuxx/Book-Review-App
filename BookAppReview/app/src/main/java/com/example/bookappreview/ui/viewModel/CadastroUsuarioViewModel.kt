@@ -5,10 +5,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import com.example.bookappreview.model.Usuario
-import com.example.bookappreview.repository.MainRepository
+import com.example.bookappreview.repository.UsuarioRepository
 
 class CadastroUsuarioViewModel(
-    private val repository: MainRepository
+    private val repository: UsuarioRepository
 ) : ViewModel() {
 
     /**

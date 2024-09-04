@@ -8,7 +8,7 @@ import com.example.bookappreview.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityCadastroUsuarioBinding
 import com.example.bookappreview.helpers.vaiPara
 import com.example.bookappreview.model.Usuario
-import com.example.bookappreview.repository.MainRepository
+import com.example.bookappreview.repository.UsuarioRepository
 import com.example.bookappreview.ui.viewModel.CadastroUsuarioViewModel
 import com.example.bookappreview.webclient.NetworkService
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class CadastroUsuarioActivity : AppCompatActivity() {
 
     private val viewModel by lazy {
-        val repository = MainRepository(AppDatabase.instancia(this).userDao(), NetworkService())
+        val repository = UsuarioRepository(AppDatabase.instancia(this).userDao(), NetworkService())
         CadastroUsuarioViewModel(repository)
     }
 

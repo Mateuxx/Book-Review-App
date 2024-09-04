@@ -2,11 +2,11 @@ package com.example.bookappreview.ui.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.bookappreview.repository.MainRepository
+import com.example.bookappreview.repository.UsuarioRepository
 
 
 class UsuarioViewModel(
-    private val repository: MainRepository
+    private val repository: UsuarioRepository
 ) :
     ViewModel() {
     private val TAG = "LogsViewModel"

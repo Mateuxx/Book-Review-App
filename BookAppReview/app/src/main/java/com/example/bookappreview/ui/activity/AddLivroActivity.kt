@@ -8,7 +8,7 @@ import androidx.appcompat.widget.SearchView
 import com.example.bookappreview.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityAddLivroBinding
 import com.example.bookappreview.model.Livro
-import com.example.bookappreview.repository.MainRepository
+import com.example.bookappreview.repository.UsuarioRepository
 import com.example.bookappreview.ui.recyclerview.adapter.ListaLivrosAdapter
 import com.example.bookappreview.ui.viewModel.AddLivroViewModel
 import com.example.bookappreview.webclient.NetworkService
@@ -16,7 +16,7 @@ import com.example.bookappreview.webclient.NetworkService
 class AddLivroActivity : AppCompatActivity() {
 
     private val viewModel by lazy {
-        val repository = MainRepository(AppDatabase.instancia(this).userDao(), NetworkService())
+        val repository = UsuarioRepository(AppDatabase.instancia(this).userDao(), NetworkService())
         AddLivroViewModel(repository)
     }
 
