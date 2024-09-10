@@ -54,15 +54,15 @@ class TelaLoginActivity : AppCompatActivity() {
             Log.i(TAG, "login: Usuario: $usuarioLogin - Senha: $senhaText")
 
             lifecycleScope.launch {
-                if (viewModel.verificaLogin(usuarioLogin, senhaText)) {
-                    vaiPara(HomeActivity::class.java)
-                } else {
-                    Toast.makeText(
-                        this@TelaLoginActivity,
-                        "Coloque um usuario válido",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+//                if (viewModel.verificaLogin(usuarioLogin, senhaText)) {
+//                    vaiPara(HomeActivity::class.java)
+//                } else {
+//                    Toast.makeText(
+//                        this@TelaLoginActivity,
+//                        "Coloque um usuario válido",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                }
             }
 
         }

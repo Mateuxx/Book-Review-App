@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/addLivroFragment"
+        android:name="com.example.bookappreview.ui.activity.fragment.AddLivroFragment"
+        tools:layout="@layout/fragment_add_livro" >
+        <action
+            android:id="@+id/action_addLivroFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/addLivroFragment" />
+        <action
+            android:id="@+id/action_addLivroFragment_to_livroDetalhesFragment"
+            app:destination="@id/livroDetalhesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewFragment"
+        android:name="com.example.bookappreview.ui.activity.fragment.ReviewFragment"
+        tools:layout="@layout/fragment_review" >
+        <argument
+            android:name="livro"
+            app:argType="com.example.bookappreview.model.Livro" />
+        <action
+            android:id="@+id/action_reviewFragment_to_livroDetalhesFragment"
+            app:destination="@id/livroDetalhesFragment" />
+        <action
+            android:id="@+id/action_reviewFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/homeFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.bookappreview.ui.activity.fragment.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_addLivroFragment"
+            app:destination="@id/addLivroFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_livroDetalhesFragment2"
+            app:destination="@id/livroDetalhesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/livroDetalhesFragment"
+        android:name="com.example.bookappreview.ui.activity.fragment.LivroDetalhesFragment"
+        android:label="fragment_livro_detalhes"
+        tools:layout="@layout/fragment_livro_detalhes" >
+        <action
+            android:id="@+id/action_livroDetalhesFragment_to_reviewFragment"
+            app:destination="@id/reviewFragment" />
+        <argument
+            android:name="livro"
+            app:argType="com.example.bookappreview.model.Livro" />
+    </fragment>
+</navigation>

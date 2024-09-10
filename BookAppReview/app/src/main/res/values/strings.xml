@@ -17,4 +17,6 @@
     <string name="livros_lidos_home_activity">Livros Lidos</string>
     <string name="watchread_home_activity">Watchread</string>
     <string name="want_to_read">Want to Read</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
