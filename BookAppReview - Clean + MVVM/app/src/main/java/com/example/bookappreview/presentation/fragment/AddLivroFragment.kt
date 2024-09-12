@@ -22,8 +22,7 @@ class AddLivroFragment : Fragment() {
 
     private val viewModel by lazy {
         val repository = UsuarioRepository(
-            AppDatabase.instancia(requireContext()).userDao(),
-            NetworkService()
+            AppDatabase.instancia(requireContext()).userDao()
         )
         val factory = AddLivroViewModelFactory(repository)
         ViewModelProvider(this, factory)[AddLivroViewModel::class.java]

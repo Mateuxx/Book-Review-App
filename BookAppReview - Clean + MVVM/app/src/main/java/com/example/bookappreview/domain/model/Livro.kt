@@ -3,12 +3,11 @@ package com.example.bookappreview.domain.model
 import java.util.UUID
 
 
-/**w
+/**
  *  A classe mais pura do objeto, não depende de nenhuma lib (android ou externa)
  *  ou de qualquer framework
  */
 data class Livro(
-    val id: String = UUID.randomUUID().toString(),
     var title: String?,
     val subtitle: String?,
     val publisher: String?,

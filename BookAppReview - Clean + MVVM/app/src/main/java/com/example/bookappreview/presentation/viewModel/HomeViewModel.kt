@@ -7,10 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bookappreview.presentation.model.LivroParcelable
 import com.example.bookappreview.data.repository.UsuarioRepository
+import com.example.bookappreview.domain.usecase.livro.BuscarLivrosUseCase
+import com.example.bookappreview.presentation.model.mapper.toParcelableList
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val repository: UsuarioRepository
+    private val buscaLivros: BuscarLivrosUseCase
 ) : ViewModel(){
 
     private val _livros = MutableLiveData<List<LivroParcelable>>()
@@ -18,8 +20,8 @@ class HomeViewModel(
 
     fun fetchBooks(searchQuery : String, context: Context) {
         viewModelScope.launch {
-            val books = repository.fetchBooks(searchQuery,context)
-            _livros.postValue(books)
+            val books = buscaLivros(searchQuery,context)
+            _livros.postValue(books.toParcelableList())
         }
     }
 }

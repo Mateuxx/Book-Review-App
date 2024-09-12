@@ -22,7 +22,6 @@ class HomeFragment : Fragment() {
     private val viewModel by lazy {
         val repository = UsuarioRepository(
             AppDatabase.instancia(requireContext()).userDao(),
-            NetworkService()
         )
         val factory = HomeViewModelFactory(repository)
         ViewModelProvider(this, factory)[HomeViewModel::class.java]

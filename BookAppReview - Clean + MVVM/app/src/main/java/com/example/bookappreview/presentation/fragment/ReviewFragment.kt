@@ -102,7 +102,6 @@ class ReviewFragment : Fragment() {
 
     private fun saveBook(book: LivroParcelable) {
         val savingBook = Livro(
-            id =  book.id,
             title = book.title,
             subtitle = book.subtitle,
             publisher = book.publisher,

@@ -5,13 +5,14 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.bookappreview.domain.model.Livro
 import com.example.bookappreview.presentation.model.LivroParcelable
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 class NetworkService {
 
-    suspend fun bookApi(searchQuery: String, context: Context): List<LivroParcelable> {
+    suspend fun bookApi(searchQuery: String, context: Context): List<Livro> {
         //faz com que seja chamado por uma courotine e cancela o mesmo
         return suspendCancellableCoroutine { continuation ->
             val mRequestQueue = Volley.newRequestQueue(context)
@@ -25,7 +26,7 @@ class NetworkService {
                 url,
                 null,
                 { response ->
-                    val arrayOfBooks = mutableListOf<LivroParcelable>()
+                    val arrayOfBooks = mutableListOf<Livro>()
                     val itemsArray = response.getJSONArray("items")
 
                     for (i in 0 until itemsArray.length()) {
@@ -55,7 +56,7 @@ class NetworkService {
                         Log.i("TAG", "bookApi: Livros: $title")
 
 
-                        val livroParcelable = LivroParcelable(
+                        val livro = Livro(
                             title = title,
                             subtitle = subtitle,
                             publisher = publisher,
@@ -64,11 +65,15 @@ class NetworkService {
                             pageCount = pageCount,
                             year = anoDeLancamento,
                             autor = authorsArrayList[0],
-                            genero = categories
+                            genero = categories,
+                            rated = 0,
+                            like = false,
+                            review = "",
+                            dateReview = ""
 
                         )
 
-                        arrayOfBooks.add(livroParcelable)
+                        arrayOfBooks.add(livro)
                     }
 
                     continuation.resume(arrayOfBooks) // retorna o valor da chamada
