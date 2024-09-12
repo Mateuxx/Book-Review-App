@@ -11,7 +11,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.activity.CadastroUsuarioActivity">
+        tools:context=".presentation.activity.CadastroUsuarioActivity">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout_nomeCadastro"

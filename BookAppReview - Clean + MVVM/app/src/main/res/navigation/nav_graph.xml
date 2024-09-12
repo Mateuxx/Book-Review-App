@@ -6,7 +6,7 @@
     app:startDestination="@id/homeFragment">
     <fragment
         android:id="@+id/addLivroFragment"
-        android:name="com.example.bookappreview.ui.activity.fragment.AddLivroFragment"
+        android:name="com.example.bookappreview.presentation.fragment.AddLivroFragment"
         tools:layout="@layout/fragment_add_livro" >
         <action
             android:id="@+id/action_addLivroFragment_to_homeFragment"
@@ -18,11 +18,11 @@
     </fragment>
     <fragment
         android:id="@+id/reviewFragment"
-        android:name="com.example.bookappreview.ui.activity.fragment.ReviewFragment"
+        android:name="com.example.bookappreview.presentation.fragment.ReviewFragment"
         tools:layout="@layout/fragment_review" >
         <argument
             android:name="livro"
-            app:argType="com.example.bookappreview.model.Livro" />
+            app:argType="com.example.bookappreview.presentation.model.LivroParcelable" />
         <action
             android:id="@+id/action_reviewFragment_to_livroDetalhesFragment"
             app:destination="@id/livroDetalhesFragment" />
@@ -34,7 +34,7 @@
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.bookappreview.ui.activity.fragment.HomeFragment"
+        android:name="com.example.bookappreview.presentation.fragment.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_addLivroFragment"
@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/livroDetalhesFragment"
-        android:name="com.example.bookappreview.ui.activity.fragment.LivroDetalhesFragment"
+        android:name="com.example.bookappreview.presentation.fragment.LivroDetalhesFragment"
         android:label="fragment_livro_detalhes"
         tools:layout="@layout/fragment_livro_detalhes" >
         <action
@@ -53,6 +53,6 @@
             app:destination="@id/reviewFragment" />
         <argument
             android:name="livro"
-            app:argType="com.example.bookappreview.model.Livro" />
+            app:argType="com.example.bookappreview.presentation.model.LivroParcelable" />
     </fragment>
 </navigation>

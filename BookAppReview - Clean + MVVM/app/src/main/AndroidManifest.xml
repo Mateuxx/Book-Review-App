@@ -17,7 +17,7 @@
         android:theme="@style/Theme.BookAppReview"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name=".presentation.activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,23 +26,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.ReviewLivroActivity"
+            android:name=".presentation.activity.ReviewLivroActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.LivroDetalhesActivity"
+            android:name=".presentation.activity.LivroDetalhesActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.AddLivroActivity"
+            android:name=".presentation.activity.AddLivroActivity"
             android:exported="false">
         </activity>
         <activity
-            android:name=".ui.activity.HomeActivity"
+            android:name=".presentation.activity.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.CadastroUsuarioActivity"
+            android:name=".presentation.activity.CadastroUsuarioActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.TelaLoginActivity"
+            android:name=".presentation.activity.TelaLoginActivity"
             android:exported="false" />
 
         <meta-data

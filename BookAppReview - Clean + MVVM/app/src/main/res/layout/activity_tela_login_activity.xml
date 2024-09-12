@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".ui.activity.TelaLoginActivity">
+        tools:context=".presentation.activity.TelaLoginActivity">
 
         <ImageView
             android:id="@+id/imageView6"
