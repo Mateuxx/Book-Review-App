@@ -15,10 +15,10 @@ import androidx.navigation.fragment.navArgs
 import com.example.bookappreview.R
 import com.example.bookappreview.databinding.FragmentReviewBinding
 import com.example.bookappreview.di.Injection
+import com.example.bookappreview.domain.model.Livro
 import com.example.bookappreview.helpers.tentaCarregarImagem
 import com.example.bookappreview.helpers.toast
 import com.example.bookappreview.presentation.model.LivroParcelable
-import com.example.bookappreview.presentation.model.mapper.toDomain
 import com.example.bookappreview.presentation.viewModel.ReviewLivroViewModel
 import com.example.bookappreview.presentation.viewModel.factory.ReviewLivroViewModelFactory
 import kotlinx.coroutines.launch
@@ -101,13 +101,28 @@ class ReviewFragment : Fragment() {
     }
 
     private fun saveBook(book: LivroParcelable) {
-        val savingBook = book.toDomain()
+        val savingBook = Livro(
+            id =  book.id,
+            title = book.title,
+            subtitle = book.subtitle,
+            publisher = book.publisher,
+            imagem = book.imagem,
+            description = book.description,
+            pageCount = book.pageCount,
+            year = book.year,
+            autor = book.autor,
+            genero = book.genero,
+            rated = binding.ratingBar.rating.toInt(),
+            review = binding.editTextTextMultiLine2.text.toString(),
+            dateReview = currentDate(),
+            like = isFavorite
+        )
         Log.i("TAG", "onViewCreated: Vendo dados: $savingBook")
         lifecycleScope.launch {
             viewModel.saveBook(savingBook)
             requireContext().toast("Livro Salvo Com sucesso")
         }
-        Toast.makeText(requireContext(), "salvo com sucesso", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "salcvo ", Toast.LENGTH_SHORT).show()
         findNavController().navigate(R.id.action_reviewFragment_to_homeFragment)
     }
 
