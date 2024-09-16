@@ -1,13 +1,9 @@
 package com.example.bookappreview.data.repository
 
-import android.content.Context
 import com.example.bookappreview.data.database.dao.UserDao
 import com.example.bookappreview.data.model.Usuario
-import com.example.bookappreview.data.webclient.NetworkService
-import com.example.bookappreview.domain.model.Livro
-import com.example.bookappreview.presentation.model.LivroParcelable
 
-class UsuarioRepository(
+class UsuarioRepositoryImpl(
     private val usuarioDao: UserDao,
 ) {
     /**

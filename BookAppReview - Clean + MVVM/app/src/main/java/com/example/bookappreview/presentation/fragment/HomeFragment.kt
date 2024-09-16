@@ -12,15 +12,14 @@ import com.example.bookappreview.R
 import com.example.bookappreview.data.database.AppDatabase
 import com.example.bookappreview.databinding.FragmentHomeBinding
 import com.example.bookappreview.presentation.model.LivroParcelable
-import com.example.bookappreview.data.repository.UsuarioRepository
+import com.example.bookappreview.data.repository.UsuarioRepositoryImpl
 import com.example.bookappreview.presentation.recyclerview.adapter.ListaLivrosHomeAdapter
 import com.example.bookappreview.presentation.viewModel.HomeViewModel
-import com.example.bookappreview.data.webclient.NetworkService
 
 class HomeFragment : Fragment() {
 
     private val viewModel by lazy {
-        val repository = UsuarioRepository(
+        val repository = UsuarioRepositoryImpl(
             AppDatabase.instancia(requireContext()).userDao(),
         )
         val factory = HomeViewModelFactory(repository)

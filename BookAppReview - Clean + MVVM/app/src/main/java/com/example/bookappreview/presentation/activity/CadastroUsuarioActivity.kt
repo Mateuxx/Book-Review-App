@@ -3,21 +3,30 @@ package com.example.bookappreview.presentation.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.bookappreview.data.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityCadastroUsuarioBinding
 import com.example.bookappreview.helpers.vaiPara
 import com.example.bookappreview.data.model.Usuario
-import com.example.bookappreview.data.repository.UsuarioRepository
+import com.example.bookappreview.data.repository.UsuarioRepositoryImpl
+import com.example.bookappreview.di.Injection
+import com.example.bookappreview.presentation.viewModel.AddLivroViewModel
 import com.example.bookappreview.presentation.viewModel.CadastroUsuarioViewModel
-import com.example.bookappreview.data.webclient.NetworkService
+import com.example.bookappreview.presentation.viewModel.ReviewLivroViewModel
+import com.example.bookappreview.presentation.viewModel.factory.AddLivroViewModelFactory
+import com.example.bookappreview.presentation.viewModel.factory.CadastroUsuarioViewModelFactory
+import com.example.bookappreview.presentation.viewModel.factory.ReviewLivroViewModelFactory
 import kotlinx.coroutines.launch
 
 class CadastroUsuarioActivity : AppCompatActivity() {
 
-    private val viewModel by lazy {
-        val repository = UsuarioRepository(AppDatabase.instancia(this).userDao(), NetworkService())
-        CadastroUsuarioViewModel(repository)
+    private val viewModel: CadastroUsuarioViewModel by lazy {
+        val cadastrLivroUseCase =
+            Injection.provideVerificaCadastroUseCase(this)
+        val factory = CadastroUsuarioViewModelFactory(cadastrLivroUseCase)
+        ViewModelProvider(this, factory)[CadastroUsuarioViewModel::class.java]
     }
 
     private val binding by lazy {

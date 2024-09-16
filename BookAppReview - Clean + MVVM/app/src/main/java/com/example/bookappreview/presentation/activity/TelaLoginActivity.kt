@@ -3,13 +3,18 @@ package com.example.bookappreview.presentation.activity
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.bookappreview.data.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityTelaLoginActivityBinding
 import com.example.bookappreview.helpers.vaiPara
-import com.example.bookappreview.data.repository.UsuarioRepository
+import com.example.bookappreview.data.repository.UsuarioRepositoryImpl
 import com.example.bookappreview.presentation.viewModel.UsuarioViewModel
 import com.example.bookappreview.data.webclient.NetworkService
+import com.example.bookappreview.di.Injection
+import com.example.bookappreview.presentation.viewModel.CadastroUsuarioViewModel
+import com.example.bookappreview.presentation.viewModel.factory.CadastroUsuarioViewModelFactory
+import com.example.bookappreview.presentation.viewModel.factory.UsuarioViewModelFactory
 import kotlinx.coroutines.launch
 
 class TelaLoginActivity : AppCompatActivity() {
@@ -20,9 +25,11 @@ class TelaLoginActivity : AppCompatActivity() {
         AppDatabase.instancia(this).userDao()
     }
 
-    private val viewModel by lazy {
-        val repository = UsuarioRepository(AppDatabase.instancia(this).userDao(), NetworkService())
-        UsuarioViewModel(repository)
+    private val viewModel:UsuarioViewModel by lazy {
+        val verificaLoginUseCase =
+            Injection.provideVerificaLoginUseCase(this)
+        val factory = UsuarioViewModelFactory(verificaLoginUseCase)
+        ViewModelProvider(this, factory)[UsuarioViewModel::class.java]
     }
 
     private val binding by lazy {

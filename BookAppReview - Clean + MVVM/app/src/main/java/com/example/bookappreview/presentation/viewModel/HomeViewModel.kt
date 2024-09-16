@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bookappreview.presentation.model.LivroParcelable
-import com.example.bookappreview.data.repository.UsuarioRepository
 import com.example.bookappreview.domain.usecase.livro.BuscarLivrosUseCase
 import com.example.bookappreview.presentation.model.mapper.toParcelableList
 import kotlinx.coroutines.launch

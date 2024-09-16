@@ -12,16 +12,15 @@ import androidx.navigation.fragment.findNavController
 import com.example.bookappreview.data.database.AppDatabase
 import com.example.bookappreview.databinding.FragmentAddLivroBinding
 import com.example.bookappreview.presentation.model.LivroParcelable
-import com.example.bookappreview.data.repository.UsuarioRepository
+import com.example.bookappreview.data.repository.UsuarioRepositoryImpl
 import com.example.bookappreview.presentation.recyclerview.adapter.ListaLivrosAdapter
 import com.example.bookappreview.presentation.viewModel.AddLivroViewModel
 import com.example.bookappreview.presentation.viewModel.factory.AddLivroViewModelFactory
-import com.example.bookappreview.data.webclient.NetworkService
 
 class AddLivroFragment : Fragment() {
 
     private val viewModel by lazy {
-        val repository = UsuarioRepository(
+        val repository = UsuarioRepositoryImpl(
             AppDatabase.instancia(requireContext()).userDao()
         )
         val factory = AddLivroViewModelFactory(repository)
