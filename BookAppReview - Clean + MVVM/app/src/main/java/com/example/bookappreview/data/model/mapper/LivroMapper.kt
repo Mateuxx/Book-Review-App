@@ -5,7 +5,6 @@ import com.example.bookappreview.domain.model.Livro
 
 fun LivroEntity.toLivro(): Livro {
     return Livro(
-    id,
     title,
     subtitle,
     publisher,
@@ -24,7 +23,7 @@ fun LivroEntity.toLivro(): Livro {
 
 fun Livro.toEntity(): LivroEntity {
     return LivroEntity(
-        id,
+        id = "",
         title,
         subtitle,
         publisher,
