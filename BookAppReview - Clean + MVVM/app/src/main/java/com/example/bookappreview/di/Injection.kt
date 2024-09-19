@@ -5,6 +5,7 @@ import com.example.bookappreview.data.database.AppDatabase
 import com.example.bookappreview.data.repository.LivroRepositoryImpl
 import com.example.bookappreview.data.repository.UsuarioRepositoryImpl
 import com.example.bookappreview.data.webclient.NetworkService
+import com.example.bookappreview.domain.usecase.livro.BuscarLivrosUseCase
 import com.example.bookappreview.domain.usecase.livro.SalvarLivrosUsecase
 import com.example.bookappreview.domain.usecase.usuario.VerificaCadastroUseCase
 import com.example.bookappreview.domain.usecase.usuario.VerificaLoginUseCase
@@ -18,6 +19,15 @@ object Injection {
         val livroRepository = LivroRepositoryImpl(livroSalvoDao, networkService)
 
         return SalvarLivrosUsecase(livroRepository)
+    }
+
+    fun provideBuscaLivrosUsecase(context: Context): BuscarLivrosUseCase {
+        val livroSalvoDao = AppDatabase.instancia(context).livroSalvodao()
+        val networkService = NetworkService()
+
+        val livroRepository = LivroRepositoryImpl(livroSalvoDao, networkService)
+
+        return BuscarLivrosUseCase(livroRepository)
     }
 
     fun provideVerificaLoginUseCase(context: Context): VerificaLoginUseCase {
@@ -35,6 +45,4 @@ object Injection {
 
         return VerificaCadastroUseCase(usuarioRepository)
     }
-
-
 }

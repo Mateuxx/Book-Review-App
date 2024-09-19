@@ -18,7 +18,9 @@ import retrofit2.Response
 
 class TesteAi : AppCompatActivity() {
 
-
+    /**
+     * Only for tests
+     */
     private val service = AiService()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

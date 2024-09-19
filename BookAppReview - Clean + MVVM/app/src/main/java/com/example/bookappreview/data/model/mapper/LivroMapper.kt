@@ -2,6 +2,7 @@ package com.example.bookappreview.data.model.mapper
 
 import com.example.bookappreview.data.model.LivroEntity
 import com.example.bookappreview.domain.model.Livro
+import java.util.UUID
 
 fun LivroEntity.toLivro(): Livro {
     return Livro(
@@ -23,7 +24,7 @@ fun LivroEntity.toLivro(): Livro {
 
 fun Livro.toEntity(): LivroEntity {
     return LivroEntity(
-        id = "",
+        id = UUID.randomUUID().toString(),
         title,
         subtitle,
         publisher,
