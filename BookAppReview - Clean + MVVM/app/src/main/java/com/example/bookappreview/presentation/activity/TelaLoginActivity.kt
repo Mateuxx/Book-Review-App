@@ -8,12 +8,8 @@ import androidx.lifecycle.lifecycleScope
 import com.example.bookappreview.data.database.AppDatabase
 import com.example.bookappreview.databinding.ActivityTelaLoginActivityBinding
 import com.example.bookappreview.helpers.vaiPara
-import com.example.bookappreview.data.repository.UsuarioRepositoryImpl
 import com.example.bookappreview.presentation.viewModel.UsuarioViewModel
-import com.example.bookappreview.data.webclient.NetworkService
 import com.example.bookappreview.di.Injection
-import com.example.bookappreview.presentation.viewModel.CadastroUsuarioViewModel
-import com.example.bookappreview.presentation.viewModel.factory.CadastroUsuarioViewModelFactory
 import com.example.bookappreview.presentation.viewModel.factory.UsuarioViewModelFactory
 import kotlinx.coroutines.launch
 

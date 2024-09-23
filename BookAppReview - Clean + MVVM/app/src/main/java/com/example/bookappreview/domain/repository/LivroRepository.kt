@@ -18,4 +18,6 @@ interface LivroRepository {
      */
     suspend fun fetchBooks(searchQuery: String, context: Context): List<Livro>
 
+    fun bookRecomendation(book: String): String
+
 }

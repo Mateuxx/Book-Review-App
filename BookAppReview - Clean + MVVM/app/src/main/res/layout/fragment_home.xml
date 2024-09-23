@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"> <!-- Permite que o ScrollView ocupe todo o espaço da tela -->
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,51 +12,67 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Título "Livros Lidos" -->
+        <Button
+            android:id="@+id/searchBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="12dp"
+            android:text="Adicionar um Novo Livro" />
+
         <TextView
             android:id="@+id/textView_livrosLidos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="162dp"
+            android:layout_marginTop="24dp"
             android:text="@string/livros_lidos_home_activity"
             android:textAppearance="@style/TextAppearance.AppCompat.SearchResult.Title"
             android:textSize="35sp" />
 
-        <!-- Primeiro RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
             tools:listitem="@layout/item_list_horizontal" />
 
-        <!-- Título "Want to Read" -->
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/textView_wantToRead"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:fontFamily="sans-serif-medium"
             android:text="@string/want_to_read"
             android:textSize="35sp" />
 
-        <!-- Segundo RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
             tools:listitem="@layout/item_list_horizontal" />
 
-        <Button
-            android:id="@+id/searchBtn"
-            android:layout_width="237dp"
-            android:layout_height="36dp"
-            android:text="Button" />
+        <TextView
+            android:id="@+id/textView_recommendedBooks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:text="Livros Recomendandos"
+            android:textSize="35sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_recommended"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            tools:listitem="@layout/item_list_horizontal" />
 
     </LinearLayout>
 </ScrollView>

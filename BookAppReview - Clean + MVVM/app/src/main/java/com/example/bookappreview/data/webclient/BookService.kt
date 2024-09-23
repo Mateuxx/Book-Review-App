@@ -6,11 +6,10 @@ import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.bookappreview.domain.model.Livro
-import com.example.bookappreview.presentation.model.LivroParcelable
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
-class NetworkService {
+class BookService {
 
     suspend fun bookApi(searchQuery: String, context: Context): List<Livro> {
         //faz com que seja chamado por uma courotine e cancela o mesmo

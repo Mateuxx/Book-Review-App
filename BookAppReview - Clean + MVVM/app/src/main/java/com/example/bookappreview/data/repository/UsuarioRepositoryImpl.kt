@@ -7,14 +7,14 @@ class UsuarioRepositoryImpl(
     private val usuarioDao: UserDao,
 ) {
     /**
-     * save the user
+     * save the user on local db
      */
     suspend fun salva(usuario: Usuario) {
         usuarioDao.salvaUsuario(usuario)
     }
 
     /**
-     * busca o usuario pelo Username na API
+     * busca o usuario pelo Username no db local
      */
     suspend fun buscaPorUsername(username: String): Usuario? =
         usuarioDao.buscaUsername(username)
