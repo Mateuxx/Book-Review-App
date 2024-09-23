@@ -4,6 +4,7 @@ import android.util.Log
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.awaitResponse
 
 /**
  * Service for ai recommendation using llm
@@ -15,43 +16,35 @@ class AiService {
     /**
      * Makes the Request with favorites books from the user
      */
-    fun fetchBookRecommendations(book: String): String? {
+    suspend fun fetchBookRecommendations(book: String): String {
         val request = ChatCompletionRequest(
             messages = listOf(
                 Message(
                     role = "user",
-                    content = "Me devolva recomendações de livros com base em $book no formato de" +
-                            " lista apenas com os títulos"
+                    content = "Me devolva recomendações de livros com base em $book no formato de lista apenas com os títulos"
                 )
             ),
             model = "llama3-8b-8192"
         )
 
-        RetrofitClient.groqService.getBookRecommendations(request)
-            .enqueue(object : Callback<ChatCompletionResponse> {
-                override fun onResponse(
-                    call: Call<ChatCompletionResponse>,
-                    response: Response<ChatCompletionResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        Log.i("TAG", "onResponse: Deu certo a resposta")
-                        val iaResponse =
-                            response.body()?.choices?.firstOrNull()?.message?.content?.trim() ?: ""
-                        Log.i("TAG", "onResponse: Response: $iaResponse")
-                        val parsedList = iaResponse.split(Regex("\\n\\s*"))
-                            .filterNot { it.matches(Regex("^[0-9]+\\..*")) }
-                        result = parsedList.joinToString(separator = "\n")
-                        Log.d("TAG", "onResponse: Resposta :  $result")
-                    } else {
-                        result = "Error: ${response.code()}"
-                        Log.i("TAG", "onResponse: Requisicao falhou")
-                    }
-                }
+        val response = RetrofitClient.groqService.getBookRecommendations(request).awaitResponse()
 
-                override fun onFailure(call: Call<ChatCompletionResponse>, t: Throwable) {
-                    println("Failure: ${t.message}")
-                }
-            })
-        return result
+        return if (response.isSuccessful) {
+            response.body()?.choices?.firstOrNull()?.message?.content?.trim() ?: ""
+        } else {
+            "Error: ${response.code()}"
+        }
     }
+
+
+
+    fun parseBookRecommendations(response: String): List<String> {
+        val regex = Regex("\\d+\\.\\s•*")
+        val books = response.split(regex)
+            .filter { it.isNotBlank() } // Remove entradas vazias
+            .map { it.trim() } // Remove espaços no início e fim de cada item
+            .drop(1) // Remove aquela descricao de chat Aqui esta bla bla bla....
+        return books
+    }
+
 }

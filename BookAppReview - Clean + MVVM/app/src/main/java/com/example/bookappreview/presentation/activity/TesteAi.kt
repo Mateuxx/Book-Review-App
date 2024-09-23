@@ -26,7 +26,7 @@ class TesteAi : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_teste_ai)
-        service.fetchBookRecommendations("O senhor dos Aneis")
+//        service.fetchBookRecommendations(a"O senhor dos Aneis")
 
     }
 }

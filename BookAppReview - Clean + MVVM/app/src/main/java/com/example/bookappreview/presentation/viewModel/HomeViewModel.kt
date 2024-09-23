@@ -17,10 +17,24 @@ class HomeViewModel(
     private val _livros = MutableLiveData<List<LivroParcelable>>()
     val livros: LiveData<List<LivroParcelable>> get() = _livros
 
+    private val allLivros = mutableListOf<LivroParcelable>()
+
     fun fetchBooks(searchQuery : String, context: Context) {
         viewModelScope.launch {
             val books = buscaLivros(searchQuery,context)
             _livros.postValue(books.toParcelableList())
         }
     }
+
+    fun fetchBooksRecomendados(queries: List<String>, context: Context) {
+        viewModelScope.launch {
+            for (query in queries) {
+                val books = buscaLivros(query, context)
+                allLivros.addAll(books.toParcelableList()) // Acumule os livros
+                // Você pode opcionalmente postar os livros acumulados após cada chamada
+                _livros.postValue(allLivros)
+            }
+        }
+    }
+
 }
