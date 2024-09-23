@@ -8,32 +8,46 @@ import androidx.lifecycle.viewModelScope
 import com.example.bookappreview.presentation.model.LivroParcelable
 import com.example.bookappreview.domain.usecase.livro.BuscarLivrosUseCase
 import com.example.bookappreview.presentation.model.mapper.toParcelableList
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val buscaLivros: BuscarLivrosUseCase
-) : ViewModel(){
+) : ViewModel() {
 
     private val _livros = MutableLiveData<List<LivroParcelable>>()
     val livros: LiveData<List<LivroParcelable>> get() = _livros
 
-    private val allLivros = mutableListOf<LivroParcelable>()
+    private val _livrosRecomendados = MutableLiveData<List<LivroParcelable>>()
+    val livrosRecomendados: LiveData<List<LivroParcelable>> get() = _livrosRecomendados
 
-    fun fetchBooks(searchQuery : String, context: Context) {
+    private val allLivrosRecomendados = mutableListOf<LivroParcelable>()
+
+    fun fetchBooks(searchQuery: String, context: Context) {
         viewModelScope.launch {
-            val books = buscaLivros(searchQuery,context)
-            _livros.postValue(books.toParcelableList())
+            val books = buscaLivros(searchQuery, context)
+            _livros.postValue(books.toParcelableList()) // Atualiza o LiveData dos livros principais
         }
     }
 
+    /**
+     * Async and map Improves performance
+     */
     fun fetchBooksRecomendados(queries: List<String>, context: Context) {
         viewModelScope.launch {
-            for (query in queries) {
-                val books = buscaLivros(query, context)
-                allLivros.addAll(books.toParcelableList()) // Acumule os livros
-                // Você pode opcionalmente postar os livros acumulados após cada chamada
-                _livros.postValue(allLivros)
+            allLivrosRecomendados.clear()
+            val deferredResults = queries.map { query ->
+                async {
+                    buscaLivros(query, context)
+                }
             }
+            val resultList = deferredResults.awaitAll()
+
+            resultList.forEach { books ->
+                allLivrosRecomendados.addAll(books.toParcelableList())
+            }
+            _livrosRecomendados.postValue(allLivrosRecomendados)
         }
     }
 

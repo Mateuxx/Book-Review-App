@@ -1,6 +1,7 @@
 package com.example.bookappreview.presentation.recyclerview.adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,17 +34,11 @@ class ListaLivrosRecomendadosHomeAdapter(
         fun vincula(livroParcelable: LivroParcelable) {
             this.livroParcelable = livroParcelable
             binding.apply {
+                Log.d("TAG", "vincula: Livro Recomendo titulo: ${livroParcelable.title}")
                 livroNome.text = livroParcelable.title
             }
-            val visibilidade = if (livroParcelable.imagem != null) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
-
-            binding.imageView.visibility = visibilidade
-
             binding.imageView.tentaCarregarImagem(livroParcelable.imagem)
+
         }
     }
 

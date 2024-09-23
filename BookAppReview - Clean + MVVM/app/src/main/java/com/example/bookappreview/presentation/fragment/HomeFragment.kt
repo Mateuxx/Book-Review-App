@@ -33,6 +33,7 @@ class HomeFragment : Fragment() {
     private lateinit var adapter: ListaLivrosHomeAdapter
     private lateinit var adapterRecomendados: ListaLivrosRecomendadosHomeAdapter
     private val armazenaLivroParcelables = mutableListOf<LivroParcelable>()
+    private val armazenaLivrosRecomendadosParcelables = mutableListOf<LivroParcelable>()
     private var armazenaLivrosRecomendados = mutableListOf<String>()
     private val teste = AiService()
 
@@ -55,21 +56,43 @@ class HomeFragment : Fragment() {
             val bookList = recommendationBooks()
             Log.i("TAG", "Recomendações: $bookList")
             armazenaLivrosRecomendados = bookList.toMutableList()
+            Log.d("TAG", "Mostraaaa: $armazenaLivrosRecomendados")
+
+            viewModel.fetchBooksRecomendados(armazenaLivrosRecomendados, requireContext())
+            viewModel.livrosRecomendados.observe(viewLifecycleOwner) { recomendados ->
+                Log.i("TAG", "Recomendados: $recomendados")
+                armazenaLivrosRecomendadosParcelables.clear()
+                armazenaLivrosRecomendadosParcelables.addAll(recomendados)
+                adapterRecomendados.updateLivros(armazenaLivrosRecomendadosParcelables)
+            }
+
         }
-
-
         binding.searchBtn.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addLivroFragment)
         }
     }
 
+
+    private fun inicializaDadosPredefinidos() {
+        val query = "Harry Potter"
+        viewModel.fetchBooks(query, requireContext())
+
+        viewModel.livros.observe(viewLifecycleOwner) { livros ->
+            armazenaLivroParcelables.clear()
+            armazenaLivroParcelables.addAll(livros)
+            adapter.updateLivros(armazenaLivroParcelables)
+        }
+    }
+
+
     private suspend fun recommendationBooks(): List<String> {
-        val result = teste.fetchBookRecommendations("Harry Potter") // Aguarda o resultado da requisição
-        val aaa = teste.parseBookRecommendations(result).toMutableList() // Retorna a lista processada
+        val result =
+            teste.fetchBookRecommendations("Harry Potter") // Aguarda o resultado da requisição
+        val aaa =
+            teste.parseBookRecommendations(result).toMutableList() // Retorna a lista processada
         Log.i("TAG", "recommendationBooks: $aaa")
         return aaa
     }
-
 
 
     private fun configuraRecyclerView() {
@@ -84,15 +107,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun inicializaDadosPredefinidos() {
-        val query = "Harry Potter"
-        viewModel.fetchBooks(query, requireContext())
 
-        viewModel.livros.observe(viewLifecycleOwner) { livros ->
-            armazenaLivroParcelables.clear()
-            armazenaLivroParcelables.addAll(livros)
-            adapter.updateLivros(armazenaLivroParcelables)
-        }
-    }
 }
 
