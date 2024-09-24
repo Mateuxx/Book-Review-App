@@ -1,6 +1,7 @@
 package com.example.bookappreview.presentation.viewModel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,15 +37,18 @@ class HomeViewModel(
      */
     fun fetchBooksRecomendados(queries: List<String>, context: Context) {
         viewModelScope.launch {
-            allLivrosRecomendados.clear()
+            allLivrosRecomendados.clear() //limpa todos os livros anteriores
             val deferredResults = queries.map { query ->
                 async {
                     buscaLivros(query, context)
                 }
             }
+            // coleta dos dados de todas as courotines executadas em async
+            // espera todas as busca por livros terminarem e retorna uma lista com esses resultados
             val resultList = deferredResults.awaitAll()
 
             resultList.forEach { books ->
+                Log.i("TAG", "fetchBooksRecomendados: $books")
                 allLivrosRecomendados.addAll(books.toParcelableList())
             }
             _livrosRecomendados.postValue(allLivrosRecomendados)
