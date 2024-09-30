@@ -14,10 +14,13 @@ import com.example.bookappreview.R
 import com.example.bookappreview.data.webclient.aiservice.AiService
 import com.example.bookappreview.databinding.FragmentHomeBinding
 import com.example.bookappreview.di.Injection
+import com.example.bookappreview.presentation.adapter.ViewPagerAdapter
 import com.example.bookappreview.presentation.model.LivroParcelable
 import com.example.bookappreview.presentation.recyclerview.adapter.ListaLivrosHomeAdapter
 import com.example.bookappreview.presentation.recyclerview.adapter.ListaLivrosRecomendadosHomeAdapter
 import com.example.bookappreview.presentation.viewModel.HomeViewModel
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -31,12 +34,13 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var adapter: ListaLivrosHomeAdapter
+
+
     private lateinit var adapterRecomendados: ListaLivrosRecomendadosHomeAdapter
     private val armazenaLivroParcelables = mutableListOf<LivroParcelable>()
     private val armazenaLivrosRecomendadosParcelables = mutableListOf<LivroParcelable>()
     private var armazenaLivrosRecomendados = mutableListOf<String>()
     private val teste = AiService()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,7 +55,10 @@ class HomeFragment : Fragment() {
         adapter = ListaLivrosHomeAdapter(requireContext())
         adapterRecomendados = ListaLivrosRecomendadosHomeAdapter(requireContext())
         configuraRecyclerView()
+//        configuraTabLayoutComViewPager()
         inicializaDadosPredefinidos()
+
+        binding.textViewLivrosLidos
         lifecycleScope.launch {
             val bookList = recommendationBooks()
             Log.i("TAG", "Recomendações: $bookList")
@@ -67,9 +74,10 @@ class HomeFragment : Fragment() {
             }
 
         }
-        binding.searchBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_addLivroFragment)
-        }
+//        binding.searchBtn.setOnClickListener {
+//            findNavController().navigate(R.id.action_homeFragment_to_addLivroFragment)
+//        }
+
     }
 
 
@@ -99,12 +107,12 @@ class HomeFragment : Fragment() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView2.adapter = adapter
         binding.recyclerViewRecommended.adapter = adapterRecomendados
-        adapter.quandoClicaNoItem = { livro ->
-
-            val actions =
-                HomeFragmentDirections.actionHomeFragmentToLivroDetalhesFragment2(livro)
-            findNavController().navigate(actions)
-        }
+//        adapter.quandoClicaNoItem = { livro ->
+//
+//            val actions =
+//                HomeFragmentDirections.actionHomeFragmentToLivroDetalhesFragment2(livro)
+//            findNavController().navigate(actions)
+//        }
     }
 
 

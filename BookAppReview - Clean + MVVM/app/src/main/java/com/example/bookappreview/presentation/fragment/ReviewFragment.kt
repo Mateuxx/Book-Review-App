@@ -122,7 +122,7 @@ class ReviewFragment : Fragment() {
             requireContext().toast("Livro Salvo Com sucesso")
         }
         Toast.makeText(requireContext(), "salcvo ", Toast.LENGTH_SHORT).show()
-        findNavController().navigate(R.id.action_reviewFragment_to_homeFragment)
+//        findNavController().navigate(R.id.action_reviewFragment_to_homeFragment)
     }
 
     private fun preencherCampos(livroParcelable: LivroParcelable) {

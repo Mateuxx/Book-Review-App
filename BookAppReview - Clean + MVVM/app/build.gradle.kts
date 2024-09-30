@@ -106,4 +106,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1") // Atualize para a versão mais recente
     implementation("com.google.android.material:material:1.10.0") // Atualize para a versão mais recente
     implementation("androidx.recyclerview:recyclerview:1.3.1") // Para RecyclerView
+
+    implementation ("androidx.viewpager2:viewpager2:1.1.0")
+
 }

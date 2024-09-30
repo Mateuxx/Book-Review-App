@@ -37,6 +37,7 @@ class HomeViewModel(
      */
     fun fetchBooksRecomendados(queries: List<String>, context: Context) {
         viewModelScope.launch {
+
             allLivrosRecomendados.clear() //limpa todos os livros anteriores
             val deferredResults = queries.map { query ->
                 async {
