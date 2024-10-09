@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">BookAppReview</string>
+    <string name="email_field">Entre com seu email:</string>
+    <string name="senha_field">Entre com seu senha:</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_cadastrar">Cadastrar</string>
+    <string name="input_usuario">Usuário</string>
+    <string name="input_field_senha">Insira sua senha</string>
+    <string name="input_nome">Insira seu nome\n</string>
+    <string name="input_nome_usuario">Insira seu nome de usuário\n</string>
+    <string name="input_email">Insira seu email\n</string>
+    <string name="btn_criarConta">Criar Conta</string>
+    <string name="salvar">Salvar</string>
+    <string name="Titulo">Salve alguma coisa pra gente ver</string>
+    <string name="autorlista">Autor</string>
+    <string name="ano_lista_carrousel">2023</string>
+    <string name="livros_lidos_home_activity">Livros Lidos</string>
+    <string name="watchread_home_activity">Watchread</string>
+    <string name="want_to_read">Want to Read</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
