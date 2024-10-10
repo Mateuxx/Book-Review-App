@@ -5,6 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
+import androidx.navigation.compose.rememberNavController
+import com.example.bookappreview.presentation.screens.MainScreen
+import com.example.bookappreview.presentation.viewModel.MainViewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -12,7 +15,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Column {
-                Text("Salve")
+                val navController = rememberNavController()
+                MainScreen()
             }
         }
     }
