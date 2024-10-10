@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.update
 class MainViewModel : ViewModel() {
 
     // Lista de rótulos das abas
-    private val _tabs = listOf("Films", "Reviews", "Lists")
+    private val _tabs = listOf("Books", "Reviews", "Lists")
     val tabs: List<String> = _tabs
 
     // Estado do índice da aba selecionada

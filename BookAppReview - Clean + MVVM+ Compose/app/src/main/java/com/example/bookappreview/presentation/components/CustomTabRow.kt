@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -28,13 +29,14 @@ fun CustomTabRow(
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(12.dp)
-            .height(28.dp)
+            .padding(2.dp)
+            .height(30.dp)
     ) {
         tabs.forEachIndexed { index, title ->
             Box(
                 modifier = Modifier
-                    .weight(1f)
+                    .weight(10f)
+                    .width(45.dp)
                     .fillMaxHeight()
                     .border(1.dp, Color.Gray, shape = RoundedCornerShape(3.dp))
                     .background(
@@ -58,7 +60,7 @@ fun CustomTabRow(
 @Preview(showBackground = true)
 @Composable
 private fun CustomTabRowPreview() {
-     CustomTabRow(tabs = listOf("Films", "Reviews", "Lists"), selectedTabIndex = 0) {
+     CustomTabRow(tabs = listOf("Livros", "Reviews", "Lists"), selectedTabIndex = 0) {
          
      }
 }
