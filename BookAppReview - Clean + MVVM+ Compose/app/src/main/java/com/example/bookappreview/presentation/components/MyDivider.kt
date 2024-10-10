@@ -2,6 +2,7 @@ package com.example.bookappreview.presentation.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.TabRowDefaults.Divider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -16,5 +17,6 @@ fun MyDivider() {
         modifier = Modifier
             .fillMaxWidth() // Makes the divider span the full width
             .height(1.dp)   // Set the height for the divider line
+            .padding(horizontal = 5.dp)
     )
 }
