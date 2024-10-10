@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.compose.compiler)
     id("com.google.devtools.ksp")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
@@ -42,7 +43,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+        compose = true
     }
 }
 
@@ -58,25 +59,25 @@ dependencies {
 
 
 
-    implementation ("com.android.volley:volley:1.2.1")
-    implementation ("com.squareup.picasso:picasso:2.71828")
+    implementation("com.android.volley:volley:1.2.1")
+    implementation("com.squareup.picasso:picasso:2.71828")
 
-    implementation ("io.coil-kt:coil:1.4.0")
+    implementation("io.coil-kt:coil:1.4.0")
 
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2")
 
-    implementation ("com.google.code.gson:gson:2.11.0")
+    implementation("com.google.code.gson:gson:2.11.0")
 
-    implementation( libs.material)
-
-
-    implementation ("com.google.android.material:material:1.9.0")
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
-    implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    implementation(libs.material)
 
 
-    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     //Android Navigation
     val nav_version = "2.8.0"
