@@ -8,9 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import com.example.bookappreview.presentation.viewModel.MainViewModel
 
 @Composable
-fun ListScreen() {
+fun ListScreen(
+    navController: NavHostController,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()

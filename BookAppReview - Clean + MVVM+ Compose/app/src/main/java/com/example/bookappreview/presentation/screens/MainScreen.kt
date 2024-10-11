@@ -52,7 +52,13 @@ fun MainScreen(
             modifier = Modifier.align(Alignment.CenterHorizontally), // Centraliza o Row horizontalmente
             verticalAlignment = Alignment.Bottom
         ) {
-            Text(text = "Book Diary", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Text(
+                modifier = Modifier.padding(top = 10.dp),
+                text = "Book Diary",
+                color = Color.White,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
         }
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -65,19 +71,52 @@ fun MainScreen(
                 homeViewModel.onTabSelected(index)
                 // Navegação entre as telas com base na aba selecionada
                 when (index) {
-                    0 -> navController.navigate("books")
-                    1 -> navController.navigate("reviews")
-                    2 -> navController.navigate("lists")
+                    0 -> navController.navigate("books") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true // Salva o estado da navegação
+                        }
+                        restoreState = true // Restaura o estado da interface
+                        launchSingleTop = true // Evita recriação do destino
+                    }
+
+                    1 -> navController.navigate("reviews") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
+
+                    2 -> navController.navigate("lists") {
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        restoreState = true
+                        launchSingleTop = true
+                    }
                 }
             }
         )
         Spacer(modifier = Modifier.height(16.dp))
 
         // Configura o NavHost para navegação
+        // Configura o NavHost para navegação
         NavHost(navController = navController, startDestination = "books") {
-            composable("books") { BooksScreen() }
-            composable("reviews") { ReviewsScreen() }
-            composable("lists") { ListScreen() }
+            composable("books") {
+                BooksScreen(
+                    navController = navController
+                )
+            }
+            composable("reviews") {
+                ReviewsScreen(
+                    navController = navController
+                )
+            }
+            composable("lists") {
+                ListScreen(
+                    navController = navController,
+                )
+            }
         }
 
 
@@ -91,5 +130,8 @@ fun HomeScreenPreview() {
     val fakeViewModel = MainViewModel()
 
     // Chamamos diretamente a HomeScreen passando o ViewModel
-    MainScreen(homeViewModel = fakeViewModel, navController = NavHostController(LocalContext.current))
+    MainScreen(
+        homeViewModel = fakeViewModel,
+        navController = NavHostController(LocalContext.current)
+    )
 }

@@ -31,13 +31,11 @@ fun BookPosterItem(
                 .width(100.dp)
                 .padding(2.dp),
             placeholder = painterResource(
-                id = R.drawable.ic_launcher_background
+                id = R.drawable.imagem_padrao
             ),
             contentScale = ContentScale.Crop
         )
     }
-
-
 }
 
 @Preview(showBackground = true)

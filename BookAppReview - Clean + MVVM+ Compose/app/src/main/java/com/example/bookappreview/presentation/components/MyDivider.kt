@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MyDivider() {
+fun MyDivider(modifier: Modifier = Modifier) {
     Divider(
         color = Color.Gray, // Adjust the color as per your preference
         thickness = 1.dp,   // Adjust the thickness as needed

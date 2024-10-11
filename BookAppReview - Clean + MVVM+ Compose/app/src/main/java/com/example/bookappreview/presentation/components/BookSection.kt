@@ -22,6 +22,7 @@ import com.example.bookappreview.presentation.model.LivroParcelable
 fun BookSection(
     sectionTitle: String,
     books: List<LivroParcelable>, // Lista de livros para a seção
+    maxBooksToShow: Int = 10 // Número máximo de livros a serem exibidos
 ) {
     Column(
         Modifier
@@ -40,7 +41,7 @@ fun BookSection(
         LazyRow(
             contentPadding = PaddingValues(horizontal = 4.dp)
         ) {
-            items(books) { book ->
+            items(books.take(maxBooksToShow)) { book ->
                 BookPosterItem(book)
 
             }
@@ -52,7 +53,7 @@ fun BookSection(
     }
 }
 
-@Preview(showSystemUi = true)
+@Preview
 @Composable
 private fun BookSectionPreview() {
     BookSection(

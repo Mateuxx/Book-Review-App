@@ -8,9 +8,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 
 @Composable
-fun ReviewsScreen() {
+fun ReviewsScreen(
+    navController: NavHostController,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
