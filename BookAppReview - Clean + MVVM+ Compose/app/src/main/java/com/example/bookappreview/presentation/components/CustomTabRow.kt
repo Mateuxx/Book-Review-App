@@ -29,7 +29,7 @@ fun CustomTabRow(
     Row(
         Modifier
             .fillMaxWidth()
-            .padding(2.dp)
+            .padding(horizontal = 6.dp, vertical = 4.dp)
             .height(30.dp)
     ) {
         tabs.forEachIndexed { index, title ->

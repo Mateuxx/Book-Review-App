@@ -19,8 +19,8 @@ import com.example.bookappreview.presentation.model.LivroParcelable
 
 @Composable
 fun BookPosterItem(
-    modifier: Modifier = Modifier,
-    book: LivroParcelable
+    book: LivroParcelable,
+    modifier: Modifier = Modifier
 ) {
     Column{
         AsyncImage(

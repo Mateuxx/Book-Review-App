@@ -17,6 +17,6 @@ fun MyDivider() {
         modifier = Modifier
             .fillMaxWidth() // Makes the divider span the full width
             .height(1.dp)   // Set the height for the divider line
-            .padding(horizontal = 5.dp)
+            .padding(horizontal = 4.dp)
     )
 }

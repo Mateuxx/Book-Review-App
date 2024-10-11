@@ -15,17 +15,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import com.example.bookappreview.presentation.components.CustomTabRow
 import com.example.bookappreview.presentation.viewModel.MainViewModel
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    navController: NavHostController,
     homeViewModel: MainViewModel = viewModel() // ViewModel gerencia o estado
 ) {
     // Observa o índice da aba selecionada
@@ -41,7 +46,7 @@ fun MainScreen(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
-            .padding(18.dp)
+//            .padding(18.dp)
     ) {
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally), // Centraliza o Row horizontalmente
@@ -56,13 +61,26 @@ fun MainScreen(
         CustomTabRow(
             tabs = tabs,
             selectedTabIndex = selectedTabIndex,
-            onTabSelected = { homeViewModel.onTabSelected(it) } // Atualiza a aba no ViewModel
+            onTabSelected = { index ->
+                homeViewModel.onTabSelected(index)
+                // Navegação entre as telas com base na aba selecionada
+                when (index) {
+                    0 -> navController.navigate("books")
+                    1 -> navController.navigate("reviews")
+                    2 -> navController.navigate("lists")
+                }
+            }
         )
-
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Renderiza o conteúdo da aba com base no estado gerenciado pelo ViewModel
-        Text(tabContent, color = Color.White)
+        // Configura o NavHost para navegação
+        NavHost(navController = navController, startDestination = "books") {
+            composable("books") { BooksScreen() }
+            composable("reviews") { ReviewsScreen() }
+            composable("lists") { ListScreen() }
+        }
+
+
     }
 }
 
@@ -73,5 +91,5 @@ fun HomeScreenPreview() {
     val fakeViewModel = MainViewModel()
 
     // Chamamos diretamente a HomeScreen passando o ViewModel
-    MainScreen(homeViewModel = fakeViewModel)
+    MainScreen(homeViewModel = fakeViewModel, navController = NavHostController(LocalContext.current))
 }
