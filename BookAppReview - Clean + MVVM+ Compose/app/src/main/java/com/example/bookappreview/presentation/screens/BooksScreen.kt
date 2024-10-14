@@ -81,10 +81,12 @@ fun BooksScreen(
             sectionTitle = "Want To Read",
             books = books
         )
+
         BookSection(
             sectionTitle = "Recomendados",
             books = recommendBooks
         )
+
     }
 }
 
