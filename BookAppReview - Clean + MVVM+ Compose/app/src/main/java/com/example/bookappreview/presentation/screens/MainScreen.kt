@@ -22,8 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import com.example.bookappreview.presentation.components.CustomBottomNavigation
 import com.example.bookappreview.presentation.components.CustomTabRow
 import com.example.bookappreview.presentation.states.Screen

@@ -7,6 +7,7 @@ data class MainScreenUiState(
 )
 
 sealed class Screen {
+
     data object Books : Screen()
     data object Reviews : Screen()
     data object Lists : Screen()
