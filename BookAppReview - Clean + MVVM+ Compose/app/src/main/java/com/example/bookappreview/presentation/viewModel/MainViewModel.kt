@@ -50,10 +50,4 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    // Função para executar navegação
-    fun navigateTo(screen: Screen) {
-        _uiState.update { currentState ->
-            currentState.copy(currentScreen = screen)
-        }
-    }
 }

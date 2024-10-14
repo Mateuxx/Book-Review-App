@@ -3,7 +3,7 @@ package com.example.bookappreview.presentation.states
 data class MainScreenUiState(
     val selectedBottomNavIndex: Int = 0,
     val selectedTabIndex: Int = 0,
-    val currentScreen: Screen = Screen.Books
+    val currentScreen: Screen = Screen.Books // iniciada em screen Books
 )
 
 sealed class Screen {

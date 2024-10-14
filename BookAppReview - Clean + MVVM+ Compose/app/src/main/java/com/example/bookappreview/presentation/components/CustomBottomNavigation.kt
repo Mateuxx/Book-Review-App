@@ -39,7 +39,8 @@ fun CustomBottomNavigation(
             Icon(
                 imageVector = Icons.Default.Home,
                 contentDescription = "Home",
-                tint = if (selectedTab == 0) Color.Cyan else Color.Gray
+                tint = if (selectedTab == 0) Color.Cyan else Color.Gray,
+                modifier = Modifier.size(34.dp)
             )
         }
         IconButton(
@@ -48,7 +49,9 @@ fun CustomBottomNavigation(
             Icon(
                 imageVector = Icons.Default.Search,
                 contentDescription = "Search",
-                tint = if (selectedTab == 1) Color.Cyan else Color.Gray
+                tint = if (selectedTab == 1) Color.Cyan else Color.Gray,
+                modifier = Modifier.size(34.dp)
+
             )
         }
         IconButton(
@@ -57,7 +60,9 @@ fun CustomBottomNavigation(
             Icon(
                 imageVector = Icons.Default.Person,
                 contentDescription = "Profile",
-                tint = if (selectedTab == 2) Color.Cyan else Color.Gray
+                tint = if (selectedTab == 2) Color.Cyan else Color.Gray,
+                modifier = Modifier.size(34.dp)
+
             )
         }
     }
