@@ -82,7 +82,7 @@ fun BooksScreen(
             books = books
         )
         BookSection(
-            sectionTitle = "teste",
+            sectionTitle = "Recomendados",
             books = recommendBooks
         )
     }

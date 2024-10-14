@@ -24,6 +24,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.bookappreview.presentation.components.CustomBottomNavigation
 import com.example.bookappreview.presentation.components.CustomTabRow
 import com.example.bookappreview.presentation.viewModel.MainViewModel
 
@@ -31,7 +32,7 @@ import com.example.bookappreview.presentation.viewModel.MainViewModel
 fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    homeViewModel: MainViewModel = viewModel() // ViewModel gerencia o estado
+    homeViewModel: MainViewModel = viewModel()
 ) {
     // Observa o índice da aba selecionada
     val selectedTabIndex by homeViewModel.selectedTabIndex.collectAsState()
@@ -46,10 +47,9 @@ fun MainScreen(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
-//            .padding(18.dp)
     ) {
         Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally), // Centraliza o Row horizontalmente
+            modifier = Modifier.align(Alignment.CenterHorizontally),
             verticalAlignment = Alignment.Bottom
         ) {
             Text(
@@ -73,12 +73,11 @@ fun MainScreen(
                 when (index) {
                     0 -> navController.navigate("books") {
                         popUpTo(navController.graph.startDestinationId) {
-                            saveState = true // Salva o estado da navegação
+                            saveState = true
                         }
-                        restoreState = true // Restaura o estado da interface
-                        launchSingleTop = true // Evita recriação do destino
+                        restoreState = true
+                        launchSingleTop = true
                     }
-
                     1 -> navController.navigate("reviews") {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
@@ -86,7 +85,6 @@ fun MainScreen(
                         restoreState = true
                         launchSingleTop = true
                     }
-
                     2 -> navController.navigate("lists") {
                         popUpTo(navController.graph.startDestinationId) {
                             saveState = true
@@ -97,31 +95,32 @@ fun MainScreen(
                 }
             }
         )
+
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Configura o NavHost para navegação
-        // Configura o NavHost para navegação
-        NavHost(navController = navController, startDestination = "books") {
+        // O conteúdo da tela (NavHost) deve ocupar o espaço restante
+        NavHost(
+            modifier = Modifier.weight(1f), // Faz o conteúdo ocupar o espaço restante da tela
+            navController = navController,
+            startDestination = "books"
+        ) {
             composable("books") {
-                BooksScreen(
-                    navController = navController
-                )
+                BooksScreen(navController = navController)
             }
             composable("reviews") {
-                ReviewsScreen(
-                    navController = navController
-                )
+                ReviewsScreen(navController = navController)
             }
             composable("lists") {
-                ListScreen(
-                    navController = navController,
-                )
+                ListScreen(navController = navController)
             }
         }
 
-
+        // Colocado no final e fixo na parte inferior da tela
+        CustomBottomNavigation()
     }
 }
+
+
 
 @Preview(showBackground = true)
 @Composable
