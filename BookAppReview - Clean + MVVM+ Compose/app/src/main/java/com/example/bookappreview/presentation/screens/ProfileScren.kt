@@ -11,12 +11,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
 @Composable
-fun SearchBookScreen(modifier: Modifier = Modifier, navController: NavHostController) {
+fun ProfileScreen(modifier: Modifier = Modifier, navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text(text = "Search Book Screen", color = Color.White)
+        Text(text = "Profile Screen", color = Color.White)
     }
 }

@@ -2,10 +2,12 @@ package com.example.bookappreview.presentation.screens
 
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -15,8 +17,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,28 +26,24 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.bookappreview.presentation.components.CustomBottomNavigation
 import com.example.bookappreview.presentation.components.CustomTabRow
+import com.example.bookappreview.presentation.states.Screen
 import com.example.bookappreview.presentation.viewModel.MainViewModel
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    homeViewModel: MainViewModel = viewModel()
+    viewModel: MainViewModel = viewModel() // Injeta o ViewModel
 ) {
-    // Observa o índice da aba selecionada
-    val selectedTabIndex by homeViewModel.selectedTabIndex.collectAsState()
-
-    // Observa o conteúdo da aba selecionada
-    val tabContent by homeViewModel.tabContent.collectAsState()
-
-    // Obtém a lista de tabs do ViewModel
-    val tabs = homeViewModel.tabs
+    // Observa o estado da UI
+    val uiState by viewModel.uiState.collectAsState()
 
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
+        // Renderiza o Título
         Row(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             verticalAlignment = Alignment.Bottom
@@ -56,81 +52,64 @@ fun MainScreen(
                 modifier = Modifier.padding(top = 10.dp),
                 text = "Book Diary",
                 color = Color.White,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 24.sp
             )
         }
 
-        Spacer(modifier = Modifier.height(8.dp))
+        // Renderiza o CustomTabRow com as abas superiores apenas na tela Home (Books, Reviews, Lists)
+        if (uiState.selectedBottomNavIndex == 0) { // Exibe o TabRow apenas na aba Home
+            Spacer(modifier = Modifier.height(8.dp))
 
-        // Renderiza o CustomTabRow com os tabs e o índice selecionado
-        CustomTabRow(
-            tabs = tabs,
-            selectedTabIndex = selectedTabIndex,
-            onTabSelected = { index ->
-                homeViewModel.onTabSelected(index)
-                // Navegação entre as telas com base na aba selecionada
-                when (index) {
-                    0 -> navController.navigate("books") {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
-                        restoreState = true
-                        launchSingleTop = true
-                    }
-                    1 -> navController.navigate("reviews") {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
-                        restoreState = true
-                        launchSingleTop = true
-                    }
-                    2 -> navController.navigate("lists") {
-                        popUpTo(navController.graph.startDestinationId) {
-                            saveState = true
-                        }
-                        restoreState = true
-                        launchSingleTop = true
-                    }
+            CustomTabRow(
+                tabs = viewModel.tabs,
+                selectedTabIndex = uiState.selectedTabIndex,
+                onTabSelected = { index ->
+                    viewModel.onTabSelected(index) // Atualiza o estado das abas no ViewModel
                 }
-            }
-        )
+            )
+        }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // O conteúdo da tela (NavHost) deve ocupar o espaço restante
-        NavHost(
-            modifier = Modifier.weight(1f), // Faz o conteúdo ocupar o espaço restante da tela
-            navController = navController,
-            startDestination = "books"
+        // O conteúdo principal deve ocupar o espaço restante da tela
+        Box(
+            modifier = Modifier
+                .weight(1f) // O conteúdo principal ocupa o espaço restante
+                .fillMaxWidth()
         ) {
-            composable("books") {
-                BooksScreen(navController = navController)
-            }
-            composable("reviews") {
-                ReviewsScreen(navController = navController)
-            }
-            composable("lists") {
-                ListScreen(navController = navController)
+            when (uiState.currentScreen) {
+                Screen.Books -> BooksScreen(navController = navController)
+                Screen.Reviews -> ReviewsScreen(navController = navController)
+                Screen.Lists -> ListScreen(navController = navController)
+                Screen.Search -> SearchBookScreen(navController = navController)
+                Screen.Profile -> ProfileScreen(navController = navController)
             }
         }
 
-        // Colocado no final e fixo na parte inferior da tela
-        CustomBottomNavigation()
+        // CustomBottomNavigation para alternar entre Home, Search e Profile
+        CustomBottomNavigation(
+            selectedTab = uiState.selectedBottomNavIndex,
+            onTabSelected = { index ->
+                viewModel.onBottomNavItemSelected(index) // Atualiza o estado da navegação no ViewModel
+            }
+        )
     }
 }
+
+
+
 
 
 
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    // Criamos uma instância "fake" do ViewModel dentro do Preview, para simular o comportamento.
-    val fakeViewModel = MainViewModel()
-
-    // Chamamos diretamente a HomeScreen passando o ViewModel
-    MainScreen(
-        homeViewModel = fakeViewModel,
-        navController = NavHostController(LocalContext.current)
-    )
+//    // Criamos uma instância "fake" do ViewModel dentro do Preview, para simular o comportamento.
+//    val fakeViewModel = MainViewModel()
+//
+//    // Chamamos diretamente a HomeScreen passando o ViewModel
+//    MainScreen(
+//        homeViewModel = fakeViewModel,
+//        navController = NavHostController(LocalContext.current)
+//    )
 }

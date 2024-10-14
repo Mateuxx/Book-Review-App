@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun CustomBottomNavigation(
-    modifier: Modifier = Modifier,
-//    selectedTab: Int,
-//    onTabSelected: (Int) -> Unit, // Callback to handle tab selection
+    selectedTab: Int,
+    onTabSelected: (Int) -> Unit
 ) {
+    // Lógica da navegação dentro da CustomBottomNavigation
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -33,49 +33,42 @@ fun CustomBottomNavigation(
         horizontalArrangement = Arrangement.SpaceEvenly,
         verticalAlignment = Alignment.CenterVertically
     ) {
-
-        //Home Button
         IconButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.size(40.dp)
+            onClick = { onTabSelected(0) },
         ) {
             Icon(
-                Icons.Default.Home,
+                imageVector = Icons.Default.Home,
                 contentDescription = "Home",
-                tint = Color.White
+                tint = if (selectedTab == 0) Color.Cyan else Color.Gray
             )
         }
-        //Search Button
         IconButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.size(40.dp)
+            onClick = { onTabSelected(1) },
         ) {
             Icon(
-                Icons.Default.Search,
+                imageVector = Icons.Default.Search,
                 contentDescription = "Search",
-                tint = Color.White
+                tint = if (selectedTab == 1) Color.Cyan else Color.Gray
             )
         }
-
-        //Profile Button
         IconButton(
-            onClick = { /*TODO*/ },
-            modifier = Modifier.size(40.dp)
+            onClick = { onTabSelected(2) },
         ) {
             Icon(
-                Icons.Default.Person,
-                contentDescription = "Search",
-                tint = Color.White
+                imageVector = Icons.Default.Person,
+                contentDescription = "Profile",
+                tint = if (selectedTab == 2) Color.Cyan else Color.Gray
             )
         }
-
-
     }
-
 }
+
 
 @Preview(showBackground = true)
 @Composable
 private fun CustomBottomNavigationPreview() {
-    CustomBottomNavigation()
+    CustomBottomNavigation(
+        selectedTab = 0,
+        onTabSelected = {}
+    )
 }
