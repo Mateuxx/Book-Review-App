@@ -1,6 +1,8 @@
 package com.example.bookappreview.presentation.screens
 
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.bookappreview.presentation.components.CustomBottomNavigation
 import com.example.bookappreview.presentation.components.CustomTabRow
 import com.example.bookappreview.presentation.states.Screen
@@ -30,10 +35,12 @@ import com.example.bookappreview.presentation.viewModel.MainViewModel
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
     viewModel: MainViewModel = viewModel() // Injeta o ViewModel
 ) {
-    // Observa o estado da UI
+    // Criando o NavController dentro do Composable
+    val navController = rememberNavController()
+
+    // Observando o estado da UI
     val uiState by viewModel.uiState.collectAsState()
 
     Column(
@@ -54,33 +61,59 @@ fun MainScreen(
             )
         }
 
-        // Renderiza o CustomTabRow com as abas superiores apenas na tela Home (Books, Reviews, Lists)
-        if (uiState.selectedBottomNavIndex == 0) { // Exibe o TabRow apenas na aba Home
-            Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
+        // Renderiza o CustomTabRow se a aba inferior for "Home"
+        if (uiState.selectedBottomNavIndex == 0) {
             CustomTabRow(
                 tabs = viewModel.tabs,
                 selectedTabIndex = uiState.selectedTabIndex,
                 onTabSelected = { index ->
-                    viewModel.onTabSelected(index) // Atualiza o estado das abas no ViewModel
+                    viewModel.onTabSelected(index)
+                    navController.navigate(
+                        when (index) {
+                            0 -> Screen.Books.route
+                            1 -> Screen.Reviews.route
+                            2 -> Screen.Lists.route
+                            else -> Screen.Books.route
+                        }
+                    ) {
+                        // Aqui utilizamos `restoreState` e `saveState` para restaurar o estado das telas anteriores
+                        restoreState = true
+                        launchSingleTop = true
+                        popUpTo(navController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                    }
                 }
             )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // O conteúdo principal deve ocupar o espaço restante da tela
+        // Define o NavHost, que gerencia as telas (destinos)
         Box(
             modifier = Modifier
-                .weight(1f) // O conteúdo principal ocupa o espaço restante
+                .weight(1f)
                 .fillMaxWidth()
         ) {
-            when (uiState.currentScreen) {
-                Screen.Books -> BooksScreen(navController = navController)
-                Screen.Reviews -> ReviewsScreen(navController = navController)
-                Screen.Lists -> ListScreen(navController = navController)
-                Screen.Search -> SearchBookScreen(navController = navController)
-                Screen.Profile -> ProfileScreen(navController = navController)
+            NavHost(
+                navController = navController,
+                startDestination = Screen.Books.route
+            ) {
+                composable(
+                    route = Screen.Books.route,
+                    enterTransition = { fadeIn() }, // Exemplo de animação ao entrar na tela
+                    exitTransition = { fadeOut() }, // Exemplo de animação ao sair da tela
+                    popEnterTransition = { fadeIn() }, // Exemplo de animação ao voltar para a tela
+                    popExitTransition = { fadeOut() } // Exemplo de animação ao sair da tela
+                ) {
+                    BooksScreen(navController)
+                }
+                composable(Screen.Reviews.route) { ReviewsScreen(navController) }
+                composable(Screen.Lists.route) { ListScreen(navController) }
+                composable(Screen.Search.route) { SearchBookScreen(navController) }
+                composable(Screen.Profile.route) { ProfileScreen(navController) }
             }
         }
 
@@ -88,13 +121,26 @@ fun MainScreen(
         CustomBottomNavigation(
             selectedTab = uiState.selectedBottomNavIndex,
             onTabSelected = { index ->
-                viewModel.onBottomNavItemSelected(index) // Atualiza o estado da navegação no ViewModel
+                viewModel.onBottomNavItemSelected(index)
+                navController.navigate(
+                    when (index) {
+                        0 -> Screen.Books.route
+                        1 -> Screen.Search.route
+                        2 -> Screen.Profile.route
+                        else -> Screen.Books.route
+                    }
+                ) {
+                    // Garante que a tela de `Search` e `Profile` também restaure o estado ao navegar
+                    restoreState = true
+                    launchSingleTop = true
+                    popUpTo(navController.graph.startDestinationId) {
+                        saveState = true
+                    }
+                }
             }
         )
     }
 }
-
-
 
 
 

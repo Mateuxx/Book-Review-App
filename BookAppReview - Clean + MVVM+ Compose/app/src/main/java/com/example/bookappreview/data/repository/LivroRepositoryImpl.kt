@@ -7,6 +7,8 @@ import com.example.bookappreview.data.webclient.BookService
 import com.example.bookappreview.data.webclient.aiservice.AiService
 import com.example.bookappreview.domain.model.Livro
 import com.example.bookappreview.domain.repository.LivroRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 
 /**
@@ -16,12 +18,12 @@ class LivroRepositoryImpl(
     private val livroSalvoDao: LivroSalvoDao,
     private val bookService: BookService,
     private val bookRecomendation: AiService
-    ) : LivroRepository {
+) : LivroRepository {
 
 
     /**
      * save books on the local db
-      */
+     */
     override suspend fun saveBooks(livro: Livro) {
         livroSalvoDao.salva(livro.toEntity())
     }
@@ -29,8 +31,11 @@ class LivroRepositoryImpl(
     /**
      * get books from the api
      */
-    override suspend fun fetchBooks(searchQuery: String, context: Context): List<Livro> {
-        return bookService.bookApi(searchQuery, context)
+    override fun fetchBooks(searchQuery: String, context: Context): Flow<List<Livro>> {
+        return flow {
+            val books = bookService.bookApi(searchQuery, context)
+            emit(books)
+        }
     }
 
     /**

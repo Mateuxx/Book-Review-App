@@ -3,15 +3,15 @@ package com.example.bookappreview.domain.usecase.livro
 import android.content.Context
 import com.example.bookappreview.domain.model.Livro
 import com.example.bookappreview.domain.repository.LivroRepository
+import kotlinx.coroutines.flow.Flow
 
 class BuscarLivrosUseCase(
     private val livroRepo: LivroRepository
 ) {
     /**
-     * Invoke eh uma convensão dentro de usecase para chamarmos de forma mais limpa a classe
-     * diretamente pelo metodo sem a necessidade de fazer o instanciamento do objeto
+     * Chama o repositório para buscar livros e retorna um Flow de Livros
      */
-    suspend operator fun invoke(books: String,context: Context): List<Livro> {
+    operator fun invoke(books: String, context: Context): Flow<List<Livro>> {
         return livroRepo.fetchBooks(books, context)
     }
 }

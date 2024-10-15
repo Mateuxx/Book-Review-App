@@ -18,36 +18,21 @@ class MainViewModel : ViewModel() {
 
     val tabs = listOf("Books", "Reviews", "Lists")
 
-    // Atualiza o estado da aba inferior selecionada
+    // Atualiza o estado da aba inferior selecionada (Home, Search, Profile)
     fun onBottomNavItemSelected(index: Int) {
         _uiState.update { currentState ->
-            val newScreen: Screen = when (index) {
-                0 -> Screen.Books // Aba inferior "Home"
-                1 -> Screen.Search // Aba inferior "Search"
-                2 -> Screen.Profile // Aba inferior "Profile"
-                else -> Screen.Books
-            }
             currentState.copy(
-                selectedBottomNavIndex = index, // Atualiza a aba inferior
-                currentScreen = newScreen // Atualiza a tela atual
+                selectedBottomNavIndex = index
             )
         }
     }
 
-    // Atualiza o estado da aba superior (TabRow) selecionada
+    // Atualiza o estado da aba superior (Books, Reviews, Lists)
     fun onTabSelected(index: Int) {
         _uiState.update { currentState ->
-            val newScreen: Screen = when (index) {
-                0 -> Screen.Books // Aba superior "Books"
-                1 -> Screen.Reviews // Aba superior "Reviews"
-                2 -> Screen.Lists // Aba superior "Lists"
-                else -> Screen.Books
-            }
             currentState.copy(
-                selectedTabIndex = index, // Atualiza a aba do TabRow
-                currentScreen = newScreen // Atualiza a tela atual
+                selectedTabIndex = index
             )
         }
     }
-
 }

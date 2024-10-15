@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            MainScreen(viewModel = MainViewModel(), navController = navController)
+            MainScreen(viewModel = MainViewModel())
         }
     }
 

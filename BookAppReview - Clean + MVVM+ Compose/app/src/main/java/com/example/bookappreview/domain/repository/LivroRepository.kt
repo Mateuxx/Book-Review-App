@@ -2,6 +2,7 @@ package com.example.bookappreview.domain.repository
 
 import android.content.Context
 import com.example.bookappreview.domain.model.Livro
+import kotlinx.coroutines.flow.Flow
 
 /**
  * independente da implementação do repo na camada data
@@ -16,7 +17,7 @@ interface LivroRepository {
     /**
      * Busca os livros na API
      */
-    suspend fun fetchBooks(searchQuery: String, context: Context): List<Livro>
+     fun fetchBooks(searchQuery: String, context: Context): Flow<List<Livro>>
 
     fun bookRecomendation(book: String): String
 
