@@ -20,20 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.example.bookappreview.presentation.model.LivroParcelable
 
 @Composable
-fun SearchBookSection(modifier: Modifier = Modifier, onClick: () -> Unit) {
-
-    val book = LivroParcelable(
-        title = "The Adventures of Kotlin",
-        subtitle = "A Comprehensive Guide to Jetpack Compose",
-        publisher = "Compose Publishers",
-        imagem = "https://example.com/image-of-book.jpg",
-        description = "This book provides an in-depth guide to Jetpack Compose and Kotlin with practical examples and best practices.",
-        pageCount = 320,
-        year = "2024",
-        autor = "John Doe",
-        genero = "Technology"
-    )
-
+fun SearchBookSection(book: LivroParcelable, onClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -82,10 +69,13 @@ fun SearchBookSection(modifier: Modifier = Modifier, onClick: () -> Unit) {
 }
 
 
-@Preview(showBackground = true, backgroundColor = 0xFF181b20)
-@Composable
-private fun SearchBookSectionPreview() {
-    SearchBookSection(
-        onClick = {}
-    )
-}
+//@Preview(showBackground = true, backgroundColor = 0xFF181b20)
+//@Composable
+//private fun SearchBookSectionPreview() {
+//    SearchBookSection(
+//        book = LivroParcelable(
+//
+//        )
+//        onClick = {}
+//    )
+//}
