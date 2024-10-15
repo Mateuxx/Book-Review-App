@@ -3,6 +3,7 @@ package com.example.bookappreview.presentation.model.mapper
 import com.example.bookappreview.domain.model.Livro
 import com.example.bookappreview.presentation.model.LivroParcelable
 
+//Pega uma lista de Livros e converte para uma lista de livros parcelable
 fun List<Livro>.toParcelableList(): List<LivroParcelable> {
     return this.map { it.toParcelable() }
 }

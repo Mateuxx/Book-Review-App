@@ -18,7 +18,6 @@ class BookSearchViewModel(
     private val buscarLivrosUseCase: BuscarLivrosUseCase
 ) : ViewModel() {
 
-    // Encapsula o UI State
     private val _uiState = MutableStateFlow(SearchScreenUiState())
     val uiState: StateFlow<SearchScreenUiState> = _uiState.asStateFlow()
 
@@ -30,7 +29,7 @@ class BookSearchViewModel(
         searchBooks(newQuery, context)
     }
 
-    // Função separada para disparar a busca dos livros
+    //Busca de Livros
     private fun searchBooks(query: String, context: Context) {
         if (query.isNotEmpty()) {
             // Dispara a busca de livros

@@ -40,7 +40,6 @@ fun SearchBookScreen(
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current // Contexto local
 
-
     // Utilizando LaunchedEffect para resetar o estado ao entrar na tela
     LaunchedEffect(Unit) {
         viewModel.resetState() // Resetar o estado da pesquisa
