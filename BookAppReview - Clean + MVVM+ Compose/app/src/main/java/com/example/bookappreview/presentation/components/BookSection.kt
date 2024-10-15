@@ -1,5 +1,6 @@
 package com.example.bookappreview.presentation.components
 
+import ShimmerBookPlaceholder
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +23,7 @@ import com.example.bookappreview.presentation.model.LivroParcelable
 fun BookSection(
     sectionTitle: String,
     books: List<LivroParcelable>, // Lista de livros para a seção
+    isLoading: Boolean = false,  // Estado para controlar o loading
     maxBooksToShow: Int = 10 // Número máximo de livros a serem exibidos
 ) {
     Column(
@@ -38,18 +40,30 @@ fun BookSection(
             modifier = Modifier.padding(horizontal = 5.dp)
 
         )
-        LazyRow(
-            contentPadding = PaddingValues(horizontal = 4.dp)
-        ) {
-            items(books.take(maxBooksToShow)) { book ->
-                BookPosterItem(book)
 
+        // Verifica se está carregando para mostrar o shimmer ou a lista de livros
+        if (isLoading) {
+            // Shimmer Effect (Loading Skeleton)
+            LazyRow(
+                contentPadding = PaddingValues(horizontal = 4.dp)
+            ) {
+                items(5) { // Exibimos 5 itens de placeholder para simular o shimmer
+                    ShimmerBookPlaceholder()
+                }
+            }
+        } else {
+            // Exibe os livros reais
+            LazyRow(
+                contentPadding = PaddingValues(horizontal = 4.dp)
+            ) {
+                items(books.take(maxBooksToShow)) { book ->
+                    BookPosterItem(book)
+                }
             }
         }
+
         Spacer(modifier = Modifier.padding(4.dp))
         MyDivider()
-
-
     }
 }
 
