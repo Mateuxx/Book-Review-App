@@ -1,5 +1,6 @@
 package com.example.bookappreview.presentation.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,20 +17,22 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.bookappreview.di.Injection
 import com.example.bookappreview.presentation.components.SearchBar
 import com.example.bookappreview.presentation.components.SearchBookSection
+import com.example.bookappreview.presentation.navigation.Screen
 import com.example.bookappreview.presentation.states.SearchState
 import com.example.bookappreview.presentation.viewModel.BookSearchViewModel
+import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 import com.example.bookappreview.presentation.viewModel.factory.BookSearchViewModelFactory
 
 @Composable
 fun SearchBookScreen(
     navController: NavHostController,
+    sharedViewModel: BookSharedViewModel,
     viewModel: BookSearchViewModel = viewModel(
         factory = BookSearchViewModelFactory(
             buscarLivrosUseCase = Injection.provideBuscaLivrosUsecase(LocalContext.current)
@@ -75,7 +78,12 @@ fun SearchBookScreen(
                 val livros = (uiState.searchState as SearchState.Success).livros
                 LazyColumn {
                     items(livros) { livro ->
-                        SearchBookSection(book = livro, onClick = {})
+                        SearchBookSection(book = livro, onClick = {
+                            Log.i("TAG", "SearchBookScreen: Livro Selecionado: $livro")
+                            sharedViewModel.selectBook(livro) //coloca esse livro especifico na sharedViewModel
+                            navController.navigate(Screen.Details.route)
+                        }
+                        )
                     }
                 }
             }
@@ -87,9 +95,14 @@ fun SearchBookScreen(
     }
 }
 
-
-@Preview(showBackground = true)
-@Composable
-private fun SearchBookScreenPreview() {
-    SearchBookScreen(navController = NavHostController(LocalContext.current))
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//private fun SearchBookScreenPreview() {
+//    SearchBookScreen(
+//        navController = NavHostController(
+//            LocalContext.current,
+//        )
+////        sharedViewModel = BookSharedViewModel()
+//    )
+//}

@@ -23,6 +23,7 @@ class BookSearchViewModel(
 
     // Atualiza a query no estado da UI e dispara a busca de livros
     fun onQueryChanged(newQuery: String, context: Context) {
+        //search state sendo o estado iniciado
         _uiState.update { it.copy(query = newQuery, searchState = SearchState.Loading) }
 
         // Dispara a busca de livros imediatamente ao mudar a query
@@ -35,9 +36,11 @@ class BookSearchViewModel(
             // Dispara a busca de livros
             viewModelScope.launch {
                 buscarLivrosUseCase(query, context)
+                    //caso tenha algum erro
                     .catch { e ->
                         _uiState.update { it.copy(searchState = SearchState.Error("Erro ao buscar livros: ${e.message}")) }
                     }
+                    //
                     .collect { livros ->
                         _uiState.update { it.copy(searchState = SearchState.Success(livros.toParcelableList())) }
                     }

@@ -14,7 +14,7 @@ data class LivroParcelable(
     var title: String?,
     var subtitle: String?,
     var publisher: String?,
-    val imagem: String? = null, // url
+    val imagem: String? = null, // URL
     var description: String?,
     var pageCount: Int,
     var year: String?,

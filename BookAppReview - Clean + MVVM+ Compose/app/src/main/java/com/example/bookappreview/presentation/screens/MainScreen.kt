@@ -28,11 +28,13 @@ import com.example.bookappreview.presentation.components.CustomTabRow
 import com.example.bookappreview.presentation.navigation.NavGraph
 import com.example.bookappreview.presentation.navigation.handlers.handleBottomNavigation
 import com.example.bookappreview.presentation.navigation.handlers.handleTabNavigation
+import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 import com.example.bookappreview.presentation.viewModel.MainViewModel
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
+    sharedViewModel: BookSharedViewModel,
     viewModel: MainViewModel = viewModel()
 ) {
     val navController = rememberNavController()
@@ -44,11 +46,9 @@ fun MainScreen(
             .background(Color.Black)
     ) {
 
-        Spacer(modifier = Modifier.height(8.dp))
 
         // Renderiza o CustomTabRow se a aba inferior for "Home"
         if (uiState.selectedBottomNavIndex == 0) {
-
             // Renderiza o Título
             Row(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -100,7 +100,7 @@ fun MainScreen(
                 .weight(1f)
                 .fillMaxWidth()
         ) {
-            NavGraph(navController = navController)
+            NavGraph(sharedViewModel = sharedViewModel, navController = navController)
         }
 
         // CustomBottomNavigation para alternar entre Home, Search e Profile

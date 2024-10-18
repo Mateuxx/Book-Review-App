@@ -3,19 +3,22 @@ package com.example.bookappreview.presentation.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.navigation.compose.rememberNavController
+import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bookappreview.presentation.screens.MainScreen
-import com.example.bookappreview.presentation.viewModel.MainViewModel
+import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val navController = rememberNavController()
-            MainScreen(viewModel = MainViewModel())
+            // Criando a instância do SharedViewModel dentro da Activity
+            val sharedViewModel= remember {
+                BookSharedViewModel()
+            }
+            //  SharedViewModel para o NavGraph
+            MainScreen(sharedViewModel = sharedViewModel)
         }
     }
-
 }
