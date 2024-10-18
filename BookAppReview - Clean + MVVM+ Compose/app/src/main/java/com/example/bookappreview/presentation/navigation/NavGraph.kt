@@ -22,6 +22,7 @@ fun NavGraph(navController: NavHostController,  sharedViewModel: BookSharedViewM
     ) {
         composable(
             route = Screen.Books.route,
+            //animações entre as transições
             enterTransition = { fadeIn() },
             exitTransition = { fadeOut() },
             popEnterTransition = { fadeIn() },
@@ -41,7 +42,7 @@ fun NavGraph(navController: NavHostController,  sharedViewModel: BookSharedViewM
         composable(route = Screen.Details.route) {
             BookDetailsScreen(
                 navController = navController,
-                viewModel = sharedViewModel // Também passa o SharedViewModel aqui
+                sharedViewModel = sharedViewModel // Também passa o SharedViewModel aqui
             )
         }
     }
