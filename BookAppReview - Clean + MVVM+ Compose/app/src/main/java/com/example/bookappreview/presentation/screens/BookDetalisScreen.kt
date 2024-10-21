@@ -18,8 +18,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.ArrowBackIosNew
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.WatchLater
 import androidx.compose.runtime.Composable
@@ -29,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -42,6 +42,7 @@ import coil.compose.AsyncImage
 import com.example.bookappreview.R
 import com.example.bookappreview.presentation.components.MyDivider
 import com.example.bookappreview.presentation.model.LivroParcelable
+import com.example.bookappreview.presentation.navigation.Screen
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 import com.example.bookappreview.presentation.viewModel.DetailsScreenViewModel
 
@@ -54,21 +55,42 @@ fun BookDetailsScreen(
     // Observa o livro selecionado
     val selectedBook by sharedViewModel.selectedBook.collectAsState()
     Log.i("TAG", "BookDetailsScreen: Livro no sharedViewmodel = $selectedBook")
-    BookDetailsContent(book = selectedBook!!)
+    BookDetailsContent(book = selectedBook!!, navController)
 }
 
 @Composable
-fun BookDetailsContent(book: LivroParcelable) {
+fun BookDetailsContent(book: LivroParcelable, navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF181b20))
-            .padding(16.dp)
     ) {
+        // Arrow Back no topo da tela
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp), // Padding para não colar no canto da tela
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Icon(
+                imageVector = Icons.Default.ArrowBackIosNew,
+                contentDescription = "Voltar",
+                tint = Color.White,
+                modifier = Modifier
+                    .size(25.dp)
+                    .clickable {
+                        navController.popBackStack() // Volta para a tela anterior
+                    }
+            )
+        }
+
+        Spacer(modifier = Modifier.height(6.dp))
+
         // Capa + informações do livro
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(horizontal = 16.dp) // Adicione um pouco de padding lateral
         ) {
             Column(
                 modifier = Modifier
@@ -81,7 +103,6 @@ fun BookDetailsContent(book: LivroParcelable) {
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
-
 
                 Spacer(modifier = Modifier.height(24.dp))
 
@@ -97,7 +118,6 @@ fun BookDetailsContent(book: LivroParcelable) {
                     color = Color.Gray,
                     fontWeight = FontWeight.Bold
                 )
-
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -113,27 +133,30 @@ fun BookDetailsContent(book: LivroParcelable) {
                 placeholder = painterResource(id = R.drawable.imagem_padrao)
             )
         }
-        Spacer(modifier = Modifier.height(40.dp))
+
+        Spacer(modifier = Modifier.height(15.dp))
 
         // Descrição do livro
         Text(
             text = book.description!!,
             style = MaterialTheme.typography.body1,
             color = Color.Gray,
-            maxLines = 8,
-            overflow = TextOverflow.Ellipsis
+            maxLines = 14,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
 
         Spacer(modifier = Modifier.height(14.dp))
 
-        MyDivider(modifier = Modifier.fillMaxWidth())
+        MyDivider(modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp))
 
         Spacer(modifier = Modifier.height(14.dp))
 
-        Spacer(modifier = Modifier.height(14.dp))
-
+        // Ícones no final da tela
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             Column(
@@ -143,18 +166,20 @@ fun BookDetailsContent(book: LivroParcelable) {
                 Icon(
                     imageVector = Icons.Default.Visibility,
                     contentDescription = null,
+                    tint = Color.Gray,
                     modifier = Modifier
-                        .size(50.dp)
+                        .size(40.dp)
                         .clickable { }
                 )
 
                 Text(
-                    text = "Read", style = TextStyle(
+                    text = "Read",
+                    style = TextStyle(
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Gray
                     )
                 )
-
             }
 
             Column(
@@ -164,18 +189,24 @@ fun BookDetailsContent(book: LivroParcelable) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = null,
+                    tint = Color.Gray,
                     modifier = Modifier
-                        .size(50.dp)
-                        .clickable { }
+                        .size(40.dp)
+                        .clickable {
+                            navController.navigate(Screen.Reviews.route)
+                        }
                 )
 
                 Text(
-                    text = "Review", style = TextStyle(
+                    text = "Review",
+                    style = TextStyle(
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Gray
                     )
                 )
             }
+
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -183,30 +214,22 @@ fun BookDetailsContent(book: LivroParcelable) {
                 Icon(
                     imageVector = Icons.Default.WatchLater,
                     contentDescription = null,
+                    tint = Color.Gray,
                     modifier = Modifier
-                        .size(50.dp)
+                        .size(40.dp)
                         .clickable { }
                 )
 
                 Text(
-                    text = "Read Later", style = TextStyle(
+                    text = "Read List",
+                    style = TextStyle(
                         fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Medium,
+                        color = Color.Gray
                     )
                 )
             }
-
-//            Icon(
-//                imageVector = Icons.Default.WatchLater,
-//                contentDescription = null,
-//                modifier = Modifier
-//                    .size(30.dp)
-//                    .clickable { }
-//            )
-
         }
-
-
     }
 }
 
@@ -225,7 +248,8 @@ private fun BookDetailsContentPreview() {
             year = "2024",
             autor = "John Doe",
             genero = "Technology"
-        )
+        ),
+        navController = NavHostController(LocalContext.current)
     )
 }
 
