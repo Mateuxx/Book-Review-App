@@ -40,6 +40,7 @@ fun ReviewContent(
     rating: Int,
     liked: Boolean,
     reviewText: String,
+    date: String,
     onRatingChanged: (Int) -> Unit,
     onLikeChanged: () -> Unit,
     onReviewTextChange: (String) -> Unit,
@@ -142,7 +143,7 @@ fun ReviewContent(
                 fontSize = 18.sp,
             )
             Text(
-                text = "Monday, 21 October 2024", // TODO: Get the respect date
+                text = date, // TODO: Get the respect date
                 color = Color.Gray,
                 fontSize = 12.sp,
             )
@@ -189,7 +190,7 @@ fun ReviewContent(
                 Icon(
                     imageVector = Icons.Default.Favorite,
                     contentDescription = null,
-                    tint = if (liked) Color.Green else Color.Yellow,
+                    tint = if (liked) Color.Green else Color.Gray,
                     modifier = Modifier
                         .size(45.dp)
                         .clickable { onLikeChanged() }
@@ -237,8 +238,9 @@ private fun ReviewContentPreview() {
             genero = "Technology"
         ),
         rating = 4,
-        liked = true,
+        liked = false,
         reviewText = "This book is a must-read for Jetpack Compose developers.",
+        date = "monday, 23 de outubro",
         onRatingChanged = {},
         onLikeChanged = {},
         onReviewTextChange = {}

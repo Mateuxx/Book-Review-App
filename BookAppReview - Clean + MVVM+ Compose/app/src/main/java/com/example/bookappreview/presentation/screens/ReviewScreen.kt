@@ -41,6 +41,7 @@ fun ReviewsScreen(
             rating = uiState.rating,
             liked = uiState.liked,
             reviewText = uiState.reviewString,
+            date = uiState.date,
             onRatingChanged = { reviewViewModel.updateRating(it) },
             onLikeChanged = { reviewViewModel.toggleLiked() },
             onReviewTextChange = { reviewViewModel.updateReviewText(it) }
