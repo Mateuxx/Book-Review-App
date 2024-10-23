@@ -3,6 +3,7 @@ package com.example.bookappreview.presentation.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Absolute.SpaceBetween
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,6 +15,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.HeartBroken
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,10 +39,9 @@ import com.example.bookappreview.R
 
 @Composable
 fun ReviewContent(modifier: Modifier = Modifier) {
+
     var liked by remember { mutableStateOf(false) }
-    var rating by remember {
-        mutableStateOf(4)
-    }
+    var rating by remember { mutableStateOf(4) }
 
     Column(
         modifier = Modifier
@@ -43,11 +49,11 @@ fun ReviewContent(modifier: Modifier = Modifier) {
             .background(Color(0xFF181b20))
             .padding(16.dp)
     ) {
-        //cancelar save (Header
+        // Cancelar save (Header)
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
-            horizontalArrangement = SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
                 text = "Cancel",
@@ -70,12 +76,17 @@ fun ReviewContent(modifier: Modifier = Modifier) {
                 fontSize = 18.sp,
                 modifier = Modifier.clickable { }
             )
-
         }
 
-        Spacer(modifier = Modifier.height(20.dp))
+        HorizontalDivider(
+            thickness = 1.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            color = Color.Gray
+        )
 
-        //Moview info - (cover + title + year)
+        // Movie info - (cover + title + year)
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth()
@@ -88,44 +99,125 @@ fun ReviewContent(modifier: Modifier = Modifier) {
                     .height(70.dp)
                     .width(50.dp),
             )
-            Text(
-                text = "The Fall Guy",
-                modifier = Modifier.padding(start = 6.dp),
-                color = Color.White,
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = "2024",
-                modifier = Modifier.padding(start = 3.dp),
-                color = Color.Gray,
-                fontSize = 14.sp
-            )
-
+            Column(
+                modifier = Modifier.padding(start = 6.dp)
+            ) {
+                Text(
+                    text = "The Fall Guy",
+                    color = Color.White,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text = "2024",
+                    color = Color.Gray,
+                    fontSize = 14.sp
+                )
+            }
         }
 
-        //Date Section
-        Row {
-
-        }
-
-        //Rating Section + liked
-        Row(
+        HorizontalDivider(
+            thickness = 1.dp,
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.Gray)
-        ) {
+                .padding(vertical = 16.dp),
+            color = Color.Gray
+        )
 
+        // Date Section
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Date",
+                color = Color.Gray,
+                fontSize = 18.sp,
+            )
+            Text(
+                text = "Monday, 21 October 2024",
+                color = Color.Gray,
+                fontSize = 12.sp,
+            )
         }
 
-        //Review Section
+        HorizontalDivider(
+            thickness = 1.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            color = Color.Gray
+        )
+
+        // Rating Section (Stars + Liked)
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Rate", color = Color.Gray, fontSize = 18.sp)
+                // Rating Stars
+                Row(
+                ) {
+                    (1..5).forEach { index ->
+                        Icon(
+                            imageVector = Icons.Default.Star,
+                            contentDescription = null,
+                            tint = if (index <= rating) Color.Green else Color.DarkGray,
+                            modifier = Modifier
+                                .size(40.dp)
+                                .clickable { rating = index }
+                        )
+                    }
+                }
+            }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = "Like", color = Color.Gray, fontSize = 18.sp)
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = null,
+                    tint = if (liked) Color.Green else Color.DarkGray,
+                    modifier = Modifier
+                        .size(45.dp)
+                        .clickable { liked = !liked }
+                )
+            }
+        }
+
+        HorizontalDivider(
+            thickness = 1.dp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            color = Color.Gray
+        )
+
+        // Add Review Section
+        Text(
+            text = "Add review...",
+            color = Color.Gray,
+            fontSize = 16.sp,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+
 
     }
-
 }
+
 
 @Preview(showBackground = true)
 @Composable
 private fun ReviewContentPreview() {
-    ReviewContent()
+    ReviewContent(
+
+    )
 }
