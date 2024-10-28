@@ -44,6 +44,7 @@ fun ReviewContent(
     onRatingChanged: (Int) -> Unit,
     onLikeChanged: () -> Unit,
     onReviewTextChange: (String) -> Unit,
+    onSaveClick: () -> Unit
 ) {
 
     Column(
@@ -77,7 +78,7 @@ fun ReviewContent(
                 text = "Save",
                 color = Color.Green,
                 fontSize = 18.sp,
-                modifier = Modifier.clickable { }
+                modifier = Modifier.clickable { onSaveClick() }
             )
         }
 
@@ -243,6 +244,7 @@ private fun ReviewContentPreview() {
         date = "monday, 23 de outubro",
         onRatingChanged = {},
         onLikeChanged = {},
-        onReviewTextChange = {}
+        onReviewTextChange = {},
+        onSaveClick = {}
     )
 }

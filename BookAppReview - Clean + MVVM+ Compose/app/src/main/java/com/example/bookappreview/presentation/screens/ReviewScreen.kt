@@ -1,18 +1,13 @@
 package com.example.bookappreview.presentation.screens
 
 import android.util.Log
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.bookappreview.presentation.components.ReviewContent
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
@@ -22,7 +17,7 @@ import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
 fun ReviewsScreen(
     navController: NavHostController,
     sharedViewModel: BookSharedViewModel,
-    reviewViewModel: ReviewScreenViewModel = viewModel(),
+    reviewViewModel: ReviewScreenViewModel = hiltViewModel(),
 ) {
 
     val selectedBook by sharedViewModel.selectedBook.collectAsState()
@@ -44,7 +39,11 @@ fun ReviewsScreen(
             date = uiState.date,
             onRatingChanged = { reviewViewModel.updateRating(it) },
             onLikeChanged = { reviewViewModel.toggleLiked() },
-            onReviewTextChange = { reviewViewModel.updateReviewText(it) }
+            onReviewTextChange = { reviewViewModel.updateReviewText(it) },
+            onSaveClick = {
+                reviewViewModel.saveBook()
+                navController.navigate("books")
+            }
         )
     } ?: run {
         Text(text = "Nenhum Livro Selecionado", color = Color.Red)

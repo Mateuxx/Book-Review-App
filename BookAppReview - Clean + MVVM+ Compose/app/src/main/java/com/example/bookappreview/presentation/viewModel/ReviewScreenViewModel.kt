@@ -1,16 +1,25 @@
 package com.example.bookappreview.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.bookappreview.domain.model.Livro
+import com.example.bookappreview.domain.usecase.livro.SalvarLivrosUsecase
 import com.example.bookappreview.presentation.model.LivroParcelable
 import com.example.bookappreview.presentation.states.ReviewScreenUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import javax.inject.Inject
 
-class ReviewScreenViewModel : ViewModel() {
+@HiltViewModel
+class ReviewScreenViewModel @Inject constructor(
+    private val salvarLivrosUsecase: SalvarLivrosUsecase
+) : ViewModel() {
 
     //Encapsulamento do estado da ui
     private val _uiState =
@@ -31,6 +40,32 @@ class ReviewScreenViewModel : ViewModel() {
 
     fun updateReviewText(newText: String) {
         _uiState.value = _uiState.value.copy(reviewString = newText)
+    }
+
+    fun saveBook() {
+        val livro = _uiState.value.book ?: return // Retorna se livro for nulo - nao faz nada
+
+        // Cria um objeto Livro com base no estado atual da UI
+        val savingBook = Livro(
+            title = livro.title,
+            subtitle = livro.subtitle,
+            publisher = livro.publisher,
+            imagem = livro.imagem,
+            description = livro.description,
+            pageCount = livro.pageCount,
+            year = livro.year,
+            autor = livro.autor,
+            genero = livro.genero,
+            rated = _uiState.value.rating,
+            review = _uiState.value.reviewString,
+            dateReview = _uiState.value.date,
+            like = _uiState.value.liked
+        )
+        //Lança uma corrotina para salvar o livro no banco de dados
+        viewModelScope.launch {
+            salvarLivrosUsecase(savingBook)
+        }
+
     }
 
     private fun currentDate(): String {
