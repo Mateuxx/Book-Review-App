@@ -49,6 +49,7 @@ fun MainScreen(
     // Observa o evento de salvamento completo do ReviewScreenViewModel
     val saveComplete by reviewViewModel.saveCompleteEvent.collectAsState()
 
+    
     // Lida com o evento de salvamento completo
     LaunchedEffect(saveComplete) {
         if (saveComplete) {

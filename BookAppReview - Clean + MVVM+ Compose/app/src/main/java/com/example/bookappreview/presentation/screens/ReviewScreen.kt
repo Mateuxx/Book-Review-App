@@ -1,17 +1,25 @@
 package com.example.bookappreview.presentation.screens
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.material.Text
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import com.example.bookappreview.presentation.components.ReviewContent
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
+import kotlinx.coroutines.launch
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ReviewsScreen(
     navController: NavHostController,
@@ -20,6 +28,7 @@ fun ReviewsScreen(
 ) {
 
     val selectedBook by sharedViewModel.selectedBook.collectAsState()
+
     Log.i("TAG", "ReviewsScreen: Livro em ReviewScreen = $selectedBook")
 
     LaunchedEffect(selectedBook) {
@@ -29,25 +38,37 @@ fun ReviewsScreen(
     }
 
     val uiState by reviewViewModel.uiState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
 
-
-    uiState.book?.let { book ->
-        ReviewContent(
-            book = book,
-            rating = uiState.rating,
-            liked = uiState.liked,
-            reviewText = uiState.reviewString,
-            date = uiState.date,
-            onRatingChanged = { reviewViewModel.updateRating(it) },
-            onLikeChanged = { reviewViewModel.toggleLiked() },
-            onReviewTextChange = { reviewViewModel.updateReviewText(it) },
-            onSaveClick = {
-                reviewViewModel.saveBook()
+    // Verifica o estado de `isSaving` e exibe o Snackbar
+    LaunchedEffect(uiState.isSaving) {
+        if (uiState.isSaving) {
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar("Salvando seu livro...")
             }
-
-        )
-    } ?: run {
-        Text(text = "Nenhum Livro Selecionado", color = Color.Red)
+        }
     }
 
+    Scaffold(
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
+    ) {
+        uiState.book?.let { book ->
+            ReviewContent(
+                book = book,
+                rating = uiState.rating,
+                liked = uiState.liked,
+                reviewText = uiState.reviewString,
+                date = uiState.date,
+                onRatingChanged = { reviewViewModel.updateRating(it) },
+                onLikeChanged = { reviewViewModel.toggleLiked() },
+                onReviewTextChange = { reviewViewModel.updateReviewText(it) },
+                onSaveClick = {
+                    reviewViewModel.saveBook()
+                }
+            )
+        } ?: run {
+            Text(text = "Nenhum Livro Selecionado", color = Color.Red)
+        }
+    }
 }

@@ -7,7 +7,9 @@ data class ReviewScreenUiState(
     val rating: Int = 0, // from 0 to 5
     val liked: Boolean = false,
     val reviewString: String = "", // text from user
-    val date: String = "" //state of the current date
+    val date: String = "", //state of the current date
+    val isSaving: Boolean = false // state for snack bar saving review
+
 )
 
 

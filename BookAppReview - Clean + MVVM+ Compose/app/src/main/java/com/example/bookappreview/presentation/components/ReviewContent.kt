@@ -144,7 +144,7 @@ fun ReviewContent(
                 fontSize = 18.sp,
             )
             Text(
-                text = date, // TODO: Get the respect date
+                text = date, 
                 color = Color.Gray,
                 fontSize = 12.sp,
             )

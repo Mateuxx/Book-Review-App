@@ -9,9 +9,11 @@ import com.example.bookappreview.domain.usecase.livro.SalvarLivrosUsecase
 import com.example.bookappreview.presentation.model.LivroParcelable
 import com.example.bookappreview.presentation.states.ReviewScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -27,6 +29,7 @@ class ReviewScreenViewModel @Inject constructor(
     private val _uiState =
         MutableStateFlow(ReviewScreenUiState(date = currentDate())) // Inicia com a data atual
     val uiState: StateFlow<ReviewScreenUiState> = _uiState.asStateFlow()
+
 
     private val _saveCompleteEvent = MutableStateFlow(false)
     val saveCompleteEvent: StateFlow<Boolean> = _saveCompleteEvent
@@ -66,11 +69,20 @@ class ReviewScreenViewModel @Inject constructor(
             dateReview = _uiState.value.date,
             like = _uiState.value.liked
         )
-        //Lança uma corrotina para salvar o livro no banco de dados
+
+        _uiState.update { it.copy(isSaving = true) }
         viewModelScope.launch {
-            salvarLivrosUsecase(savingBook)
-            // Emite o evento de conclusão
-            _saveCompleteEvent.value = true
+            try {
+                salvarLivrosUsecase(savingBook)
+                // TODO: Refatorar para colcocar o shimmer no lugar certo!
+                delay(2000)
+                // Emite o evento de conclusão para navegar de volta para a tela anterior
+                _saveCompleteEvent.value = true
+
+            } finally {
+                // Emite o evento de conclusão para navegar de volta para a tela anterior
+                _uiState.update { it.copy(isSaving = false) }
+            }
         }
 
     }

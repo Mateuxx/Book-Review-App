@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 
 
-// TODO: Fazer o ui state e colocar E refatorar esse viewmodel e o bookScreen
 class BooksScreenViewModel(
     private val buscarLivrosUseCase: BuscarLivrosUseCase
 ) : ViewModel() {
