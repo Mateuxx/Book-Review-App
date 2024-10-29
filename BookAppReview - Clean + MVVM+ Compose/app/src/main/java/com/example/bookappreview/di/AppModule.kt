@@ -38,19 +38,11 @@ object AppModule {
         return database.livroSalvodao()
     }
 
+    // Injeção direta de BookService usando Volley
     @Provides
     @Singleton
-    fun provideRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://example.com") // Substitua pela URL base correta
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideBookService(retrofit: Retrofit): BookService {
-        return retrofit.create(BookService::class.java)
+    fun provideBookService(): BookService {
+        return BookService() // Instancia diretamente BookService como uma classe
     }
 
     @Provides
