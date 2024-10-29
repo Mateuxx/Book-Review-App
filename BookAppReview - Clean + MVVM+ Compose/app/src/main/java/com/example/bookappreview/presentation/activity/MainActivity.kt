@@ -7,6 +7,7 @@ import com.example.bookappreview.presentation.screens.MainScreen
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -16,8 +17,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             // Criando a instância do SharedViewModel dentro da Activity
             val sharedViewModel: BookSharedViewModel = hiltViewModel()
+            val reviewViewModel: ReviewScreenViewModel = hiltViewModel()
+
             //  SharedViewModel para o NavGraph
-            MainScreen(sharedViewModel = sharedViewModel)
+            MainScreen(sharedViewModel = sharedViewModel, reviewViewModel = reviewViewModel)
         }
     }
 }

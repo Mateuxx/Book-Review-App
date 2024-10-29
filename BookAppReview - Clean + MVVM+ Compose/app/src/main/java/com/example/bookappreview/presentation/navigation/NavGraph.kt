@@ -13,9 +13,10 @@ import com.example.bookappreview.presentation.screens.ProfileScreen
 import com.example.bookappreview.presentation.screens.ReviewsScreen
 import com.example.bookappreview.presentation.screens.SearchBookScreen
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
+import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
 
 @Composable
-fun NavGraph(navController: NavHostController, sharedViewModel: BookSharedViewModel) {
+fun NavGraph(navController: NavHostController, sharedViewModel: BookSharedViewModel, reviewModel: ReviewScreenViewModel) {
     NavHost(
         navController = navController,
         startDestination = Screen.Books.route
@@ -33,7 +34,8 @@ fun NavGraph(navController: NavHostController, sharedViewModel: BookSharedViewMo
         composable(Screen.Reviews.route) {
             ReviewsScreen(
                 navController,
-                sharedViewModel
+                sharedViewModel,
+                reviewModel
             )
         }
         composable(Screen.Lists.route) { ListScreen(navController) }

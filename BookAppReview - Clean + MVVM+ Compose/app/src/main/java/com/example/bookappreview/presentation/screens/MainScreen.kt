@@ -12,8 +12,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,24 +23,45 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.bookappreview.presentation.components.CustomBottomNavigation
 import com.example.bookappreview.presentation.components.CustomTabRow
 import com.example.bookappreview.presentation.navigation.NavGraph
+import com.example.bookappreview.presentation.navigation.Screen
 import com.example.bookappreview.presentation.navigation.handlers.handleBottomNavigation
 import com.example.bookappreview.presentation.navigation.handlers.handleTabNavigation
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 import com.example.bookappreview.presentation.viewModel.MainViewModel
+import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     sharedViewModel: BookSharedViewModel,
-    viewModel: MainViewModel = viewModel()
+    viewModel: MainViewModel = viewModel(),
+    reviewViewModel: ReviewScreenViewModel
 ) {
     val navController = rememberNavController()
     val uiState by viewModel.uiState.collectAsState()
+
+    // Observa o evento de salvamento completo do ReviewScreenViewModel
+    val saveComplete by reviewViewModel.saveCompleteEvent.collectAsState()
+
+    // Lida com o evento de salvamento completo
+    LaunchedEffect(saveComplete) {
+        if (saveComplete) {
+            // Atualiza o estado da BottomNavigation no MainViewModel para o índice "Books" (0)
+            viewModel.onBottomNavItemSelected(0)
+            // Navega para a tela "Books" limpando a pilha anterior
+            navController.navigate(Screen.Books.route) {
+                popUpTo(Screen.Books.route) { inclusive = true }
+                launchSingleTop = true
+            }
+            reviewViewModel.resetSaveComplete() // Reseta o evento de salvamento completo
+        }
+    }
 
     Column(
         modifier = modifier
@@ -100,7 +123,11 @@ fun MainScreen(
                 .weight(1f)
                 .fillMaxWidth()
         ) {
-            NavGraph(sharedViewModel = sharedViewModel, navController = navController)
+            NavGraph(
+                sharedViewModel = sharedViewModel,
+                navController = navController,
+                reviewModel = reviewViewModel
+            )
         }
 
         // CustomBottomNavigation para alternar entre Home, Search e Profile

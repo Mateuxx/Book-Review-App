@@ -1,5 +1,7 @@
 package com.example.bookappreview.presentation.viewModel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bookappreview.domain.model.Livro
@@ -25,6 +27,9 @@ class ReviewScreenViewModel @Inject constructor(
     private val _uiState =
         MutableStateFlow(ReviewScreenUiState(date = currentDate())) // Inicia com a data atual
     val uiState: StateFlow<ReviewScreenUiState> = _uiState.asStateFlow()
+
+    private val _saveCompleteEvent = MutableStateFlow(false)
+    val saveCompleteEvent: StateFlow<Boolean> = _saveCompleteEvent
 
     fun initializeBook(book: LivroParcelable) {
         _uiState.value = _uiState.value.copy(book = book)
@@ -64,10 +69,19 @@ class ReviewScreenViewModel @Inject constructor(
         //Lança uma corrotina para salvar o livro no banco de dados
         viewModelScope.launch {
             salvarLivrosUsecase(savingBook)
+            // Emite o evento de conclusão
+            _saveCompleteEvent.value = true
         }
 
     }
 
+    // Função para resetar o evento após a navegação
+    fun resetSaveComplete() {
+        _saveCompleteEvent.value = false // Reseta o evento para evitar navegações repetidas
+    }
+
+
+    // TODO: Refatorar para isso vir de um outro lugar - Clean
     private fun currentDate(): String {
         val monthNames = mapOf(
             1 to "Janeiro", 2 to "Fevereiro", 3 to "Março", 4 to "Abril",

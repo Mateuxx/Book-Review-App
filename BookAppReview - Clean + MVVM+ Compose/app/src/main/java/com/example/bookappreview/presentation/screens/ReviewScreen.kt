@@ -7,7 +7,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.bookappreview.presentation.components.ReviewContent
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
@@ -17,7 +16,7 @@ import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
 fun ReviewsScreen(
     navController: NavHostController,
     sharedViewModel: BookSharedViewModel,
-    reviewViewModel: ReviewScreenViewModel = hiltViewModel(),
+    reviewViewModel: ReviewScreenViewModel
 ) {
 
     val selectedBook by sharedViewModel.selectedBook.collectAsState()
@@ -30,6 +29,8 @@ fun ReviewsScreen(
     }
 
     val uiState by reviewViewModel.uiState.collectAsState()
+
+
     uiState.book?.let { book ->
         ReviewContent(
             book = book,
@@ -42,8 +43,8 @@ fun ReviewsScreen(
             onReviewTextChange = { reviewViewModel.updateReviewText(it) },
             onSaveClick = {
                 reviewViewModel.saveBook()
-                navController.navigate("books")
             }
+
         )
     } ?: run {
         Text(text = "Nenhum Livro Selecionado", color = Color.Red)
