@@ -13,33 +13,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.example.bookappreview.di.Injection
 import com.example.bookappreview.presentation.components.BookSection
 import com.example.bookappreview.presentation.states.BooksScreenUiState
 import com.example.bookappreview.presentation.viewModel.BooksScreenViewModel
-import com.example.bookappreview.presentation.viewModel.factory.BooksScreenViewModelFactory
 
 @Composable
 fun BooksScreen(
     navController: NavHostController,
-    bookScreenViewModel: BooksScreenViewModel = viewModel(
-        factory = BooksScreenViewModelFactory(
-            buscaLivrosUseCase = Injection.provideBuscaLivrosUsecase(LocalContext.current)
-        )
-    ),
+    bookScreenViewModel: BooksScreenViewModel,
     isLoading: Boolean
 ) {
+
+    val context = LocalContext.current
     // Observa o estado de UI
     val uiState by bookScreenViewModel.uiState.collectAsState()
-    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        // Evita fazer novas requisições se os dados já foram carregados
+        // Fetch data only if not already loaded
         if (uiState !is BooksScreenUiState.Success) {
             bookScreenViewModel.fetchBooks("Harry Potter", context)
-
             val recommendations = bookScreenViewModel.aiRecommendation("Harry Potter")
             bookScreenViewModel.fetchBooksRecomendados(recommendations, context)
         }

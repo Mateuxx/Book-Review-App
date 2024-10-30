@@ -8,6 +8,7 @@ import com.example.bookappreview.data.repository.LivroRepositoryImpl
 import com.example.bookappreview.data.webclient.BookService
 import com.example.bookappreview.data.webclient.aiservice.AiService
 import com.example.bookappreview.domain.repository.LivroRepository
+import com.example.bookappreview.domain.usecase.livro.BuscarLivrosUseCase
 import com.example.bookappreview.domain.usecase.livro.SalvarLivrosUsecase
 import dagger.Module
 import dagger.Provides
@@ -38,17 +39,15 @@ object AppModule {
         return database.livroSalvodao()
     }
 
-    // Injeção direta de BookService usando Volley
     @Provides
     @Singleton
     fun provideBookService(): BookService {
-        return BookService() // Instancia diretamente BookService como uma classe
+        return BookService()
     }
 
     @Provides
     @Singleton
     fun provideAiService(): AiService {
-        // Inicialize o `AiService` conforme necessário
         return AiService()
     }
 
@@ -66,5 +65,11 @@ object AppModule {
     @Singleton
     fun provideSalvarLivrosUsecase(livroRepository: LivroRepository): SalvarLivrosUsecase {
         return SalvarLivrosUsecase(livroRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBuscarLivrosUseCase(livroRepository: LivroRepository): BuscarLivrosUseCase {
+        return BuscarLivrosUseCase(livroRepository)
     }
 }

@@ -10,15 +10,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.bookappreview.presentation.components.CustomBottomNavigation
@@ -38,7 +33,6 @@ import com.example.bookappreview.presentation.navigation.handlers.handleTabNavig
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 import com.example.bookappreview.presentation.viewModel.MainViewModel
 import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
@@ -53,16 +47,15 @@ fun MainScreen(
     // Observa o evento de salvamento completo do ReviewScreenViewModel
     val saveComplete by reviewViewModel.saveCompleteEvent.collectAsState()
 
-    // Lida com o evento de salvamento completo
     LaunchedEffect(saveComplete) {
         if (saveComplete) {
-            viewModel.setIsLoading(false) // Define que o Shimmer não deve mais ser exibido
-            viewModel.onBottomNavItemSelected(0) // Volta para a aba "Books"
+            viewModel.setIsLoading(false)
+            viewModel.onBottomNavItemSelected(0)
             navController.navigate(Screen.Books.route) {
                 popUpTo(Screen.Books.route) { inclusive = true }
                 launchSingleTop = true
             }
-            reviewViewModel.resetSaveComplete() // Reseta o evento de salvamento completo
+            reviewViewModel.resetSaveComplete() // Reset to prevent re-triggering
         }
     }
 

@@ -3,6 +3,7 @@ package com.example.bookappreview.presentation.navigation
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,6 +14,7 @@ import com.example.bookappreview.presentation.screens.ProfileScreen
 import com.example.bookappreview.presentation.screens.ReviewsScreen
 import com.example.bookappreview.presentation.screens.SearchBookScreen
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
+import com.example.bookappreview.presentation.viewModel.BooksScreenViewModel
 import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
 
 @Composable
@@ -22,6 +24,9 @@ fun NavGraph(
     reviewModel: ReviewScreenViewModel,
     isLoadingBooks: Boolean
 ) {
+
+    val bookScreenViewModel: BooksScreenViewModel = hiltViewModel()
+
     NavHost(
         navController = navController,
         startDestination = Screen.Books.route
@@ -34,7 +39,11 @@ fun NavGraph(
             popEnterTransition = { fadeIn() },
             popExitTransition = { fadeOut() }
         ) {
-            BooksScreen(navController, isLoading = isLoadingBooks)
+            BooksScreen(
+                navController,
+                bookScreenViewModel = bookScreenViewModel,
+                isLoading = isLoadingBooks
+            )
         }
         composable(Screen.Reviews.route) {
             ReviewsScreen(
