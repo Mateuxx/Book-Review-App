@@ -10,12 +10,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +38,7 @@ import com.example.bookappreview.presentation.navigation.handlers.handleTabNavig
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 import com.example.bookappreview.presentation.viewModel.MainViewModel
 import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun MainScreen(
@@ -49,13 +53,11 @@ fun MainScreen(
     // Observa o evento de salvamento completo do ReviewScreenViewModel
     val saveComplete by reviewViewModel.saveCompleteEvent.collectAsState()
 
-    
     // Lida com o evento de salvamento completo
     LaunchedEffect(saveComplete) {
         if (saveComplete) {
-            // Atualiza o estado da BottomNavigation no MainViewModel para o índice "Books" (0)
-            viewModel.onBottomNavItemSelected(0)
-            // Navega para a tela "Books" limpando a pilha anterior
+            viewModel.setIsLoading(false) // Define que o Shimmer não deve mais ser exibido
+            viewModel.onBottomNavItemSelected(0) // Volta para a aba "Books"
             navController.navigate(Screen.Books.route) {
                 popUpTo(Screen.Books.route) { inclusive = true }
                 launchSingleTop = true
@@ -69,7 +71,6 @@ fun MainScreen(
             .fillMaxSize()
             .background(Color.Black)
     ) {
-
 
         // Renderiza o CustomTabRow se a aba inferior for "Home"
         if (uiState.selectedBottomNavIndex == 0) {
@@ -127,7 +128,8 @@ fun MainScreen(
             NavGraph(
                 sharedViewModel = sharedViewModel,
                 navController = navController,
-                reviewModel = reviewViewModel
+                reviewModel = reviewViewModel,
+                isLoadingBooks = uiState.isLoadingBooks,
             )
         }
 

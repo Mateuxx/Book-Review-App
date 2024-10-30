@@ -23,7 +23,7 @@ import com.example.bookappreview.presentation.model.LivroParcelable
 fun BookSection(
     sectionTitle: String,
     books: List<LivroParcelable>, // Lista de livros para a seção
-    isLoading: Boolean = false,  // Estado para controlar o loading
+    isLoading: Boolean,  // Estado para controlar o loading
     maxBooksToShow: Int = 10 // Número máximo de livros a serem exibidos
 ) {
     Column(
@@ -67,20 +67,20 @@ fun BookSection(
     }
 }
 
-@Preview
-@Composable
-private fun BookSectionPreview() {
-    BookSection(
-        "Title",
-        listOf(LivroParcelable(
-            title = "The Adventures of Kotlin",
-            subtitle = "A Comprehensive Guide to Jetpack Compose",
-            publisher = "Compose Publishers",
-            imagem = "https://example.com/image-of-book.jpg",
-            description = "This book provides an in-depth guide to Jetpack Compose and Kotlin with practical examples and best practices.",
-            pageCount = 320,
-            year = "2024",
-            autor = "John Doe",
-            genero = "Technology"
-        )))
-}
+//@Preview
+//@Composable
+//private fun BookSectionPreview() {
+//    BookSection(
+//        "Title",
+//        listOf(LivroParcelable(
+//            title = "The Adventures of Kotlin",
+//            subtitle = "A Comprehensive Guide to Jetpack Compose",
+//            publisher = "Compose Publishers",
+//            imagem = "https://example.com/image-of-book.jpg",
+//            description = "This book provides an in-depth guide to Jetpack Compose and Kotlin with practical examples and best practices.",
+//            pageCount = 320,
+//            year = "2024",
+//            autor = "John Doe",
+//            genero = "Technology"
+//        )))
+//}

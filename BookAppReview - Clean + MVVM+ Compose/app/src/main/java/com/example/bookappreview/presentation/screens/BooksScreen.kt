@@ -28,7 +28,8 @@ fun BooksScreen(
         factory = BooksScreenViewModelFactory(
             buscaLivrosUseCase = Injection.provideBuscaLivrosUsecase(LocalContext.current)
         )
-    )
+    ),
+    isLoading: Boolean
 ) {
     // Observa o estado de UI
     val uiState by bookScreenViewModel.uiState.collectAsState()
@@ -55,17 +56,17 @@ fun BooksScreen(
                 BookSection(
                     sectionTitle = "Latest",
                     books = emptyList(),
-                    isLoading = true
+                    isLoading = isLoading
                 )
                 BookSection(
                     sectionTitle = "Want To Read",
                     books = emptyList(),
-                    isLoading = true
+                    isLoading = isLoading
                 )
                 BookSection(
                     sectionTitle = "Recomendados",
                     books = emptyList(),
-                    isLoading = true
+                    isLoading = isLoading
                 )
             }
             is BooksScreenUiState.Success -> {

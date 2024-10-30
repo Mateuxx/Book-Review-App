@@ -17,6 +17,14 @@ class MainViewModel : ViewModel() {
 
     val tabs = listOf("Books", "Reviews", "Lists")
 
+
+    fun setIsLoading(isLoading: Boolean) {
+        _uiState.update { currentState ->
+            currentState.copy(isLoadingBooks = isLoading)
+        }
+    }
+
+
     // Atualiza o estado da aba inferior selecionada (Home, Search, Profile)
     fun onBottomNavItemSelected(index: Int) {
         _uiState.update { currentState ->

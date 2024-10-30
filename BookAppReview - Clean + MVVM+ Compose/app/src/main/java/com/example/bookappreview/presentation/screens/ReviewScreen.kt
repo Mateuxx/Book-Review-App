@@ -38,14 +38,18 @@ fun ReviewsScreen(
     }
 
     val uiState by reviewViewModel.uiState.collectAsState()
+
+
     val snackbarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
+
+
 
     // Verifica o estado de `isSaving` e exibe o Snackbar
     LaunchedEffect(uiState.isSaving) {
         if (uiState.isSaving) {
             coroutineScope.launch {
-                snackbarHostState.showSnackbar("Salvando seu livro...")
+                snackbarHostState.showSnackbar("Salvando sua Review...")
             }
         }
     }
@@ -65,6 +69,7 @@ fun ReviewsScreen(
                 onReviewTextChange = { reviewViewModel.updateReviewText(it) },
                 onSaveClick = {
                     reviewViewModel.saveBook()
+                    //save and go to home screen(which is bookscreen)
                 }
             )
         } ?: run {

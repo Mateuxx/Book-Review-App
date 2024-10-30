@@ -16,7 +16,12 @@ import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
 import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
 
 @Composable
-fun NavGraph(navController: NavHostController, sharedViewModel: BookSharedViewModel, reviewModel: ReviewScreenViewModel) {
+fun NavGraph(
+    navController: NavHostController,
+    sharedViewModel: BookSharedViewModel,
+    reviewModel: ReviewScreenViewModel,
+    isLoadingBooks: Boolean
+) {
     NavHost(
         navController = navController,
         startDestination = Screen.Books.route
@@ -29,7 +34,7 @@ fun NavGraph(navController: NavHostController, sharedViewModel: BookSharedViewMo
             popEnterTransition = { fadeIn() },
             popExitTransition = { fadeOut() }
         ) {
-            BooksScreen(navController)
+            BooksScreen(navController, isLoading = isLoadingBooks)
         }
         composable(Screen.Reviews.route) {
             ReviewsScreen(
