@@ -36,7 +36,7 @@ fun BooksScreen(
         if (saveComplete) {
             Log.d("BooksScreen", "saveComplete detectado, chamando refreshBooks")
             bookScreenViewModel.refreshBooks("Harry Potter", context)
-            reviewScreenViewModel.resetSaveComplete()
+            reviewScreenViewModel.resetSaveComplete() //reseta o saveComplete para false para não afetar em outras navegoções
         }
     }
 

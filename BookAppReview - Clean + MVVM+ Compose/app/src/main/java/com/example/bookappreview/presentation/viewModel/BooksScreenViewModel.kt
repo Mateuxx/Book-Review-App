@@ -77,9 +77,8 @@ class BooksScreenViewModel @Inject constructor(
                             recommendedBooks.addAll(livros.toParcelableList())
                         }
                     }
-                }.awaitAll() // Aguarda todas as buscas paralelas finalizarem
+                }.awaitAll() //Espera todas as buscas em paralelo finalizarem para seguir o fluxo do codigo
 
-                // Atualiza o estado de UI mantendo os livros atuais e adicionando os recomendados
                 val currentBooks = (_uiState.value as? BooksScreenUiState.Success)?.livros ?: emptyList()
                 _uiState.value = BooksScreenUiState.Success(
                     livros = currentBooks,

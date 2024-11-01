@@ -69,7 +69,8 @@ fun ReviewsScreen(
                 onReviewTextChange = { reviewViewModel.updateReviewText(it) },
                 onSaveClick = {
                     reviewViewModel.saveBook()
-                    //save and go to home screen(which is bookscreen)
+                    //save and go to home screen(which is bookscreen) and
+                    // send the flag to upadte the bookscreen with the lastest books row
                 }
             )
         } ?: run {
