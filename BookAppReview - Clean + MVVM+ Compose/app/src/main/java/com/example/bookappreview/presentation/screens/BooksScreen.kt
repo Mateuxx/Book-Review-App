@@ -44,7 +44,7 @@ fun BooksScreen(
     LaunchedEffect(Unit) {
         if (uiState !is BooksScreenUiState.Success) {
             Log.d("BooksScreen", "Primeiro carregamento de livros e recomendações")
-            bookScreenViewModel.fetchLastSavedBooksAndCompleteWithApi("Harry Potter", context)
+            bookScreenViewModel.refreshBooks("Harry Potter", context)
             val recommendations = bookScreenViewModel.aiRecommendation("Harry Potter")
             bookScreenViewModel.fetchBooksRecomendados(recommendations, context)
         }
