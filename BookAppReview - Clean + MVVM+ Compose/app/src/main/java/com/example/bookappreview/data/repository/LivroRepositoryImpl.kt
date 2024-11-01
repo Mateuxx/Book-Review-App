@@ -3,12 +3,14 @@ package com.example.bookappreview.data.repository
 import android.content.Context
 import com.example.bookappreview.data.database.dao.LivroSalvoDao
 import com.example.bookappreview.data.model.mapper.toEntity
+import com.example.bookappreview.data.model.mapper.toLivro
 import com.example.bookappreview.data.webclient.BookService
 import com.example.bookappreview.data.webclient.aiservice.AiService
 import com.example.bookappreview.domain.model.Livro
 import com.example.bookappreview.domain.repository.LivroRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 
 /**
@@ -35,6 +37,12 @@ class LivroRepositoryImpl(
         return flow {
             val books = bookService.bookApi(searchQuery, context)
             emit(books)
+        }
+    }
+
+    override fun fecthLastSavedBooks(): Flow<List<Livro>> {
+        return livroSalvoDao.getLatestBooks().map { entities ->
+            entities.map { it.toLivro() }
         }
     }
 

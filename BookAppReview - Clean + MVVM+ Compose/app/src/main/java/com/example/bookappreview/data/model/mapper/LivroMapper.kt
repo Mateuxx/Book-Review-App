@@ -24,7 +24,7 @@ fun LivroEntity.toLivro(): Livro {
 
 fun Livro.toEntity(): LivroEntity {
     return LivroEntity(
-        id = UUID.randomUUID().toString(),
+        id = 0L,
         title,
         subtitle,
         publisher,

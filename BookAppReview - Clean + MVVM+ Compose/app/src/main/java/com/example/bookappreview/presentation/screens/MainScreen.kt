@@ -1,6 +1,7 @@
 package com.example.bookappreview.presentation.screens
 
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.example.bookappreview.presentation.components.CustomBottomNavigation
@@ -31,6 +33,7 @@ import com.example.bookappreview.presentation.navigation.Screen
 import com.example.bookappreview.presentation.navigation.handlers.handleBottomNavigation
 import com.example.bookappreview.presentation.navigation.handlers.handleTabNavigation
 import com.example.bookappreview.presentation.viewModel.BookSharedViewModel
+import com.example.bookappreview.presentation.viewModel.BooksScreenViewModel
 import com.example.bookappreview.presentation.viewModel.MainViewModel
 import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
 
@@ -43,12 +46,14 @@ fun MainScreen(
 ) {
     val navController = rememberNavController()
     val uiState by viewModel.uiState.collectAsState()
+    val bookScreenViewModel: BooksScreenViewModel = hiltViewModel()
 
     // Observa o evento de salvamento completo do ReviewScreenViewModel
     val saveComplete by reviewViewModel.saveCompleteEvent.collectAsState()
 
     LaunchedEffect(saveComplete) {
         if (saveComplete) {
+            Log.d("MainScreen", "Navigating to BooksScreen due to saveCompleteEvent")
             viewModel.setIsLoading(false)
             viewModel.onBottomNavItemSelected(0)
             navController.navigate(Screen.Books.route) {
@@ -123,6 +128,7 @@ fun MainScreen(
                 navController = navController,
                 reviewModel = reviewViewModel,
                 isLoadingBooks = uiState.isLoadingBooks,
+                bookScreenViewModel = bookScreenViewModel
             )
         }
 

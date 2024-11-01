@@ -1,5 +1,6 @@
 package com.example.bookappreview.presentation.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,26 +18,39 @@ import androidx.navigation.NavHostController
 import com.example.bookappreview.presentation.components.BookSection
 import com.example.bookappreview.presentation.states.BooksScreenUiState
 import com.example.bookappreview.presentation.viewModel.BooksScreenViewModel
+import com.example.bookappreview.presentation.viewModel.ReviewScreenViewModel
 
 @Composable
 fun BooksScreen(
     navController: NavHostController,
     bookScreenViewModel: BooksScreenViewModel,
+    reviewScreenViewModel: ReviewScreenViewModel,
     isLoading: Boolean
 ) {
-
     val context = LocalContext.current
-    // Observa o estado de UI
     val uiState by bookScreenViewModel.uiState.collectAsState()
+    val saveComplete by reviewScreenViewModel.saveCompleteEvent.collectAsState()
 
+    // Atualiza a lista de livros quando um novo livro é salvo
+    LaunchedEffect(saveComplete) {
+        if (saveComplete) {
+            Log.d("BooksScreen", "saveComplete detectado, chamando refreshBooks")
+            bookScreenViewModel.refreshBooks("Harry Potter", context)
+            reviewScreenViewModel.resetSaveComplete()
+        }
+    }
+
+    // Carrega livros e recomendações apenas uma vez ao entrar na tela
     LaunchedEffect(Unit) {
-        // Fetch data only if not already loaded
         if (uiState !is BooksScreenUiState.Success) {
-            bookScreenViewModel.fetchBooks("Harry Potter", context)
+            Log.d("BooksScreen", "Primeiro carregamento de livros e recomendações")
+            bookScreenViewModel.fetchLastSavedBooksAndCompleteWithApi("Harry Potter", context)
             val recommendations = bookScreenViewModel.aiRecommendation("Harry Potter")
             bookScreenViewModel.fetchBooksRecomendados(recommendations, context)
         }
     }
+
+
 
     Column(
         modifier = Modifier
@@ -45,46 +59,19 @@ fun BooksScreen(
     ) {
         when (uiState) {
             is BooksScreenUiState.Loading -> {
-                // Exibe shimmer enquanto carrega
-                BookSection(
-                    sectionTitle = "Latest",
-                    books = emptyList(),
-                    isLoading = isLoading
-                )
-                BookSection(
-                    sectionTitle = "Want To Read",
-                    books = emptyList(),
-                    isLoading = isLoading
-                )
-                BookSection(
-                    sectionTitle = "Recomendados",
-                    books = emptyList(),
-                    isLoading = isLoading
-                )
+                BookSection("Latest", emptyList(), isLoading)
+                BookSection("Want To Read", emptyList(), isLoading)
+                BookSection("Recomendados", emptyList(), isLoading)
             }
+
             is BooksScreenUiState.Success -> {
                 val successState = uiState as BooksScreenUiState.Success
-
-                // Exibe os livros principais e recomendados
-                BookSection(
-                    sectionTitle = "Ultimos",
-                    books = successState.livros,
-                    isLoading = false // Carregamento completo, exibe os livros
-                )
-                BookSection(
-                    sectionTitle = "Want To Read",
-                    books = successState.livros,
-                    isLoading = false // Carregamento completo, exibe os livros
-                )
-
-                BookSection(
-                    sectionTitle = "Recomendados",
-                    books = successState.livrosRecomendados,
-                    isLoading = false // Carregamento completo, exibe os recomendados
-                )
+                BookSection("Ultimos", successState.livros, isLoading = false)
+                BookSection("Want To Read", successState.livros, isLoading = false)
+                BookSection("Recomendados", successState.livrosRecomendados, isLoading = false)
             }
+
             is BooksScreenUiState.Error -> {
-                // Exibe uma mensagem de erro
                 Text(
                     text = (uiState as BooksScreenUiState.Error).message,
                     color = Color.Red,
@@ -94,7 +81,6 @@ fun BooksScreen(
         }
     }
 }
-
 
 //@Preview
 //@Composable

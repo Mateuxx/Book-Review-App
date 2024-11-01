@@ -1,5 +1,6 @@
 package com.example.bookappreview.presentation.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -51,9 +52,7 @@ class ReviewScreenViewModel @Inject constructor(
     }
 
     fun saveBook() {
-        val livro = _uiState.value.book ?: return // Retorna se livro for nulo - nao faz nada
-
-        // Cria um objeto Livro com base no estado atual da UI
+        val livro = _uiState.value.book ?: return
         val savingBook = Livro(
             title = livro.title,
             subtitle = livro.subtitle,
@@ -74,19 +73,14 @@ class ReviewScreenViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 salvarLivrosUsecase(savingBook)
-                // TODO: Refatorar para colcocar o shimmer no lugar certo!
-                delay(2000)
-                // Emite o evento de conclusão para navegar de volta para a tela anterior
-                _saveCompleteEvent.value = true
-
+                _saveCompleteEvent.value = true // Define o evento de salvamento como concluído
+                // Adiciona um log para confirmar o evento de salvamento
+                Log.d("ReviewScreenViewModel", "Livro salvo, _saveCompleteEvent disparado")
             } finally {
-                // Emite o evento de conclusão para navegar de volta para a tela anterior
                 _uiState.update { it.copy(isSaving = false) }
             }
         }
-
     }
-
     // Função para resetar o evento após a navegação
     fun resetSaveComplete() {
         _saveCompleteEvent.value = false // Reseta o evento para evitar navegações repetidas

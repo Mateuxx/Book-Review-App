@@ -17,7 +17,11 @@ interface LivroRepository {
     /**
      * Busca os livros na API
      */
-     fun fetchBooks(searchQuery: String, context: Context): Flow<List<Livro>>
+    fun fetchBooks(searchQuery: String, context: Context): Flow<List<Livro>>
+
+
+    //Get the latest reviews from the database
+    fun fecthLastSavedBooks(): Flow<List<Livro>>
 
     fun bookRecomendation(book: String): String
 

@@ -7,9 +7,8 @@ import java.util.UUID
 
 @Entity(tableName = "livrosalvo")
 data class LivroEntity (
-    @PrimaryKey
-    @ColumnInfo(defaultValue = "")
-    val id: String = UUID.randomUUID().toString(),
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0L, // ID incremental gerado automaticamente
     val title: String?,
     val subtitle: String?,
     val publisher: String?,

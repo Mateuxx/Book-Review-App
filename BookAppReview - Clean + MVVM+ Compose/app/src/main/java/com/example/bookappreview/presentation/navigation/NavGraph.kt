@@ -22,10 +22,11 @@ fun NavGraph(
     navController: NavHostController,
     sharedViewModel: BookSharedViewModel,
     reviewModel: ReviewScreenViewModel,
-    isLoadingBooks: Boolean
+    isLoadingBooks: Boolean,
+    bookScreenViewModel: BooksScreenViewModel
 ) {
 
-    val bookScreenViewModel: BooksScreenViewModel = hiltViewModel()
+
 
     NavHost(
         navController = navController,
@@ -42,6 +43,7 @@ fun NavGraph(
             BooksScreen(
                 navController,
                 bookScreenViewModel = bookScreenViewModel,
+                reviewScreenViewModel = reviewModel,
                 isLoading = isLoadingBooks
             )
         }

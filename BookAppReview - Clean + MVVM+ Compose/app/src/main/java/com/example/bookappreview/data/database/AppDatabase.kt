@@ -16,10 +16,10 @@ import com.example.bookappreview.data.model.Usuario
     entities = [Usuario::class,
         LivroEntity::class
     ],
-    version = 1,
-//    autoMigrations = [
-//        AutoMigration(from = 3, to = 4)
-//    ],
+    version = 2,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2)
+    ],
     exportSchema = true
 )
 @TypeConverters(Converters::class)
