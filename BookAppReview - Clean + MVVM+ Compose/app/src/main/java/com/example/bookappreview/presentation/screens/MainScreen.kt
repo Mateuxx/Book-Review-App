@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -133,16 +136,23 @@ fun MainScreen(
         }
 
         // CustomBottomNavigation para alternar entre Home, Search e Profile
-        CustomBottomNavigation(
-            selectedTab = uiState.selectedBottomNavIndex,
-            onTabSelected = { index ->
-                viewModel.onBottomNavItemSelected(index)
-                handleBottomNavigation(
-                    navController,
-                    index
-                )  // Navegação movida para função separada
-            }
-        )
+        Box(
+            modifier = Modifier
+//                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .windowInsetsPadding(WindowInsets.navigationBars) // Respeita a barra de navegação
+        ) {
+            CustomBottomNavigation(
+                selectedTab = uiState.selectedBottomNavIndex,
+                onTabSelected = { index ->
+                    viewModel.onBottomNavItemSelected(index)
+                    handleBottomNavigation(
+                        navController,
+                        index
+                    )
+                }
+            )
+        }
     }
 }
 
