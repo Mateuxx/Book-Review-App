@@ -1,8 +1,6 @@
 package com.example.bookappreview.presentation.viewModel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bookappreview.domain.model.Livro
@@ -10,7 +8,6 @@ import com.example.bookappreview.domain.usecase.livro.SalvarLivrosUsecase
 import com.example.bookappreview.presentation.model.LivroParcelable
 import com.example.bookappreview.presentation.states.ReviewScreenUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +25,7 @@ class ReviewScreenViewModel @Inject constructor(
 
     //Encapsulamento do estado da ui
     private val _uiState =
-        MutableStateFlow(ReviewScreenUiState(date=  currentDateIso())) // Inicia com a data atual
+        MutableStateFlow(ReviewScreenUiState(date = currentDate())) // Inicia com a data atual
     val uiState: StateFlow<ReviewScreenUiState> = _uiState.asStateFlow()
 
 
@@ -65,7 +62,7 @@ class ReviewScreenViewModel @Inject constructor(
             genero = livro.genero,
             rated = _uiState.value.rating,
             review = _uiState.value.reviewString,
-            dateReview = currentDateIso(),
+            dateReview = _uiState.value.date,
             like = _uiState.value.liked
         )
 
@@ -84,12 +81,6 @@ class ReviewScreenViewModel @Inject constructor(
     // Função para resetar o evento após a navegação
     fun resetSaveComplete() {
         _saveCompleteEvent.value = false // Reseta o evento para evitar navegações repetidas
-    }
-
-    // Método para gerar a data no formato ISO para salvar no banco
-    private fun currentDateIso(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        return sdf.format(Calendar.getInstance().time)
     }
 
 

@@ -11,6 +11,8 @@ import com.example.bookappreview.domain.repository.LivroRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 /**
@@ -51,6 +53,39 @@ class LivroRepositoryImpl(
      */
     override fun bookRecomendation(book: String): String {
         TODO("Not yet implemented")
+    }
+
+    override fun fetchAllBooksGroupedByDate(): Flow<Map<String, List<Livro>>> {
+        return livroSalvoDao.getAllBooks().map { entities ->
+            entities.map { it.toLivro() }
+                .groupBy { livro ->
+                    //converter a data para o formato de agrupamento para mes e ano
+                    val isoDate = convertDateToIso(livro.dateReview)
+                    val parsedDate =
+                        //pega a data convertida e passa para o formato date
+                        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(isoDate)
+                    // formata a data para o formato desejado - janeiro 2024
+                    SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(parsedDate!!)
+                }
+                .toSortedMap(compareByDescending { it })
+        }
+    }
+
+    /**
+     * converter a data no formato que vem do db sendo uma string
+     * - dia/mes/ano para o formato de agrupamento - mes e ano
+     *
+     * @return uma string com o formato ano e mes
+     */
+    private fun convertDateToIso(date: String): String {
+        val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+        val parseDate = inputFormat.parse(date)
+        return if (parseDate != null) {
+            outputFormat.format(parseDate)
+        } else {
+            ""
+        }
     }
 }
 

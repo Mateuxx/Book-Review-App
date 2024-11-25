@@ -15,4 +15,10 @@ interface LivroSalvoDao {
     @Query("SELECT * FROM livrosalvo ORDER BY id DESC LIMIT 5")
     fun getLatestBooks(): Flow<List<LivroEntity>>
 
+    /**
+     * Returns all the saved books from the database
+     */
+    @Query("SELECT * FROM livrosalvo ORDER BY id DESC")
+    fun getAllBooks(): Flow<List<LivroEntity>>
+
 }

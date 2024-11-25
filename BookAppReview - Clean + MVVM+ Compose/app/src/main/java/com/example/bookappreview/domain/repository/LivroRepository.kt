@@ -23,6 +23,15 @@ interface LivroRepository {
     //Get the latest reviews from the database
     fun fecthLastSavedBooks(): Flow<List<Livro>>
 
+    /**
+     * Recomenda Livros Semelhantes com base nos livros ja salvos do usuario
+     */
     fun bookRecomendation(book: String): String
+
+
+    /**
+     * Busca todos os livros agrupados por data
+     */
+    fun fetchAllBooksGroupedByDate(): Flow<Map<String, List<Livro>>>
 
 }
