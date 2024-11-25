@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -67,91 +68,104 @@ fun MainScreen(
         }
     }
 
-    Column(
-        modifier = modifier
+    Box(
+        modifier = Modifier
             .fillMaxSize()
-            .background(Color.Black)
+            .background(
+                when (uiState.selectedBottomNavIndex) {
+                    1 -> Color(0xFF181b20)
+                    else -> Color.Black
+                }
+            )
+            .windowInsetsPadding(WindowInsets.systemBars)
     ) {
-
-        // Renderiza o CustomTabRow se a aba inferior for "Home"
-        if (uiState.selectedBottomNavIndex == 0) {
-            // Renderiza o Título
-            Row(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Text(
-                    modifier = Modifier.padding(top = 10.dp),
-                    text = "Book Diary",
-                    color = Color.White,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
-                )
-            }
-            CustomTabRow(
-                tabs = viewModel.tabs,
-                selectedTabIndex = uiState.selectedTabIndex,
-                onTabSelected = { index ->
-                    viewModel.onTabSelected(index)
-                    handleTabNavigation(
-                        navController,
-                        index
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            // Renderiza o título, dependendo da aba selecionada
+            if (uiState.selectedBottomNavIndex == 0) {
+                Row(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    Text(
+                        modifier = Modifier.padding(top = 10.dp),
+                        text = "Book Diary",
+                        color = Color.White,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
                     )
                 }
-            )
-        }
-        // Renderiza o Titulo do app em profile as well
-        if (uiState.selectedBottomNavIndex == 2) {
-            // Renderiza o Título
-            Row(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                verticalAlignment = Alignment.Bottom
-            ) {
-                Text(
-                    modifier = Modifier.padding(top = 10.dp),
-                    text = "Book Diary",
-                    color = Color.White,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.Bold
+                CustomTabRow(
+                    tabs = viewModel.tabs,
+                    selectedTabIndex = uiState.selectedTabIndex,
+                    onTabSelected = { index ->
+                        viewModel.onTabSelected(index)
+                        handleTabNavigation(
+                            navController,
+                            index
+                        )
+                    }
                 )
             }
 
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Usa o NavGraph para a navegação centralizada
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth()
-        ) {
-            NavGraph(
-                sharedViewModel = sharedViewModel,
-                navController = navController,
-                reviewModel = reviewViewModel,
-                isLoadingBooks = uiState.isLoadingBooks,
-                bookScreenViewModel = bookScreenViewModel
-            )
-        }
-
-        // CustomBottomNavigation para alternar entre Home, Search e Profile
-        Box(
-            modifier = Modifier
-//                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .windowInsetsPadding(WindowInsets.navigationBars) // Respeita a barra de navegação
-        ) {
-            CustomBottomNavigation(
-                selectedTab = uiState.selectedBottomNavIndex,
-                onTabSelected = { index ->
-                    viewModel.onBottomNavItemSelected(index)
-                    handleBottomNavigation(
-                        navController,
-                        index
+            // Renderiza o Título na aba de Perfil
+            if (uiState.selectedBottomNavIndex == 2) {
+                Row(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    verticalAlignment = Alignment.Bottom
+                ) {
+                    Text(
+                        modifier = Modifier.padding(top = 10.dp),
+                        text = "Book Diary",
+                        color = Color.White,
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
                     )
                 }
-            )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Renderiza o conteúdo principal da tela
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+            ) {
+                NavGraph(
+                    sharedViewModel = sharedViewModel,
+                    navController = navController,
+                    reviewModel = reviewViewModel,
+                    isLoadingBooks = uiState.isLoadingBooks,
+                    bookScreenViewModel = bookScreenViewModel
+                )
+            }
+
+            // Navegação inferior com fundo dinâmico
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(
+                        when (uiState.selectedBottomNavIndex) {
+                            1 -> Color.Gray.copy(alpha = 0.1f) // Fundo mais claro para a navegação inferior na aba de busca
+                            else -> Color.Black // Fundo padrão
+                        }
+                    )
+                    .windowInsetsPadding(WindowInsets.navigationBars)
+            ) {
+                CustomBottomNavigation(
+                    selectedTab = uiState.selectedBottomNavIndex,
+                    onTabSelected = { index ->
+                        viewModel.onBottomNavItemSelected(index)
+                        handleBottomNavigation(
+                            navController,
+                            index
+                        )
+                    }
+                )
+            }
         }
     }
 }

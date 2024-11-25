@@ -15,7 +15,7 @@ class MainViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(MainScreenUiState())
     val uiState: StateFlow<MainScreenUiState> = _uiState.asStateFlow()
 
-    val tabs = listOf("Books", "Reviews", "Lists")
+    val tabs = listOf("Books", "Diary", "Lists")
 
 
     fun setIsLoading(isLoading: Boolean) {

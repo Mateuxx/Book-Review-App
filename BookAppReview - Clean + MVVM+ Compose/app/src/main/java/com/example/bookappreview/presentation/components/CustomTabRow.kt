@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -50,7 +51,8 @@ fun CustomTabRow(
             ) {
                 Text(
                     text = title,
-                    color = if (selectedTabIndex == index) Color.White else Color.Gray // Cor do texto condicional
+                    color = if (selectedTabIndex == index) Color.White else Color.Gray, // Cor do texto condicional
+                    fontWeight = FontWeight.Bold
                 )
             }
         }
@@ -60,7 +62,7 @@ fun CustomTabRow(
 @Preview(showBackground = true)
 @Composable
 private fun CustomTabRowPreview() {
-     CustomTabRow(tabs = listOf("Livros", "Reviews", "Lists"), selectedTabIndex = 0) {
-         
-     }
+    CustomTabRow(tabs = listOf("Livros", "Reviews", "Lists"), selectedTabIndex = 0) {
+
+    }
 }
