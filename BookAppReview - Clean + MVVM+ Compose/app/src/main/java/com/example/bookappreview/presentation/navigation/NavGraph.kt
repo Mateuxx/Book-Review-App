@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.bookappreview.presentation.screens.BookDetailsScreen
+import com.example.bookappreview.presentation.screens.BookDiaryScreen
 import com.example.bookappreview.presentation.screens.BooksScreen
 import com.example.bookappreview.presentation.screens.ListScreen
 import com.example.bookappreview.presentation.screens.ProfileScreen
@@ -62,6 +63,7 @@ fun NavGraph(
             )
         }
         composable(Screen.Profile.route) { ProfileScreen(navController) }
+        composable(Screen.Diary.route) { BookDiaryScreen(navController) }
         composable(route = Screen.Details.route) {
             BookDetailsScreen(
                 navController = navController,

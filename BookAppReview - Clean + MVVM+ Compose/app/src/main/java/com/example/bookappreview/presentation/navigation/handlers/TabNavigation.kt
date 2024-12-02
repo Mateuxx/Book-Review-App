@@ -6,7 +6,7 @@ import com.example.bookappreview.presentation.navigation.Screen
 fun handleTabNavigation(navController: NavController, selectedTabIndex: Int) {
     val route = when (selectedTabIndex) {
         0 -> Screen.Books.route
-        1 -> Screen.Reviews.route
+        1 -> Screen.Diary.route
         2 -> Screen.Lists.route
         else -> Screen.Books.route
     }

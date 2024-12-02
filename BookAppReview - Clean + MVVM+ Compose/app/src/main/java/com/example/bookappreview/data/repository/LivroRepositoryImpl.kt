@@ -1,6 +1,7 @@
 package com.example.bookappreview.data.repository
 
 import android.content.Context
+import android.util.Log
 import com.example.bookappreview.data.database.dao.LivroSalvoDao
 import com.example.bookappreview.data.model.mapper.toEntity
 import com.example.bookappreview.data.model.mapper.toLivro
@@ -13,12 +14,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import java.text.SimpleDateFormat
 import java.util.Locale
+import javax.inject.Inject
 
 
 /**
  * Repository data - tem acesso ao banco aos Data Source
  */
-class LivroRepositoryImpl(
+class LivroRepositoryImpl @Inject constructor(
     private val livroSalvoDao: LivroSalvoDao,
     private val bookService: BookService,
     private val bookRecomendation: AiService
@@ -50,6 +52,7 @@ class LivroRepositoryImpl(
 
     /**
      * Recommendation of similar books using AI
+     *
      */
     override fun bookRecomendation(book: String): String {
         TODO("Not yet implemented")
@@ -59,17 +62,15 @@ class LivroRepositoryImpl(
         return livroSalvoDao.getAllBooks().map { entities ->
             entities.map { it.toLivro() }
                 .groupBy { livro ->
-                    //converter a data para o formato de agrupamento para mes e ano
+                    // Converte a data para "MMMM yyyy" (ex.: "Novembro 2024")
                     val isoDate = convertDateToIso(livro.dateReview)
-                    val parsedDate =
-                        //pega a data convertida e passa para o formato date
-                        SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(isoDate)
-                    // formata a data para o formato desejado - janeiro 2024
-                    SimpleDateFormat("MMMM yyyy", Locale.getDefault()).format(parsedDate!!)
+                    val parsedDate = SimpleDateFormat("yyyy-MM", Locale.getDefault()).parse(isoDate)
+                    SimpleDateFormat("MMMM yyyy", Locale("pt", "BR")).format(parsedDate!!)
                 }
-                .toSortedMap(compareByDescending { it })
+                .toSortedMap(compareByDescending { it }) // Ordena os meses/anos em ordem decrescente
         }
     }
+
 
     /**
      * converter a data no formato que vem do db sendo uma string
@@ -78,12 +79,20 @@ class LivroRepositoryImpl(
      * @return uma string com o formato ano e mes
      */
     private fun convertDateToIso(date: String): String {
-        val inputFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("yyyy-MM", Locale.getDefault())
-        val parseDate = inputFormat.parse(date)
-        return if (parseDate != null) {
-            outputFormat.format(parseDate)
-        } else {
+        return try {
+            val inputFormat = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("pt", "BR"))
+            val outputFormat = SimpleDateFormat("yyyy-MM", Locale.getDefault())
+
+            val parsedDate = inputFormat.parse(date)
+            if (parsedDate != null) {
+                outputFormat.format(parsedDate)
+            } else {
+                // Retorna uma string vazia se a data não puder ser analisada
+                ""
+            }
+        } catch (e: Exception) {
+            // Log para depuração
+            Log.e("convertDateToIso", "Erro ao converter a data: $date", e)
             ""
         }
     }
