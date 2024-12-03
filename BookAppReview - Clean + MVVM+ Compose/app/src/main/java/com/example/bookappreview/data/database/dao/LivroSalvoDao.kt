@@ -21,4 +21,9 @@ interface LivroSalvoDao {
     @Query("SELECT * FROM livrosalvo ORDER BY id DESC")
     fun getAllBooks(): Flow<List<LivroEntity>>
 
+    @Query("SELECT * FROM livrosalvo WHERE `like` = 1 ORDER BY id DESC LIMIT 1")
+    suspend fun getLastLikedBook(): LivroEntity
+
+
+
 }

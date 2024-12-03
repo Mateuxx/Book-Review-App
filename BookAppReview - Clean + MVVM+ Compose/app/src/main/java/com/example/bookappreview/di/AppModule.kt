@@ -72,4 +72,5 @@ object AppModule {
     fun provideBuscarLivrosUseCase(livroRepository: LivroRepository): BuscarLivrosUseCase {
         return BuscarLivrosUseCase(livroRepository)
     }
+
 }

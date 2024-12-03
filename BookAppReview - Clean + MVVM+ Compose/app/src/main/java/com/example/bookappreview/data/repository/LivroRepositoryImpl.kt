@@ -3,6 +3,7 @@ package com.example.bookappreview.data.repository
 import android.content.Context
 import android.util.Log
 import com.example.bookappreview.data.database.dao.LivroSalvoDao
+import com.example.bookappreview.data.model.LivroEntity
 import com.example.bookappreview.data.model.mapper.toEntity
 import com.example.bookappreview.data.model.mapper.toLivro
 import com.example.bookappreview.data.webclient.BookService
@@ -96,5 +97,14 @@ class LivroRepositoryImpl @Inject constructor(
             ""
         }
     }
+
+
+    /**
+     * get latest liked book
+     */
+    override suspend fun getLastLikedBook(): Livro {
+        return livroSalvoDao.getLastLikedBook().toLivro()
+    }
+
 }
 

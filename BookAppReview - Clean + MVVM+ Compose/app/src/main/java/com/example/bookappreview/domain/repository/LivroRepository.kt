@@ -34,4 +34,9 @@ interface LivroRepository {
      */
     fun fetchAllBooksGroupedByDate(): Flow<Map<String, List<Livro>>>
 
+
+    /**
+     * Get the latest liked book
+     */
+    suspend fun getLastLikedBook(): Livro
 }

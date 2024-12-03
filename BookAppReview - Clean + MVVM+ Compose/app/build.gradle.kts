@@ -129,4 +129,15 @@ dependencies {
     ksp(libs.hilt.compiler)
     //Hilt Navigation Compose
     implementation(libs.hilt.navigation.compose)
+
+    implementation ("androidx.work:work-runtime-ktx:2.8.1")
+
+    implementation ("androidx.hilt:hilt-work:1.2.0")
+
+
+    ksp("androidx.hilt:hilt-compiler:1.2.0")
+    ksp("com.google.dagger:hilt-compiler:2.52")
+
 }
+
+
